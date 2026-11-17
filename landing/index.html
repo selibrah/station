@@ -562,9 +562,101 @@
 
     #pretext-canvas {
       width: 100%;
-      height: 360px;
+      height: 430px;
       display: block;
-      cursor: none;
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    .game-canvas-wrap {
+      position: relative;
+      background: #0B0F18;
+    }
+
+    .game-hud-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 10px 18px;
+      border-bottom: 1px solid var(--hairline);
+      background: rgba(9, 13, 20, 0.9);
+      flex-wrap: wrap;
+      font-size: 12.5px;
+    }
+
+    .hud-stats {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .hud-stat span {
+      color: var(--muted);
+      margin-right: 5px;
+    }
+    .hud-stat strong {
+      color: var(--ivory);
+    }
+
+    .btn-play-sprint {
+      height: 34px;
+      padding: 0 14px;
+      border-radius: 6px;
+      border: 1px solid var(--mint);
+      background: var(--mint-soft);
+      color: var(--mint);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 140ms ease, color 140ms ease;
+    }
+    .btn-play-sprint:hover {
+      background: var(--mint);
+      color: #07090E;
+    }
+
+    .sound-btn {
+      height: 34px;
+      padding: 0 10px;
+      border-radius: 6px;
+      border: 1px solid var(--hairline-bright);
+      background: transparent;
+      color: var(--slate);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      cursor: pointer;
+    }
+
+    .game-end-modal {
+      position: absolute;
+      inset: 0;
+      background: rgba(7, 9, 14, 0.86);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 10;
+    }
+    .game-end-modal[hidden] { display: none; }
+
+    .game-end-card {
+      max-width: 460px;
+      width: 100%;
+      background: var(--surface-raised);
+      border: 1px solid var(--hairline-bright);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: left;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+    .game-end-card h3 {
+      margin: 4px 0 8px;
+      font-size: 23px;
+      letter-spacing: -0.02em;
     }
 
     .pretext-footer {
@@ -899,7 +991,7 @@
       </a>
 
       <nav class="nav-links" aria-label="Primary">
-        <a href="#pretext-lab">Pretext Lens</a>
+        <a href="#pretext-lab">Play 0.36ms Game</a>
         <a href="#benchmarks">vs OpenCLI &amp; Agent-Reach</a>
         <a href="#studio">Auto-Jobs &amp; CRM</a>
         <a href="#faq">FAQ</a>
@@ -989,33 +1081,68 @@
     </div>
 
     <!-- ======================================================================
-         SECTION 1: LIVE 120 FPS PRETEXT REFLOW LAB (OUR REAL FINDINGS!)
+         SECTION 1: PLAYABLE 120 FPS PRETEXT + GLYPH-ATLAS MINI-GAME
          ====================================================================== -->
     <section class="section pad-x" id="pretext-lab" aria-labelledby="pretext-heading">
       <div class="section-header">
         <div>
-          <h2 id="pretext-heading">Move the 0.36&nbsp;ms lens through live extracted findings.</h2>
+          <h2 id="pretext-heading">Play 0.36&nbsp;ms Signal Sprint: shatter HTML bloat, harvest SQLite matches.</h2>
         </div>
         <p>
-          Powered by two-phase <strong>Pretext</strong> math (one-time offscreen <code>measureText</code> cache + zero-DOM arithmetic line breaking). Drag your cursor across real Job Search, Housing, and <code>@eN</code> streams to inspect tokens at 120&nbsp;FPS.
+          Built on live two-phase <strong>Pretext</strong> obstacle reflow + <strong>Glyph-Atlas</strong> ASCII shrapnel. Sweep your <code>0.36&nbsp;ms</code> lens over Mint job &amp; housing matches, and <strong>Click or press Space</strong> to blast red <code>&lt;div&gt;</code> bloat &amp; <code>310ms OpenCLI</code> lag into <code>@eN</code> crystals!
         </p>
       </div>
 
       <div class="pretext-stage-card">
         <div class="pretext-toolbar">
-          <div class="stream-pills" role="tablist" aria-label="Live extraction dataset">
-            <button type="button" class="stream-pill" role="tab" aria-selected="true" data-stream="jobs">Job Hunter Stream (30 roles)</button>
-            <button type="button" class="stream-pill" role="tab" aria-selected="false" data-stream="housing">Housing &amp; Rent Stream (58 ads)</button>
-            <button type="button" class="stream-pill" role="tab" aria-selected="false" data-stream="snapshot">Agent @eN DOM Map (-99.4% tokens)</button>
+          <div class="stream-pills" role="tablist" aria-label="Background Pretext stream">
+            <button type="button" class="stream-pill" role="tab" aria-selected="true" data-stream="jobs">Jobs Stream</button>
+            <button type="button" class="stream-pill" role="tab" aria-selected="false" data-stream="housing">Housing Stream</button>
+            <button type="button" class="stream-pill" role="tab" aria-selected="false" data-stream="snapshot">@eN DOM Stream</button>
           </div>
-          <span class="mono" style="font-size: 12px; color: var(--mint);" id="pretext-perf-readout">DOM reflows: 0 · Layout: 0.04 ms</span>
+
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <button type="button" class="sound-btn" id="game-sound-btn" aria-pressed="true">SFX: ON</button>
+            <button type="button" class="btn-play-sprint" id="start-sprint-btn">Start 30s Sprint</button>
+          </div>
         </div>
 
-        <canvas id="pretext-canvas" role="img" aria-label="Interactive Pretext kinetic typography canvas wrapping extracted job and housing findings around your cursor"></canvas>
+        <div class="game-hud-bar mono">
+          <div class="hud-stats">
+            <div class="hud-stat"><span>SCORE</span><strong id="g-score">0</strong></div>
+            <div class="hud-stat"><span>STREAK</span><strong id="g-streak" style="color: var(--prism);">x1</strong></div>
+            <div class="hud-stat"><span>SQLITE SAVED</span><strong id="g-saved" style="color: var(--mint);">0</strong></div>
+            <div class="hud-stat"><span>TOKENS SAVED</span><strong id="g-tokens">0k</strong></div>
+            <div class="hud-stat"><span>BEST</span><strong id="g-best">0</strong></div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <span style="color: var(--mint);" id="pretext-perf-readout">0 DOM reflows</span>
+            <span>TIME <strong id="g-time" style="color: var(--ivory);">30.0s</strong></span>
+          </div>
+        </div>
+
+        <div class="game-canvas-wrap">
+          <canvas id="pretext-canvas" tabindex="0" role="application" aria-label="0.36ms Signal Sprint mini-game: move mouse or arrow keys to collect green job and housing tokens, click or press spacebar to shatter red HTML bloat blocks"></canvas>
+
+          <div class="game-end-modal" id="game-end-modal" hidden>
+            <div class="game-end-card">
+              <div class="mono" style="font-size: 11.5px; color: var(--mint);" id="end-rank">RANK: SUB-MS SYSTEMS ARCHITECT</div>
+              <h3 id="end-headline">Sprint Complete — 0.36 ms Precision</h3>
+              <p style="margin: 0 0 16px; color: var(--slate); font-size: 14px;" id="end-summary">
+                You harvested 0 authenticated matches into SQLite and saved 0k LLM context tokens with zero DOM reflows.
+              </p>
+              <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <button type="button" class="btn-play-sprint" id="play-again-btn">Play Again</button>
+                <button type="button" class="sound-btn" id="copy-score-btn">Copy Score</button>
+                <a href="https://github.com/selibrah/station/releases/latest/download/Station-Studio-v0.4.0-macOS-arm64.dmg" class="btn-primary" style="height: 34px; font-size: 13px; padding: 0 14px;">Get Station (.dmg)</a>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div class="pretext-footer mono">
-          <span>Phase 1: cached glyph segment widths (offscreen canvas)</span>
-          <span>Phase 2: pure arithmetic obstacle-wrapping per frame</span>
+          <span>Controls: Move Cursor / Touch / WASD · Click or Spacebar = 0.36ms CDP Pulse (shatters red bloat into @eN!)</span>
+          <span>Pretext math + Glyph-Atlas particles</span>
         </div>
       </div>
     </section>
@@ -1463,14 +1590,223 @@
       let activeStreamKey = "jobs";
       prepareStream("jobs");
 
-      let ptw = 900, pth = 360, dpr = 1;
-      const ptMouse = { x: 450, y: 180, inside: false, t: 0 };
+      let ptw = 900, pth = 430, dpr = 1;
+      const ptMouse = { x: 450, y: 215, inside: false, t: 0 };
+      const keysDown = {};
+
+      // ======================================================================
+      // PLAYABLE MINI-GAME ENGINE: "0.36ms SIGNAL SPRINT"
+      // Combines Multi-Obstacle Pretext Reflow + Glyph-Atlas Shrapnel Physics
+      // ======================================================================
+      let audioCtx = null;
+      let sfxEnabled = true;
+
+      function playTone(freq, dur, type, vol) {
+        if (!sfxEnabled) return;
+        try {
+          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          if (audioCtx.state === "suspended") audioCtx.resume();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = type || "sine";
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(freq * 1.45, audioCtx.currentTime + dur);
+          gain.gain.setValueAtTime(vol || 0.06, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + dur);
+        } catch (_) {}
+      }
+
+      const GOOD_POOL = [
+        { label: "[@job · $210k Rust]", pts: 120, tok: 48 },
+        { label: "[seen.db · 1,150 DH Maarif]", pts: 110, tok: 42 },
+        { label: "[@e1 · Easy Apply]", pts: 90, tok: 48 },
+        { label: "[resume.pdf · DataTransfer]", pts: 140, tok: 55 },
+        { label: "[@lead · $8k Remote]", pts: 115, tok: 38 },
+        { label: "[station_read · -99.1%]", pts: 100, tok: 64 }
+      ];
+
+      const HAZARD_POOL = [
+        { label: "<div class=\"48k-bloat\">" },
+        { label: "[OpenCLI: 310ms LAG]" },
+        { label: "[403 LOGIN WALL]" },
+        { label: "[MV3 fileChooser ERR]" }
+      ];
+
+      // Pretext Phase 1 for Game Entities: measure pill widths once on offscreen canvas!
+      mCtx.font = "600 12.5px 'JetBrains Mono', monospace";
+      GOOD_POOL.forEach(function (g) { g.w = mCtx.measureText(g.label).width + 18; });
+      HAZARD_POOL.forEach(function (h) { h.w = mCtx.measureText(h.label).width + 18; });
+      const DISTILLED_WIDTH = mCtx.measureText("[@eN · DISTILLED +180]").width + 18;
+
+      const game = {
+        active: false,
+        score: 0,
+        streak: 1,
+        savedCount: 0,
+        tokensSavedK: 0,
+        best: Number(localStorage.getItem("station-sprint-best") || 0),
+        timeLeft: 30.0,
+        lastTick: performance.now(),
+        entities: [],
+        pulses: [],
+        shrapnel: [],
+        popups: [],
+        hitFlash: 0,
+        spawnTimer: 0
+      };
+
+      const elScore = document.getElementById("g-score");
+      const elStreak = document.getElementById("g-streak");
+      const elSaved = document.getElementById("g-saved");
+      const elTokens = document.getElementById("g-tokens");
+      const elBest = document.getElementById("g-best");
+      const elTime = document.getElementById("g-time");
+      const endModal = document.getElementById("game-end-modal");
+      const startBtn = document.getElementById("start-sprint-btn");
+      elBest.textContent = game.best.toLocaleString();
+
+      function syncHUD() {
+        elScore.textContent = game.score.toLocaleString();
+        elStreak.textContent = "x" + game.streak;
+        elSaved.textContent = String(game.savedCount);
+        elTokens.textContent = game.tokensSavedK + "k";
+        elBest.textContent = game.best.toLocaleString();
+        elTime.textContent = game.timeLeft.toFixed(1) + "s";
+      }
+
+      function spawnEntity(forceHazard) {
+        const isHazard = typeof forceHazard === "boolean" ? forceHazard : (Math.random() < 0.42);
+        const tpl = isHazard
+          ? HAZARD_POOL[Math.floor(Math.random() * HAZARD_POOL.length)]
+          : GOOD_POOL[Math.floor(Math.random() * GOOD_POOL.length)];
+        const fromLeft = Math.random() < 0.5;
+        const speed = (1.15 + Math.random() * 1.45) * (fromLeft ? 1 : -1);
+        game.entities.push({
+          x: fromLeft ? -60 : ptw + 60,
+          y: 44 + Math.random() * (pth - 88),
+          vx: speed,
+          vy: (Math.random() - 0.5) * 0.55,
+          w: tpl.w,
+          h: 26,
+          label: tpl.label,
+          pts: tpl.pts || 150,
+          tok: tpl.tok || 48,
+          hazard: isHazard,
+          distilled: false
+        });
+      }
+
+      // Seed ambient sandbox entities even before starting 30s Sprint so visitors get hooked immediately!
+      for (let i = 0; i < 5; i++) spawnEntity(i % 2 === 1);
+
+      function spawnAsciiShrapnel(cx, cy, tier) {
+        for (let i = 0; i < 34; i++) {
+          const ang = (Math.PI * 2 * i) / 34 + (Math.random() - 0.5) * 0.25;
+          const spd = 1.8 + Math.random() * 4.8;
+          game.shrapnel.push({
+            x: cx,
+            y: cy,
+            vx: Math.cos(ang) * spd,
+            vy: Math.sin(ang) * spd,
+            glyphIdx: Math.floor(Math.random() * ALL_CHARS.length),
+            tier: tier,
+            life: 1.0
+          });
+        }
+      }
+
+      function triggerPulse(px, py) {
+        game.pulses.push({ x: px, y: py, r: 18, maxR: 168, alpha: 1.0 });
+        playTone(340, 0.14, "triangle", 0.07);
+
+        let shatteredAny = false;
+        for (let i = 0; i < game.entities.length; i++) {
+          const ent = game.entities[i];
+          if (!ent.hazard) continue;
+          const dx = ent.x - px;
+          const dy = ent.y - py;
+          if (dx * dx + dy * dy <= 175 * 175) {
+            // Shatter red bloat into Glyph-Atlas ASCII shrapnel + transmute into Mint @eN crystal!
+            spawnAsciiShrapnel(ent.x, ent.y, 1);
+            ent.hazard = false;
+            ent.distilled = true;
+            ent.label = "[@eN · DISTILLED +180]";
+            ent.w = DISTILLED_WIDTH;
+            ent.pts = 180;
+            ent.tok = 60;
+            ent.vx *= 0.35;
+            ent.vy *= 0.35;
+            shatteredAny = true;
+          }
+        }
+        if (shatteredAny) {
+          playTone(680, 0.18, "sine", 0.08);
+        }
+      }
+
+      function startSprint() {
+        endModal.setAttribute("hidden", "");
+        game.active = true;
+        game.score = 0;
+        game.streak = 1;
+        game.savedCount = 0;
+        game.tokensSavedK = 0;
+        game.timeLeft = 30.0;
+        game.lastTick = performance.now();
+        game.entities = [];
+        for (let i = 0; i < 7; i++) spawnEntity(i % 2 === 0);
+        startBtn.textContent = "Restart 30s Sprint";
+        syncHUD();
+        ptCanvas.focus();
+      }
+
+      function finishSprint() {
+        game.active = false;
+        if (game.score > game.best) {
+          game.best = game.score;
+          localStorage.setItem("station-sprint-best", String(game.best));
+        }
+        syncHUD();
+        const rank =
+          game.score >= 3500 ? "RANK: 0.36MS PRINCIPAL RUST ARCHITECT" :
+          game.score >= 1800 ? "RANK: STAFF CDP PROTOCOL ENGINEER" :
+                               "RANK: AUTHENTICATED AGENT OPERATOR";
+        document.getElementById("end-rank").textContent = rank;
+        document.getElementById("end-headline").textContent = game.score.toLocaleString() + " pts in 30s";
+        document.getElementById("end-summary").textContent =
+          "Harvested " + game.savedCount + " authenticated matches into SQLite and saved " +
+          game.tokensSavedK + "k LLM tokens with 0 DOM reflows.";
+        endModal.removeAttribute("hidden");
+      }
+
+      startBtn.addEventListener("click", startSprint);
+      document.getElementById("play-again-btn").addEventListener("click", startSprint);
+
+      document.getElementById("game-sound-btn").addEventListener("click", function () {
+        sfxEnabled = !sfxEnabled;
+        this.textContent = sfxEnabled ? "SFX: ON" : "SFX: OFF";
+        this.setAttribute("aria-pressed", String(sfxEnabled));
+      });
+
+      document.getElementById("copy-score-btn").addEventListener("click", function () {
+        const btn = this;
+        const badge = "⚡ Station 0.36ms Signal Sprint: " + game.score.toLocaleString() + " pts · " +
+          game.savedCount + " SQLite matches · " + game.tokensSavedK + "k LLM tokens saved (0 DOM reflows) — https://selibrah.github.io/station/";
+        navigator.clipboard.writeText(badge).then(function () {
+          btn.textContent = "Copied!";
+          setTimeout(function () { btn.textContent = "Copy Score"; }, 1500);
+        });
+      });
 
       function resizePretext() {
         dpr = Math.min(2, window.devicePixelRatio || 1);
         const r = ptCanvas.getBoundingClientRect();
         ptw = Math.max(300, r.width);
-        pth = 360;
+        pth = 430;
         ptCanvas.width = ptw * dpr;
         ptCanvas.height = pth * dpr;
         ptCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -1487,6 +1823,24 @@
       ptCanvas.addEventListener("pointerleave", function () {
         ptMouse.inside = false;
       });
+      ptCanvas.addEventListener("pointerdown", function (e) {
+        const r = ptCanvas.getBoundingClientRect();
+        ptMouse.x = e.clientX - r.left;
+        ptMouse.y = e.clientY - r.top;
+        ptMouse.inside = true;
+        triggerPulse(ptMouse.x, ptMouse.y);
+      });
+
+      window.addEventListener("keydown", function (e) {
+        if (e.code === "Space" && document.activeElement === ptCanvas) {
+          e.preventDefault();
+          triggerPulse(ptMouse.x, ptMouse.y);
+        }
+        keysDown[e.key] = true;
+      });
+      window.addEventListener("keyup", function (e) {
+        keysDown[e.key] = false;
+      });
 
       document.querySelectorAll(".stream-pill").forEach(function (btn) {
         btn.addEventListener("click", function () {
@@ -1497,47 +1851,97 @@
         });
       });
 
-      // Phase 2: Pure arithmetic Pretext line-layout around moving circular obstacle
-      function renderPretextFrame() {
-        const t0 = performance.now();
-        ptMouse.t += 0.02;
-        const ox = ptMouse.inside ? ptMouse.x : (ptw * 0.5 + Math.cos(ptMouse.t) * (ptw * 0.24));
-        const oy = ptMouse.inside ? ptMouse.y : (pth * 0.5 + Math.sin(ptMouse.t * 1.4) * 75);
-        const orbR = 86;
+      // Helper: subtract circular chord `[cutL, cutR]` from line intervals `[[a, b], ...]`
+      function carveInterval(segs, cutL, cutR, minWidth) {
+        const out = [];
+        for (let i = 0; i < segs.length; i++) {
+          const a = segs[i][0], b = segs[i][1];
+          if (cutR <= a || cutL >= b) {
+            out.push([a, b]);
+          } else {
+            if (cutL - a > minWidth) out.push([a, cutL]);
+            if (b - cutR > minWidth) out.push([cutR, b]);
+          }
+        }
+        return out;
+      }
 
-        ptCtx.fillStyle = "#0B0F18";
+      function renderPretextFrame(now) {
+        const t0 = performance.now();
+        const dtSec = Math.min(0.05, ((now || t0) - game.lastTick) / 1000);
+        game.lastTick = now || t0;
+
+        // Keyboard steering support
+        const step = 340 * dtSec;
+        if (keysDown["ArrowLeft"] || keysDown["a"]) { ptMouse.x = Math.max(40, ptMouse.x - step); ptMouse.inside = true; }
+        if (keysDown["ArrowRight"] || keysDown["d"]) { ptMouse.x = Math.min(ptw - 40, ptMouse.x + step); ptMouse.inside = true; }
+        if (keysDown["ArrowUp"] || keysDown["w"]) { ptMouse.y = Math.max(40, ptMouse.y - step); ptMouse.inside = true; }
+        if (keysDown["ArrowDown"] || keysDown["s"]) { ptMouse.y = Math.min(pth - 40, ptMouse.y + step); ptMouse.inside = true; }
+
+        ptMouse.t += 0.018;
+        const ox = (ptMouse.inside || game.active) ? ptMouse.x : (ptw * 0.5 + Math.cos(ptMouse.t) * (ptw * 0.24));
+        const oy = (ptMouse.inside || game.active) ? ptMouse.y : (pth * 0.5 + Math.sin(ptMouse.t * 1.35) * 85);
+        ptMouse.x = ox;
+        ptMouse.y = oy;
+        const orbR = 62;
+
+        // Update 30s Sprint timer & spawns
+        if (game.active) {
+          game.timeLeft = Math.max(0, game.timeLeft - dtSec);
+          game.spawnTimer += dtSec;
+          if (game.spawnTimer >= 0.52 && game.entities.length < 13) {
+            game.spawnTimer = 0;
+            spawnEntity();
+          }
+          elTime.textContent = game.timeLeft.toFixed(1) + "s";
+          if (game.timeLeft <= 0) finishSprint();
+        } else if (game.entities.length < 6 && Math.random() < 0.02) {
+          spawnEntity();
+        }
+
+        ptCtx.fillStyle = "#090D16";
         ptCtx.fillRect(0, 0, ptw, pth);
 
+        // Build active Pretext obstacle list: Player Lens + Expanding CDP Shockwaves!
+        const obstacles = [{ x: ox, y: oy, r: orbR + 10 }];
+        for (let p = game.pulses.length - 1; p >= 0; p--) {
+          const pulse = game.pulses[p];
+          pulse.r += 380 * dtSec;
+          pulse.alpha -= 1.9 * dtSec;
+          if (pulse.alpha <= 0 || pulse.r >= pulse.maxR) {
+            game.pulses.splice(p, 1);
+          } else {
+            obstacles.push({ x: pulse.x, y: pulse.y, r: pulse.r * 0.72 });
+          }
+        }
+
+        // Phase 2 Pretext: Pure arithmetic multi-obstacle line wrapping (0 DOM reads!)
         const tokens = prepareStream(activeStreamKey);
-        const padX = 26;
-        const lineH = 27;
+        const padX = 24;
+        const lineH = 26;
         let wordIdx = 0;
 
         ptCtx.font = PT_FONT;
         ptCtx.textBaseline = "middle";
 
-        for (let y = 30; y < pth - 20 && wordIdx < tokens.length; y += lineH) {
-          const dy = Math.abs(y - oy);
+        for (let y = 26; y < pth - 18 && wordIdx < tokens.length; y += lineH) {
           let segments = [[padX, ptw - padX]];
-
-          // Pure geometric chord intersection with circular optical lens
-          if (dy < orbR + 12) {
-            const halfChord = Math.sqrt(Math.max(0, (orbR + 12) * (orbR + 12) - dy * dy));
-            const leftEnd = ox - halfChord;
-            const rightStart = ox + halfChord;
-            segments = [];
-            if (leftEnd - padX > 60) segments.push([padX, leftEnd]);
-            if ((ptw - padX) - rightStart > 60) segments.push([rightStart, ptw - padX]);
+          for (let k = 0; k < obstacles.length; k++) {
+            const ob = obstacles[k];
+            const dy = Math.abs(y - ob.y);
+            if (dy < ob.r) {
+              const half = Math.sqrt(ob.r * ob.r - dy * dy);
+              segments = carveInterval(segments, ob.x - half, ob.x + half, 52);
+            }
           }
 
           for (let s = 0; s < segments.length; s++) {
             let cursorX = segments[s][0];
             const maxX = segments[s][1];
-
             while (wordIdx < tokens.length) {
               const tok = tokens[wordIdx];
               if (cursorX + tok.width > maxX) break;
-              ptCtx.fillStyle = tok.highlight ? "#2DD4BF" : "#CBD5E1";
+              ptCtx.fillStyle = tok.highlight ? "rgba(45, 212, 191, 0.34)" : "rgba(148, 163, 184, 0.22)";
               ptCtx.fillText(tok.text, cursorX, y);
               cursorX += tok.width + SPACE_W;
               wordIdx++;
@@ -1545,38 +1949,147 @@
           }
         }
 
-        // Draw the 0.36ms Pretext Inspection Loupe
+        // Draw Expanding 0.36ms CDP Shockwaves
+        for (let p = 0; p < game.pulses.length; p++) {
+          const pulse = game.pulses[p];
+          ptCtx.strokeStyle = "rgba(56, 189, 248, " + pulse.alpha.toFixed(2) + ")";
+          ptCtx.lineWidth = 2.2;
+          ptCtx.beginPath();
+          ptCtx.arc(pulse.x, pulse.y, pulse.r, 0, Math.PI * 2);
+          ptCtx.stroke();
+        }
+
+        // Update & Render Collectible Matches & Bloat Hazards
+        ptCtx.font = "600 12.5px 'JetBrains Mono', monospace";
+        for (let i = game.entities.length - 1; i >= 0; i--) {
+          const ent = game.entities[i];
+          // Gentle magnetic pull toward player lens when distilled!
+          if (ent.distilled) {
+            ent.x += (ox - ent.x) * 0.06;
+            ent.y += (oy - ent.y) * 0.06;
+          } else {
+            ent.x += ent.vx;
+            ent.y += ent.vy;
+          }
+
+          if (ent.y < 28 || ent.y > pth - 28) ent.vy *= -1;
+          if (ent.x < -160 || ent.x > ptw + 160) {
+            game.entities.splice(i, 1);
+            continue;
+          }
+
+          // Check collision with Player Optical Lens
+          const dx = ent.x - ox;
+          const dy = ent.y - oy;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < orbR + 14) {
+            if (!ent.hazard) {
+              const gained = ent.pts * game.streak;
+              game.score += gained;
+              game.savedCount += 1;
+              game.tokensSavedK += ent.tok;
+              game.streak = Math.min(8, game.streak + 1);
+              spawnAsciiShrapnel(ent.x, ent.y, 2);
+              game.popups.push({ x: ent.x, y: ent.y - 10, text: "+" + gained, color: "#2DD4BF", life: 1.0 });
+              playTone(440 + game.streak * 55, 0.11, "sine", 0.06);
+              syncHUD();
+              game.entities.splice(i, 1);
+              continue;
+            } else {
+              // Hit un-shattered bloat hazard -> resets streak!
+              game.streak = 1;
+              game.hitFlash = 1.0;
+              spawnAsciiShrapnel(ent.x, ent.y, 0);
+              game.popups.push({ x: ent.x, y: ent.y - 10, text: "CLICK TO SHATTER!", color: "#FB7185", life: 1.0 });
+              playTone(150, 0.16, "sawtooth", 0.05);
+              syncHUD();
+              game.entities.splice(i, 1);
+              continue;
+            }
+          }
+
+          // Draw Entity Pill
+          const rx = ent.x - ent.w / 2;
+          const ry = ent.y - ent.h / 2;
+          ptCtx.fillStyle = ent.hazard ? "rgba(127, 29, 29, 0.82)" : (ent.distilled ? "rgba(15, 118, 110, 0.9)" : "rgba(13, 38, 48, 0.88)");
+          ptCtx.strokeStyle = ent.hazard ? "#FB7185" : (ent.distilled ? "#5EEAD4" : "#2DD4BF");
+          ptCtx.lineWidth = 1.3;
+          ptCtx.beginPath();
+          ptCtx.roundRect(rx, ry, ent.w, ent.h, 6);
+          ptCtx.fill();
+          ptCtx.stroke();
+
+          ptCtx.fillStyle = ent.hazard ? "#FECDD3" : "#F0FDFA";
+          ptCtx.textAlign = "center";
+          ptCtx.fillText(ent.label, ent.x, ent.y + 0.5);
+          ptCtx.textAlign = "left";
+        }
+
+        // Update & Blit Glyph-Atlas Shrapnel Sprites (0 fillText calls!)
+        for (let s = game.shrapnel.length - 1; s >= 0; s--) {
+          const sp = game.shrapnel[s];
+          sp.x += sp.vx;
+          sp.y += sp.vy;
+          sp.vx *= 0.96;
+          sp.vy *= 0.96;
+          sp.life -= 1.8 * dtSec;
+          if (sp.life <= 0) {
+            game.shrapnel.splice(s, 1);
+            continue;
+          }
+          ptCtx.globalAlpha = Math.max(0, sp.life);
+          ptCtx.drawImage(atlas, sp.glyphIdx * CELL_W, sp.tier * CELL_H, CELL_W, CELL_H, sp.x, sp.y, CELL_W, CELL_H);
+        }
+        ptCtx.globalAlpha = 1;
+
+        // Floating Score Popups
+        ptCtx.font = "700 13px 'JetBrains Mono', monospace";
+        ptCtx.textAlign = "center";
+        for (let f = game.popups.length - 1; f >= 0; f--) {
+          const pop = game.popups[f];
+          pop.y -= 36 * dtSec;
+          pop.life -= 1.5 * dtSec;
+          if (pop.life <= 0) { game.popups.splice(f, 1); continue; }
+          ptCtx.globalAlpha = Math.max(0, pop.life);
+          ptCtx.fillStyle = pop.color;
+          ptCtx.fillText(pop.text, pop.x, pop.y);
+        }
+        ptCtx.globalAlpha = 1;
+
+        // Draw Player [@station · 0.36ms] Collector Ring
+        if (game.hitFlash > 0) game.hitFlash = Math.max(0, game.hitFlash - 3.2 * dtSec);
+        const ringColor = game.hitFlash > 0.1 ? "#FB7185" : "#38BDF8";
         const grad = ptCtx.createRadialGradient(ox, oy, 6, ox, oy, orbR);
-        grad.addColorStop(0, "rgba(56, 189, 248, 0.20)");
+        grad.addColorStop(0, game.hitFlash > 0.1 ? "rgba(251, 113, 133, 0.25)" : "rgba(56, 189, 248, 0.22)");
         grad.addColorStop(1, "rgba(45, 212, 191, 0.03)");
         ptCtx.fillStyle = grad;
         ptCtx.beginPath();
         ptCtx.arc(ox, oy, orbR, 0, Math.PI * 2);
         ptCtx.fill();
 
-        ptCtx.strokeStyle = "#38BDF8";
-        ptCtx.lineWidth = 1.5;
+        ptCtx.strokeStyle = ringColor;
+        ptCtx.lineWidth = 1.8;
         ptCtx.beginPath();
         ptCtx.arc(ox, oy, orbR, 0, Math.PI * 2);
         ptCtx.stroke();
 
         ptCtx.fillStyle = "#F2F5FA";
-        ptCtx.font = "600 12px 'JetBrains Mono', monospace";
-        ptCtx.textAlign = "center";
-        ptCtx.fillText("0.36 ms LENS", ox, oy - 7);
+        ptCtx.font = "600 11.5px 'JetBrains Mono', monospace";
+        ptCtx.fillText("[@station]", ox, oy - 7);
         ptCtx.fillStyle = "#2DD4BF";
-        ptCtx.font = "500 11px 'JetBrains Mono', monospace";
-        ptCtx.fillText("0 DOM REFLOWS", ox, oy + 11);
+        ptCtx.font = "500 10.5px 'JetBrains Mono', monospace";
+        ptCtx.fillText("CLICK = PULSE", ox, oy + 9);
         ptCtx.textAlign = "left";
 
-        const dt = (performance.now() - t0).toFixed(2);
-        if (Math.random() < 0.12) {
-          ptReadout.textContent = "DOM reflows: 0 · Pretext math: " + dt + " ms";
+        const frameMs = (performance.now() - t0).toFixed(2);
+        if (Math.random() < 0.1) {
+          ptReadout.textContent = "0 DOM reflows · " + frameMs + " ms";
         }
 
         if (!reducedMotion) requestAnimationFrame(renderPretextFrame);
       }
-      renderPretextFrame();
+      requestAnimationFrame(renderPretextFrame);
 
       // ======================================================================
       // 3. CLI INSTALL SWITCHER & INTERACTIVE STUDIO TABS
