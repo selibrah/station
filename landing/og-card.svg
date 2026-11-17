@@ -1,34 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Station — 0.36ms Rust Browser Daemon &amp; Native MCP Server">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Station — 0.36ms Rust Browser CLI &amp; Native MCP Workbench">
+  <rect width="1200" height="630" fill="#141414"/>
+  <!-- Outer Forge Workbench Frame -->
+  <rect x="16" y="16" width="844" height="598" rx="10" fill="#184A8C"/>
+  <rect x="16" y="16" width="844" height="598" rx="10" fill="url(#skyGrad)"/>
+  <rect x="872" y="16" width="312" height="598" rx="10" fill="#2B2B2B" stroke="#F0F0F0" stroke-opacity="0.08"/>
+
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0C1017"/>
-      <stop offset="100%" stop-color="#131B28"/>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2468B4"/>
+      <stop offset="65%" stop-color="#143B6E"/>
+      <stop offset="100%" stop-color="#0B1A33"/>
     </linearGradient>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1E293B" stroke-width="1"/>
-    </pattern>
   </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <rect width="1200" height="630" fill="url(#grid)" opacity="0.55"/>
 
-  <rect x="64" y="64" width="250" height="38" rx="19" fill="#0F2922" stroke="#10B981" stroke-opacity="0.45"/>
-  <circle cx="88" cy="83" r="6" fill="#10B981"/>
-  <text x="104" y="89" fill="#6EE7B7" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" font-weight="600">0.36 ms CDP · 4.5 MB RAM</text>
+  <!-- Tactical HUD Top-Left -->
+  <rect x="36" y="36" width="276" height="32" rx="3" fill="#0B1A33" fill-opacity="0.72"/>
+  <text x="50" y="57" fill="#FFFFFF" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="600" letter-spacing="1.8">RTT 0.36MS  POOL ▮▮▮▮▮▮</text>
 
-  <text x="64" y="182" fill="#F8FAFC" font-family="system-ui, -apple-system, sans-serif" font-size="68" font-weight="700" letter-spacing="-1.5">Station</text>
-  <text x="64" y="246" fill="#94A3B8" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="500">Your logged-in Chrome as a sub-millisecond CLI &amp; MCP server.</text>
-  <text x="64" y="294" fill="#64748B" font-family="system-ui, -apple-system, sans-serif" font-size="24">Zero browser extensions. Zero API keys. Built in Rust with native macOS Studio.</text>
+  <!-- Hero Copy on Canvas -->
+  <text x="52" y="180" fill="#FFFFFF" font-family="system-ui, -apple-system, sans-serif" font-size="66" font-weight="700" letter-spacing="-1.8">Station</text>
+  <text x="52" y="236" fill="#E2E8F0" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="500">Your logged-in Chrome as a 0.36ms CLI &amp; MCP server.</text>
+  <text x="52" y="278" fill="#FFD27A" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" letter-spacing="1.2">ZERO EXTENSIONS · ZERO API KEYS · 4.5 MB RUST BINARY + MACOS STUDIO</text>
 
-  <!-- Benchmark Bars -->
-  <rect x="64" y="352" width="1072" height="214" rx="16" fill="#0F1623" stroke="#263244"/>
-  <text x="96" y="396" fill="#E2E8F0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" font-weight="600">Station (Rust CDP)       0.36 ms</text>
-  <rect x="470" y="380" width="16" height="20" rx="4" fill="#10B981"/>
+  <!-- Tactical Comparison Card inside Stage -->
+  <rect x="52" y="330" width="760" height="224" rx="6" fill="#0B1A33" fill-opacity="0.82" stroke="#FFFFFF" stroke-opacity="0.14"/>
+  <text x="80" y="376" fill="#FFFFFF" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17" font-weight="600">STATION (RUST PERSISTENT CDP)    0.36 ms</text>
+  <rect x="530" y="360" width="240" height="18" rx="3" fill="#EC4412"/>
 
-  <text x="96" y="446" fill="#94A3B8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18">OpenCLI (Node + Ext)    28–310 ms</text>
-  <rect x="470" y="430" width="420" height="20" rx="4" fill="#475569"/>
+  <text x="80" y="426" fill="#94A3B8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17">OPENCLI (NODE + MV3 EXTENSION)  28–310 ms</text>
+  <rect x="530" y="410" width="52" height="18" rx="3" fill="#475569"/>
 
-  <text x="96" y="496" fill="#94A3B8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18">Playwright Headless     180+ ms (logged out)</text>
-  <rect x="470" y="480" width="310" height="20" rx="4" fill="#475569"/>
+  <text x="80" y="476" fill="#94A3B8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17">AGENT-REACH (PUBLIC SCRAPERS)   LOGIN WALL</text>
+  <rect x="530" y="460" width="20" height="18" rx="3" fill="#475569"/>
 
-  <text x="96" y="540" fill="#64748B" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16">claude mcp add station -- station mcp --auto-start</text>
+  <text x="80" y="526" fill="#FFD27A" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15">$ claude mcp add station -- station mcp --auto-start</text>
+
+  <!-- Right Controls Sidebar Preview -->
+  <text x="892" y="50" fill="#F0F0F0" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600">Controls · station-v0.4</text>
+  <rect x="892" y="70" width="272" height="32" rx="5" fill="#252525" stroke="#F0F0F0" stroke-opacity="0.08"/>
+  <text x="904" y="91" fill="#F0F0F0" font-family="system-ui, sans-serif" font-size="12">Auto-start MCP daemon</text>
+  <rect x="1126" y="79" width="26" height="14" rx="3" fill="#EC4412"/>
+  <rect x="1139" y="81" width="10" height="10" rx="2" fill="#FFFFFF"/>
+
+  <rect x="892" y="114" width="272" height="32" rx="5" fill="#252525" stroke="#F0F0F0" stroke-opacity="0.08"/>
+  <rect x="894" y="116" width="198" height="28" rx="3" fill="#FFFFFF" fill-opacity="0.08"/>
+  <text x="904" y="135" fill="#F0F0F0" font-family="system-ui, sans-serif" font-size="12">Throughput</text>
+  <text x="1096" y="135" fill="#F0F0F0" font-family="ui-monospace, monospace" font-size="12">2600/s</text>
+
+  <rect x="892" y="158" width="272" height="32" rx="5" fill="#252525" stroke="#F0F0F0" stroke-opacity="0.08"/>
+  <text x="904" y="179" fill="#F0F0F0" font-family="system-ui, sans-serif" font-size="12">Background tab pool</text>
+  <rect x="1126" y="167" width="26" height="14" rx="3" fill="#EC4412"/>
+  <rect x="1139" y="169" width="10" height="10" rx="2" fill="#FFFFFF"/>
 </svg>
