@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Station — 0.36ms Rust Browser CLI &amp; MCP Server (OpenCLI &amp; Agent-Reach Alternative)</title>
-  <meta name="description" content="Turn your real logged-in Chrome into a 0.36ms CLI and native MCP server in one 4.5MB Rust binary. Zero browser extensions, zero API fees, Auto-Jobs, SQLite CRM, and macOS Studio.">
-  <meta name="keywords" content="OpenCLI alternative, Agent-Reach alternative, Playwright MCP alternative, browser MCP server, Rust Chrome DevTools Protocol, authenticated web automation, Claude Code browser tool, Cursor MCP browser, automated job search, apartment rent watcher">
+  <meta name="description" content="Drive your real logged-in Chrome at 0.36ms in one 4.5MB Rust binary. Zero browser extensions, zero API fees, -99% LLM tokens, plus a Swift 6 macOS Studio app with Auto-Jobs, SQLite CRM &amp; Charts.">
+  <meta name="keywords" content="OpenCLI alternative, Agent-Reach alternative, Playwright MCP alternative, browser MCP server, Rust Chrome DevTools Protocol, authenticated web automation, Claude Code MCP, Cursor browser MCP, automated job search, apartment rent radar">
   <meta name="author" content="selibrah">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://selibrah.github.io/station/">
@@ -13,25 +13,25 @@
   <!-- OpenGraph / Social -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Station">
-  <meta property="og:title" content="Station — 0.36ms Rust Browser CLI &amp; Native MCP Workbench">
-  <meta property="og:description" content="Drive your already-logged-in Chrome at 2,600 ops/sec with zero extensions and zero API keys. Interactive workbench + downloadable macOS Studio app.">
+  <meta property="og:title" content="Station — 0.36ms Rust Browser CLI, Native MCP &amp; macOS Studio">
+  <meta property="og:description" content="Replace fragile browser extensions and slow scrapers. Drive your logged-in Chrome at 2,600 ops/sec with @eN snapshots, Clean Markdown, Auto-Jobs, and local SQLite CRM.">
   <meta property="og:url" content="https://selibrah.github.io/station/">
   <meta property="og:image" content="https://selibrah.github.io/station/og-card.svg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Station — 0.36ms Rust Browser Daemon &amp; Native MCP">
-  <meta name="twitter:description" content="No fragile MV3 extensions. No 310ms CLI lag. No login walls. One Rust binary + macOS Studio app.">
+  <meta name="twitter:description" content="Zero extensions. Zero API keys. 4.5MB Rust binary + native Swift 6 macOS app for Auto-Jobs, CRM &amp; Charts.">
   <meta name="twitter:image" content="https://selibrah.github.io/station/og-card.svg">
-  <meta name="theme-color" content="#1E1E1E">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231E1E1E'/%3E%3Crect x='4' y='4' width='24' height='24' rx='4' fill='none' stroke='%23EC4412' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23FFFFFF'/%3E%3C/svg%3E">
+  <meta name="theme-color" content="#07090E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2307090E'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2338BDF8' stroke-width='2.2'/%3E%3Ccircle cx='16' cy='16' r='3.5' fill='%232DD4BF'/%3E%3C/svg%3E">
 
-  <!-- Fonts: Inter / System UI + DM Mono for tactical HUD & tabular controls -->
+  <!-- Typography: Space Grotesk (Display & Body) + JetBrains Mono (Code & Glyph Atlas) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 
-  <!-- Structured Data: SoftwareApplication + FAQPage -->
+  <!-- Rich Search Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -51,11 +51,11 @@
           "priceCurrency": "USD"
         },
         "featureList": [
-          "0.36ms p50 round-trip over persistent CDP WebSockets",
+          "0.36ms p50 round-trip over persistent CDP WebSockets (2,600 ops/sec)",
           "Zero Chrome extensions required",
           "Native stdio MCP server with --auto-start for Claude Code, Cursor, Windsurf, and Antigravity",
-          "Compact @e1..@eN interactive DOM snapshots (-99% LLM tokens)",
-          "Authenticated Clean Markdown reader",
+          "Compact @e1..@eN interactive DOM snapshots (-99.4% LLM tokens)",
+          "Authenticated Clean Markdown reader (-99.1% vs raw HTML)",
           "Gesture-free chunked DataTransfer file uploads",
           "Native Swift 6 macOS Studio app with Auto-Jobs, SQLite CRM, and Swift Charts"
         ]
@@ -76,7 +76,7 @@
             "name": "How does Station compare to Agent-Reach?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Agent-Reach routes public read requests through curl and third-party readers like Jina, which cannot access logged-in pages or interact with forms. Station reads clean Markdown AND clicks, fills forms, and uploads files inside your authenticated Chrome profiles locally."
+              "text": "Agent-Reach routes public read requests through curl and third-party readers like Jina, which hit login walls and cannot interact with forms. Station reads clean Markdown AND clicks, fills React/Angular forms, and uploads files inside your authenticated Chrome profiles locally."
             }
           },
           {
@@ -84,7 +84,7 @@
             "name": "Why not use Playwright MCP or headless Chromium?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Playwright spawns a fresh unauthenticated browser (240MB+ RAM) that triggers bot blocks and steals focus. Station reuses persistent Chrome profiles, opens background tabs silently via pooled sockets, and uses 4.5MB RSS."
+              "text": "Playwright spawns a fresh unauthenticated browser (240MB+ RAM) that triggers bot detection and steals window focus. Station reuses persistent Chrome profiles, opens background tabs silently via pooled sockets, and uses 4.5MB RSS."
             }
           },
           {
@@ -92,7 +92,7 @@
             "name": "Does Station send my cookies or browsing data to the cloud?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Never. Station binds strictly to 127.0.0.1:19826 with CORS disabled and requires a constant-time verified 256-bit POSIX 0600 token header (X-Station-Token) on every request."
+              "text": "Never. Station binds strictly to 127.0.0.1:19826 with CORS disabled and verifies a 256-bit POSIX 0600 local token header (X-Station-Token) in constant time."
             }
           }
         ]
@@ -103,40 +103,22 @@
 
   <style>
     :root {
-      /* Forge Industrial Workbench Palette */
-      --bg-root: #141414;
-      --bg-shell: #1e1e1e;
-      --bg-aside: #2b2b2b;
-      --bg-row: #252525;
-      --bg-row-hover: #2c2c2c;
-      --bg-card: #1a1a1a;
-      --bg-code: #111111;
+      --obsidian: #07090E;
+      --surface: #0D121C;
+      --surface-raised: #131A28;
+      --hairline: #1C2536;
+      --hairline-bright: #2B3954;
+      --ivory: #F2F5FA;
+      --slate: #94A3B8;
+      --muted: #5E6E87;
+      --prism: #38BDF8;
+      --prism-soft: rgba(56, 189, 248, 0.12);
+      --mint: #2DD4BF;
+      --mint-soft: rgba(45, 212, 191, 0.12);
+      --amber: #FBBF24;
 
-      --tx-ff: #ffffff;
-      --tx-f0: #f0f0f0;
-      --tx-c2: #c2c2c2;
-      --tx-98: #989898;
-      --tx-78: #787878;
-      --tx-56: #565656;
-
-      --line-05: rgba(240, 240, 240, 0.06);
-      --line-10: rgba(240, 240, 240, 0.11);
-      --line-16: rgba(240, 240, 240, 0.16);
-
-      /* Signal Accents */
-      --signal: #EC4412;
-      --signal-border: #EC6612;
-      --signal-hover: #DA3A00;
-      --signal-soft: rgba(236, 68, 18, 0.14);
-
-      /* Tactical HUD Tokens */
-      --hud-navy: rgba(11, 26, 51, 0.76);
-      --hud-navy-strong: rgba(11, 26, 51, 0.92);
-      --hud-gold: #ffd27a;
-      --hud-emerald: #34d399;
-
-      --font-sans: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --font-display: "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       color-scheme: dark;
     }
 
@@ -145,15 +127,16 @@
 
     body {
       margin: 0;
-      background: var(--bg-shell);
-      color: var(--tx-f0);
-      font-family: var(--font-sans);
-      font-size: 15px;
+      background-color: var(--obsidian);
+      color: var(--ivory);
+      font-family: var(--font-display);
+      font-size: 16px;
       line-height: 1.55;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    .mono, code, pre {
+    code, pre, .mono {
       font-family: var(--font-mono);
       font-variant-numeric: tabular-nums;
     }
@@ -161,1265 +144,940 @@
     .skip-link {
       position: absolute;
       left: -9999px;
-      top: 8px;
-      z-index: 200;
-      padding: 6px 12px;
-      background: var(--signal);
-      color: #fff;
-      border-radius: 4px;
+      top: 10px;
+      z-index: 100;
+      padding: 8px 14px;
+      background: var(--prism);
+      color: #07090E;
+      font-weight: 700;
+      border-radius: 6px;
       text-decoration: none;
-      font-size: 12px;
-      font-weight: 600;
     }
     .skip-link:focus { left: 12px; }
 
     :focus-visible {
-      outline: 1.5px solid var(--signal-border);
+      outline: 2px solid var(--prism);
       outline-offset: 2px;
     }
 
-    /* ==========================================================================
-       1. FORGE WORKBENCH TOP BAR + FULL-VIEWPORT INTERACTIVE STAGE
-       ========================================================================== */
-    .workbench-frame {
-      padding: 4px;
-      background: var(--bg-shell);
-      min-height: 100dvh;
+    /* Architectural Container with Subtle Structural Rails */
+    .rail-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      border-left: 1px solid var(--hairline);
+      border-right: 1px solid var(--hairline);
+    }
+
+    .pad-x {
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+
+    /* Sticky Optical Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(7, 9, 14, 0.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 64px;
       display: flex;
-      flex-direction: column;
-      border-bottom: 1px solid var(--line-10);
-    }
-
-    .wb-topbar {
-      height: 46px;
-      display: grid;
-      grid-template-columns: minmax(max-content, 1fr) minmax(0, auto) minmax(max-content, 1fr);
-      align-items: center;
-      gap: 10px;
-      padding: 0 8px 4px;
-    }
-
-    .wb-brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      text-decoration: none;
-      color: var(--tx-f0);
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .wb-brand-logo {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      font-size: 14px;
-    }
-
-    .wb-vdivider {
-      width: 1px;
-      height: 14px;
-      background: var(--line-16);
-    }
-
-    .wb-subpath {
-      color: var(--tx-98);
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    /* Center Daemon Pill (Forge component switcher style) */
-    .wb-center-pill {
-      height: 28px;
-      min-width: 236px;
-      padding: 0 10px 0 6px;
-      border-radius: 999px;
-      background: var(--bg-root);
-      border: 1px solid var(--line-10);
-      display: inline-flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      font-size: 12px;
-      color: var(--tx-f0);
+      gap: 20px;
+      border-left: 1px solid var(--hairline);
+      border-right: 1px solid var(--hairline);
     }
 
-    .wb-reload-btn {
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      border: 0;
-      background: transparent;
-      color: var(--tx-98);
-      cursor: pointer;
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--ivory);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.03em;
+    }
+
+    .brand-lens {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid var(--prism);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
     }
-    .wb-reload-btn:hover { color: var(--tx-ff); background: rgba(255,255,255,0.06); }
-
-    .wb-live-dot {
-      width: 6px;
-      height: 6px;
+    .brand-lens::after {
+      content: "";
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      background: var(--hud-emerald);
-      box-shadow: 0 0 8px var(--hud-emerald);
+      background: var(--mint);
     }
 
-    .wb-right-nav {
+    .fps-pill {
+      font-size: 11.5px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--mint-soft);
+      color: var(--mint);
+      border: 1px solid rgba(45, 212, 191, 0.28);
+      font-weight: 500;
+    }
+
+    .nav-links {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      gap: 8px;
+      gap: 26px;
     }
-
-    .wb-nav-link {
-      color: var(--tx-98);
+    .nav-links a {
+      color: var(--slate);
       text-decoration: none;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 500;
-      padding: 4px 8px;
-      border-radius: 5px;
-      transition: color 140ms ease, background 140ms ease;
+      transition: color 150ms ease;
     }
-    .wb-nav-link:hover { color: var(--tx-f0); background: rgba(255,255,255,0.04); }
+    .nav-links a:hover { color: var(--ivory); }
 
-    /* Rotating Conic Glow CTA Chip (Forge "Remix" signature) */
-    @property --conic-angle {
-      syntax: "<angle>";
-      initial-value: 0deg;
-      inherits: false;
-    }
-    @keyframes spinConic {
-      to { --conic-angle: 360deg; }
+    .header-ctas {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .forge-glow-btn {
-      position: relative;
-      height: 28px;
-      padding: 0 12px;
-      border-radius: 6px;
-      background: linear-gradient(180deg, #2e2e2e 0%, #222222 100%);
-      color: var(--tx-f0);
-      font-size: 12px;
-      font-weight: 500;
-      text-decoration: none;
+    .btn-primary,
+    .btn-ghost {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      box-shadow: inset 0 1px 0 0 rgba(240,240,240,0.08), 0 0 0 1px rgba(0,0,0,0.55);
-      isolation: isolate;
-      overflow: hidden;
+      justify-content: center;
+      gap: 8px;
+      height: 40px;
+      padding: 0 18px;
+      border-radius: 7px;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
       white-space: nowrap;
+      transition: background 150ms ease, border-color 150ms ease, transform 120ms ease;
     }
-    .forge-glow-btn::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      padding: 1px;
-      border-radius: inherit;
-      background: conic-gradient(from var(--conic-angle), transparent 55%, #EC4412 78%, #ffd27a 90%, transparent 100%);
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      animation: spinConic 4.2s linear infinite;
-      pointer-events: none;
+    .btn-primary {
+      background: var(--ivory);
+      color: #07090E;
+      border: 1px solid var(--ivory);
     }
-    .forge-glow-btn:hover { color: #fff; background: linear-gradient(180deg, #353535 0%, #262626 100%); }
-
-    /* Main Split: Interactive Canvas Stage + 306px Controls Sidebar */
-    .wb-body {
-      flex: 1;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 308px;
-      gap: 4px;
-      min-height: calc(100dvh - 54px);
+    .btn-primary:hover {
+      background: var(--prism);
+      border-color: var(--prism);
+    }
+    .btn-ghost {
+      background: var(--surface);
+      color: var(--ivory);
+      border: 1px solid var(--hairline-bright);
+    }
+    .btn-ghost:hover {
+      border-color: var(--prism);
+      background: var(--surface-raised);
     }
 
-    /* Interactive Stage Viewport */
-    .stage-viewport {
+    /* ==========================================================================
+       HERO: 120 FPS GLYPH-ATLAS KINETIC ASCII FIELD + OPTICAL LENS
+       ========================================================================== */
+    .hero-section {
       position: relative;
-      border-radius: 8px;
+      border-bottom: 1px solid var(--hairline);
       overflow: hidden;
-      background: #1b5299;
-      cursor: crosshair;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 620px;
-      user-select: none;
     }
 
-    #radar-canvas {
+    #ascii-atlas-canvas {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       display: block;
-      image-rendering: pixelated;
+      cursor: crosshair;
     }
 
-    .stage-vignette {
+    /* Smooth left readability gradient so copy stays razor-sharp over kinetic ASCII */
+    .hero-scrim {
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background: radial-gradient(circle at 50% 45%, transparent 48%, rgba(6, 13, 28, 0.52) 100%);
+      background:
+        linear-gradient(90deg, rgba(7, 9, 14, 0.96) 0%, rgba(7, 9, 14, 0.86) 44%, rgba(7, 9, 14, 0.25) 76%, rgba(7, 9, 14, 0.55) 100%),
+        linear-gradient(180deg, rgba(7, 9, 14, 0.3) 0%, transparent 25%, transparent 80%, rgba(7, 9, 14, 0.92) 100%);
     }
 
-    /* Corner Tactical HUD Badges (from fighter-jet-eject.tsx) */
-    .hud-top-row,
-    .hud-bottom-row {
+    .hero-grid {
       position: relative;
-      z-index: 4;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      padding: 16px;
-      gap: 12px;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: minmax(0, 610px) 1fr;
+      gap: 32px;
+      padding-top: 76px;
+      padding-bottom: 72px;
       pointer-events: none;
     }
-    .hud-bottom-row { align-items: flex-end; }
 
-    .hud-badge,
-    .hud-btn {
+    .hero-copy {
       pointer-events: auto;
-      background: var(--hud-navy);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 3px;
-      padding: 7px 10px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      line-height: 1;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: rgba(255, 255, 255, 0.92);
-      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+    }
+
+    .status-line {
       display: inline-flex;
       align-items: center;
       gap: 10px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(13, 18, 28, 0.88);
+      border: 1px solid var(--hairline-bright);
+      font-size: 12.5px;
+      color: var(--prism);
+      margin-bottom: 22px;
     }
 
-    .hud-btn {
-      cursor: pointer;
-      transition: background 120ms ease;
-    }
-    .hud-btn:hover,
-    .hud-btn[aria-expanded="true"] {
-      background: var(--hud-navy-strong);
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.28);
-    }
-
-    .pip-group {
-      display: inline-flex;
-      gap: 3px;
-      align-items: center;
-    }
-
-    .pip {
-      width: 4px;
-      height: 9px;
-      background: rgba(255, 255, 255, 0.22);
-      border-radius: 1px;
-    }
-    .pip.on { background: #ffffff; }
-    .pip.hot { background: var(--signal); }
-
-    /* Center Hero Overlay inside Stage */
-    .stage-hero-overlay {
-      position: relative;
-      z-index: 4;
-      padding: 0 36px;
-      max-width: 575px;
-      pointer-events: none;
-    }
-
-    .stage-eyebrow {
-      display: inline-block;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--hud-gold);
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
-      margin-bottom: 12px;
-    }
-
-    .stage-hero-overlay h1 {
-      margin: 0 0 14px;
-      font-size: clamp(32px, 4vw, 48px);
-      line-height: 1.07;
-      letter-spacing: -0.03em;
+    h1 {
+      margin: 0 0 20px;
+      font-size: clamp(38px, 4.8vw, 60px);
+      line-height: 1.03;
+      letter-spacing: -0.04em;
       font-weight: 700;
-      color: #ffffff;
-      text-shadow: 0 2px 18px rgba(6, 14, 30, 0.65);
     }
 
-    .stage-lead {
-      margin: 0 0 22px;
-      font-size: 16px;
-      line-height: 1.5;
-      color: rgba(244, 247, 252, 0.90);
-      text-shadow: 0 1px 8px rgba(6, 14, 30, 0.65);
-      max-width: 58ch;
+    .hero-lead {
+      margin: 0 0 28px;
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--slate);
+      max-width: 54ch;
     }
 
-    .stage-cta-cluster {
-      pointer-events: auto;
+    .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 14px;
+      margin-bottom: 24px;
+    }
+    .hero-actions .btn-primary,
+    .hero-actions .btn-ghost {
+      height: 46px;
+      padding: 0 20px;
+      font-size: 14.5px;
     }
 
-    .btn-signal {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      height: 40px;
-      padding: 0 16px;
-      border-radius: 5px;
-      background: var(--signal);
-      border: 1px solid var(--signal-border);
-      color: #fff;
-      font-family: var(--font-sans);
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-      transition: background 140ms ease;
-    }
-    .btn-signal:hover { background: var(--signal-hover); }
-
-    .btn-hud-glass {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      height: 40px;
-      padding: 0 15px;
-      border-radius: 5px;
-      background: var(--hud-navy-strong);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 500;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    .btn-hud-glass:hover { border-color: rgba(255, 255, 255, 0.42); }
-
-    /* Quick CLI Copy Strip inside Stage */
-    .stage-cli-bar {
-      pointer-events: auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      max-width: 100%;
-      padding: 7px 8px 7px 12px;
-      border-radius: 4px;
-      background: var(--hud-navy-strong);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      color: #f8fafc;
-      font-size: 12px;
-    }
-    .stage-cli-bar code {
-      overflow-x: auto;
-      white-space: nowrap;
-      color: var(--hud-gold);
-    }
-    .stage-copy-mini {
-      padding: 4px 9px;
-      border-radius: 3px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      cursor: pointer;
-    }
-    .stage-copy-mini:hover { background: rgba(255, 255, 255, 0.22); }
-
-    /* Floating INTEL Modal Overlay inside Stage (matches Forge fragment Intel card) */
-    .intel-modal {
-      position: absolute;
-      top: 52px;
-      right: 16px;
-      z-index: 10;
-      width: min(23.5rem, calc(100% - 32px));
-      background: var(--hud-navy-strong);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 4px;
-      padding: 14px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
-    }
-    .intel-modal[hidden] { display: none; }
-
-    .intel-tabs {
-      display: flex;
-      gap: 4px;
-      margin-bottom: 12px;
-    }
-    .intel-tab {
-      padding: 5px 8px;
-      border-radius: 3px;
-      border: 0;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      background: rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.8);
-      cursor: pointer;
-    }
-    .intel-tab[aria-selected="true"] {
-      background: #ffffff;
-      color: #0b1a33;
-      font-weight: 600;
-    }
-    .intel-dl {
-      margin: 0;
-      display: grid;
-      grid-template-columns: 7.8rem 1fr;
-      gap: 7px 10px;
-      line-height: 1.35;
-    }
-    .intel-dl dt { color: rgba(255, 255, 255, 0.55); text-transform: uppercase; letter-spacing: 0.08em; }
-    .intel-dl dd { margin: 0; color: #ffffff; }
-
-    /* ==========================================================================
-       RIGHT-HAND FORGE CONTROLS SIDEBAR (`aside`)
-       ========================================================================== */
-    .controls-aside {
-      background: var(--bg-aside);
-      border-top: 1px solid rgba(244, 244, 244, 0.08);
-      border-radius: 10px 10px 14px 8px;
-      padding: 0 12px 14px;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
-    }
-
-    .aside-header {
-      height: 42px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 12px;
-      font-weight: 500;
-    }
-    .aside-header strong { color: var(--tx-f0); font-weight: 600; }
-    .aside-header span { color: var(--tx-98); }
-
-    .param-search {
-      width: 100%;
-      height: 30px;
-      padding: 0 10px;
-      border-radius: 5px;
-      border: 1px solid var(--line-05);
-      background: var(--bg-root);
-      color: var(--tx-f0);
-      font-family: var(--font-sans);
-      font-size: 12px;
-      margin-bottom: 14px;
-    }
-    .param-search::placeholder { color: var(--tx-56); }
-
-    .param-groups {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .param-group-title {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--tx-98);
-      margin: 0 0 8px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .param-rows {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .param-row {
-      position: relative;
-      height: 32px;
-      border-radius: 5px;
-      border: 1px solid var(--line-05);
-      background: var(--bg-row);
-      padding: 0 9px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      font-size: 12px;
-      color: var(--tx-f0);
+    /* Multi-Tab CLI Switcher */
+    .cli-deck {
+      background: rgba(13, 18, 28, 0.92);
+      border: 1px solid var(--hairline-bright);
+      border-radius: 10px;
       overflow: hidden;
-    }
-    .param-row:hover { border-color: var(--line-16); }
-
-    /* Scrubbable Full-Row Slider */
-    .param-row.scrub-row { cursor: ew-resize; }
-    .scrub-fill {
-      position: absolute;
-      left: 2px;
-      top: 2px;
-      bottom: 2px;
-      border-radius: 3px;
-      background: rgba(255, 255, 255, 0.09);
-      pointer-events: none;
-    }
-    .scrub-input {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      cursor: ew-resize;
-      margin: 0;
-    }
-    .param-label, .param-val {
-      position: relative;
-      z-index: 1;
-      pointer-events: none;
-    }
-    .param-label { color: var(--tx-c2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .param-val { font-family: var(--font-mono); font-size: 11.5px; color: var(--tx-f0); }
-
-    /* Square-Industrial Forge Switch (`24×14px`, `#EC4412` when checked) */
-    .forge-switch {
-      appearance: none;
-      width: 26px;
-      height: 14px;
-      border-radius: 3px;
-      background: #171717;
-      border: 1px solid var(--line-10);
-      position: relative;
-      cursor: pointer;
-      flex-shrink: 0;
-      margin: 0;
-      transition: background 120ms ease, border-color 120ms ease;
-    }
-    .forge-switch::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 2px;
-      transform: translate(0, -50%);
-      width: 9px;
-      height: 9px;
-      border-radius: 2px;
-      background: #888;
-      transition: transform 120ms ease, background 120ms ease;
-    }
-    .forge-switch:checked {
-      background: var(--signal);
-      border-color: var(--signal-border);
-    }
-    .forge-switch:checked::after {
-      transform: translate(11px, -50%);
-      background: #ffffff;
+      max-width: 570px;
     }
 
-    /* Segmented Radio Pill inside 32px Row */
-    .seg-group {
-      display: inline-flex;
-      background: #181818;
-      padding: 2px;
-      border-radius: 4px;
-      gap: 2px;
+    .cli-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--hairline);
+      background: rgba(7, 9, 14, 0.65);
+      overflow-x: auto;
     }
-    .seg-btn {
+
+    .cli-tab {
       border: 0;
       background: transparent;
-      color: var(--tx-78);
-      font-family: var(--font-sans);
-      font-size: 11px;
-      font-weight: 500;
-      padding: 3px 7px;
-      border-radius: 3px;
+      color: var(--muted);
+      font-family: var(--font-display);
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 9px 14px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+    }
+    .cli-tab[aria-selected="true"] {
+      color: var(--ivory);
+      border-bottom-color: var(--prism);
+      background: rgba(56, 189, 248, 0.06);
+    }
+
+    .cli-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 16px;
+    }
+    .cli-row code {
+      font-size: 13px;
+      color: var(--mint);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .copy-chip {
+      flex-shrink: 0;
+      padding: 5px 11px;
+      border-radius: 5px;
+      border: 1px solid var(--hairline-bright);
+      background: var(--surface-raised);
+      color: var(--ivory);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
       cursor: pointer;
     }
-    .seg-btn[aria-pressed="true"] {
-      background: linear-gradient(180deg, #3a3a3a 0%, #2e2e2e 100%);
-      color: var(--tx-ff);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    .copy-chip:hover { border-color: var(--prism); }
+
+    /* Right-side Canvas Lens Caption */
+    .lens-hint-box {
+      align-self: end;
+      justify-self: end;
+      pointer-events: auto;
+      background: rgba(13, 18, 28, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--hairline-bright);
+      border-radius: 8px;
+      padding: 12px 15px;
+      max-width: 310px;
+      font-size: 12.5px;
+      color: var(--slate);
+    }
+    .lens-hint-box strong {
+      display: block;
+      color: var(--ivory);
+      margin-bottom: 3px;
+      font-size: 13px;
     }
 
     /* ==========================================================================
-       BELOW-THE-FOLD TECHNICAL & SEO SECTIONS (Unified Forge Industrial Styling)
+       METRIC PROOF STRIP (4 Structural Columns)
        ========================================================================== */
-    .wrap {
-      max-width: 1160px;
-      margin: 0 auto;
-      padding: 0 24px;
+    .metrics-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--hairline);
+      background: var(--surface);
     }
 
-    .section-block {
-      padding: 76px 0;
-      border-bottom: 1px solid var(--line-05);
+    .metric-cell {
+      padding: 26px 32px;
+      border-right: 1px solid var(--hairline);
+    }
+    .metric-cell:last-child { border-right: 0; }
+
+    .metric-num {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--ivory);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .metric-label {
+      font-size: 13.5px;
+      color: var(--slate);
     }
 
-    .section-head {
-      max-width: 700px;
+    /* ==========================================================================
+       SECTION 1: LIVE 120 FPS PRETEXT REFLOW LAB ("FEEL ZERO-REFLOW EXTRACTION")
+       ========================================================================== */
+    .section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
       margin-bottom: 36px;
     }
 
-    .tactical-tag {
-      display: inline-block;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--signal);
-      margin-bottom: 10px;
+    .section-header h2 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 3.2vw, 40px);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      max-width: 22ch;
     }
 
-    .section-head h2 {
-      margin: 0 0 12px;
-      font-size: clamp(26px, 3vw, 35px);
-      line-height: 1.16;
-      letter-spacing: -0.025em;
-      color: var(--tx-ff);
-    }
-
-    .section-head p {
+    .section-header p {
       margin: 0;
-      color: var(--tx-98);
-      font-size: 16px;
+      color: var(--slate);
+      max-width: 56ch;
+      font-size: 16.5px;
     }
 
-    /* Interactive @eN Token Workbench Section */
-    .inspector-grid {
-      display: grid;
-      grid-template-columns: 0.94fr 1.06fr;
-      background: var(--bg-aside);
-      border: 1px solid var(--line-10);
-      border-radius: 10px;
+    .pretext-stage-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline-bright);
+      border-radius: 12px;
       overflow: hidden;
     }
 
-    .dom-card-side {
-      padding: 22px;
-      background: var(--bg-card);
-      border-right: 1px solid var(--line-10);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .address-pill {
-      padding: 7px 10px;
-      border-radius: 5px;
-      background: var(--bg-root);
-      border: 1px solid var(--line-05);
-      font-size: 12px;
-      color: var(--tx-98);
-    }
-
-    .sim-job-box {
-      padding: 16px;
-      border-radius: 7px;
-      background: var(--bg-row);
-      border: 1px solid var(--line-10);
-    }
-    .sim-job-box h3 { margin: 0 0 4px; font-size: 16px; color: var(--tx-ff); }
-    .sim-job-meta { font-size: 12.5px; color: var(--tx-98); margin-bottom: 12px; }
-
-    .sim-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .sim-input {
-      flex: 1 1 170px;
-      height: 32px;
-      padding: 0 10px;
-      border-radius: 5px;
-      border: 1px solid var(--line-16);
-      background: var(--bg-root);
-      color: var(--tx-f0);
-      font-size: 12.5px;
-    }
-
-    .ref-btn {
-      height: 32px;
-      padding: 0 10px;
-      border-radius: 5px;
-      border: 1px solid var(--line-16);
-      background: #2e2e2e;
-      color: var(--tx-f0);
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .ref-btn:hover { border-color: var(--signal-border); background: #343434; }
-
-    .ref-pill {
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      padding: 1px 5px;
-      border-radius: 3px;
-      background: var(--signal);
-      color: #fff;
-    }
-
-    .code-side {
-      background: var(--bg-code);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .code-topbar {
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--line-05);
+    .pretext-toolbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--hairline);
+      background: rgba(7, 9, 14, 0.55);
+      gap: 12px;
       flex-wrap: wrap;
     }
 
-    .tok-chip {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 3px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+    .stream-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
     }
-    .tok-good { background: rgba(52, 211, 153, 0.14); color: var(--hud-emerald); }
-    .tok-bad  { background: var(--signal-soft); color: #ff8a65; }
 
-    .code-output {
-      margin: 0;
-      padding: 16px;
+    .stream-pill {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--hairline-bright);
+      background: transparent;
+      color: var(--slate);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .stream-pill[aria-selected="true"] {
+      background: var(--prism-soft);
+      border-color: var(--prism);
+      color: var(--ivory);
+    }
+
+    #pretext-canvas {
+      width: 100%;
+      height: 360px;
+      display: block;
+      cursor: none;
+    }
+
+    .pretext-footer {
+      padding: 10px 18px;
+      border-top: 1px solid var(--hairline);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
       font-size: 12px;
-      line-height: 1.6;
-      color: var(--tx-f0);
-      min-height: 225px;
-      white-space: pre-wrap;
-      overflow-x: auto;
+      color: var(--muted);
+      background: rgba(7, 9, 14, 0.7);
     }
 
-    .code-status-footer {
-      margin-top: auto;
-      padding: 9px 16px;
-      border-top: 1px solid var(--line-05);
-      background: #0b0b0b;
-      font-size: 11.5px;
-      color: var(--hud-emerald);
+    /* ==========================================================================
+       SECTION 2: EMPIRICAL SPEED & ARCHITECTURE COMPARISON
+       ========================================================================== */
+    .bench-bars {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 36px;
     }
 
-    /* Comparison Table */
-    .matrix-shell {
-      border: 1px solid var(--line-10);
+    .bench-item {
+      padding: 16px 20px;
       border-radius: 10px;
-      overflow-x: auto;
-      background: var(--bg-card);
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      display: grid;
+      grid-template-columns: 240px 1fr 150px;
+      align-items: center;
+      gap: 20px;
+    }
+    .bench-item.winner {
+      border-color: rgba(45, 212, 191, 0.45);
+      background: linear-gradient(90deg, rgba(45, 212, 191, 0.08) 0%, var(--surface) 60%);
     }
 
-    table.cmp-table {
+    .bench-name {
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .bench-sub {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .bench-track {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+    }
+    .bench-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    .bench-val {
+      text-align: right;
+      font-size: 13.5px;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--hairline-bright);
+      border-radius: 12px;
+      background: var(--surface);
+    }
+
+    table.cmp {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
-      font-size: 13.5px;
+      font-size: 14px;
     }
-    .cmp-table caption {
+    .cmp caption {
       position: absolute;
       width: 1px;
       height: 1px;
       overflow: hidden;
       clip: rect(0 0 0 0);
     }
-    .cmp-table th, .cmp-table td {
-      padding: 13px 16px;
-      border-bottom: 1px solid var(--line-05);
+    .cmp th, .cmp td {
+      padding: 15px 18px;
+      border-bottom: 1px solid var(--hairline);
     }
-    .cmp-table thead th {
-      background: var(--bg-row);
-      color: var(--tx-98);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
+    .cmp thead th {
+      background: rgba(7, 9, 14, 0.65);
+      color: var(--slate);
+      font-weight: 600;
+      font-size: 13px;
     }
-    .cmp-table th.win-col,
-    .cmp-table td.win-col {
-      background: rgba(236, 68, 18, 0.08);
-      color: var(--tx-ff);
+    .cmp th.station-col,
+    .cmp td.station-col {
+      background: rgba(56, 189, 248, 0.07);
+      color: var(--ivory);
       font-weight: 600;
     }
-    .cmp-table thead th.win-col { color: var(--hud-gold); }
-    .cmp-table tbody tr:last-child th,
-    .cmp-table tbody tr:last-child td { border-bottom: 0; }
+    .cmp tbody tr:last-child th,
+    .cmp tbody tr:last-child td { border-bottom: 0; }
 
-    .val-win { color: var(--hud-emerald); font-weight: 600; }
-    .val-bad { color: #ff8a65; }
+    .good { color: var(--mint); font-weight: 600; }
+    .warn { color: var(--amber); }
 
-    /* Auto-Jobs & Native SQLite Studio Grid */
-    .bento-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
+    /* ==========================================================================
+       SECTION 3: INTERACTIVE MACOS STUDIO + AUTO-JOBS + SQLITE CRM PREVIEW
+       ========================================================================== */
+    .studio-window {
+      border: 1px solid var(--hairline-bright);
+      border-radius: 12px;
+      background: var(--surface);
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
     }
 
-    .bento-card {
-      background: var(--bg-card);
-      border: 1px solid var(--line-10);
-      border-radius: 9px;
-      padding: 20px;
+    .studio-titlebar {
+      height: 44px;
+      padding: 0 16px;
+      background: #090D14;
+      border-bottom: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .traffic-dots {
+      display: flex;
+      gap: 7px;
+    }
+    .traffic-dots i {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      display: inline-block;
+      background: var(--hairline-bright);
+    }
+
+    .studio-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+    }
+    .studio-tab {
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--slate);
+      font-family: var(--font-display);
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 5px 11px;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .studio-tab[aria-selected="true"] {
+      background: var(--surface-raised);
+      border-color: var(--hairline-bright);
+      color: var(--ivory);
+    }
+
+    .studio-body {
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .crm-rows {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 9px;
     }
-    .bento-card:hover { border-color: var(--line-16); }
 
-    .bento-top {
+    .crm-row {
+      padding: 13px 15px;
+      border-radius: 8px;
+      background: #090D14;
+      border: 1px solid var(--hairline);
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 10px;
-    }
-    .bento-card h3 { margin: 0; font-size: 17px; color: var(--tx-ff); }
-    .bento-card p { margin: 0; font-size: 14px; color: var(--tx-98); }
-
-    .mini-tag {
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      padding: 3px 7px;
-      border-radius: 3px;
-      background: var(--bg-row);
-      border: 1px solid var(--line-10);
-      color: var(--tx-c2);
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    .stages-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-top: 4px;
+    .score-box {
+      width: 34px;
+      height: 26px;
+      border-radius: 5px;
+      background: var(--mint-soft);
+      color: var(--mint);
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
-    .st-chip {
-      font-family: var(--font-mono);
+
+    .stage-badge {
       font-size: 11px;
       padding: 3px 8px;
-      border-radius: 3px;
-      background: var(--bg-root);
-      border: 1px solid var(--line-05);
-      color: var(--tx-98);
+      border-radius: 999px;
+      background: var(--prism-soft);
+      color: var(--prism);
+      font-weight: 600;
     }
-    .st-chip.hot {
-      background: var(--signal-soft);
-      border-color: rgba(236, 68, 18, 0.45);
-      color: #fff;
+
+    .chart-card {
+      padding: 18px;
+      border-radius: 9px;
+      background: #090D14;
+      border: 1px solid var(--hairline);
+    }
+
+    .hist-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 112px;
+      margin-top: 16px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .hist-bars div {
+      flex: 1;
+      border-radius: 4px 4px 0 0;
+      background: linear-gradient(180deg, var(--prism) 0%, rgba(56, 189, 248, 0.25) 100%);
+    }
+    .hist-bars div.median {
+      background: linear-gradient(180deg, var(--mint) 0%, rgba(45, 212, 191, 0.3) 100%);
     }
 
     /* FAQ */
-    .faq-stack {
-      max-width: 820px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
     }
-    details.faq-box {
-      background: var(--bg-card);
-      border: 1px solid var(--line-10);
-      border-radius: 7px;
-      padding: 14px 18px;
+
+    details.faq-card {
+      padding: 18px 20px;
+      border-radius: 10px;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
     }
-    details.faq-box summary {
-      cursor: pointer;
+    details.faq-card summary {
       font-weight: 600;
-      font-size: 15px;
-      color: var(--tx-f0);
+      font-size: 15.5px;
+      cursor: pointer;
       list-style: none;
     }
-    details.faq-box summary::-webkit-details-marker { display: none; }
-    details.faq-box p {
+    details.faq-card summary::-webkit-details-marker { display: none; }
+    details.faq-card p {
       margin: 10px 0 0;
-      color: var(--tx-98);
-      font-size: 14px;
+      color: var(--slate);
+      font-size: 14.5px;
     }
 
     /* Footer */
-    .cta-banner {
-      margin: 64px 0;
-      padding: 32px;
-      border-radius: 10px;
-      background: var(--bg-aside);
-      border: 1px solid var(--line-16);
+    .cta-slab {
+      margin: 72px 0;
+      padding: 40px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--surface-raised) 0%, var(--surface) 100%);
+      border: 1px solid var(--hairline-bright);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 24px;
       flex-wrap: wrap;
     }
-    .cta-banner h2 { margin: 0 0 6px; font-size: 24px; color: var(--tx-ff); }
-    .cta-banner p { margin: 0; color: var(--tx-98); font-size: 14.5px; }
+    .cta-slab h2 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      letter-spacing: -0.03em;
+    }
+    .cta-slab p {
+      margin: 0;
+      color: var(--slate);
+      max-width: 52ch;
+    }
 
-    .footer-bar {
-      padding: 24px 0 40px;
-      border-top: 1px solid var(--line-05);
-      font-size: 12px;
-      color: var(--tx-78);
+    .footer-row {
+      padding: 26px 0 42px;
+      border-top: 1px solid var(--hairline);
+      font-size: 13px;
+      color: var(--muted);
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 12px;
     }
 
-    @media (max-width: 980px) {
-      .wb-body { grid-template-columns: 1fr; }
-      .wb-nav-link { display: none; }
-      .inspector-grid, .bento-grid { grid-template-columns: 1fr; }
-      .dom-card-side { border-right: 0; border-bottom: 1px solid var(--line-10); }
-      .stage-hero-overlay { padding: 24px 20px; }
+    @media (max-width: 960px) {
+      .hero-grid,
+      .studio-body,
+      .faq-grid {
+        grid-template-columns: 1fr;
+      }
+      .metrics-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .bench-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .bench-val { text-align: left; }
+      .nav-links, .lens-hint-box { display: none; }
+      .pad-x, .header-inner { padding-left: 20px; padding-right: 20px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      .forge-glow-btn::before { animation: none; }
     }
   </style>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- ========================================================================
-       FORGE WORKBENCH HERO SHELL
-       ======================================================================== -->
-  <div class="workbench-frame">
-    <header class="wb-topbar">
-      <a href="#" class="wb-brand">
-        <span class="wb-brand-logo">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EC4412" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="3" width="18" height="18" rx="4"/>
-            <circle cx="12" cy="12" r="3" fill="#ffffff" stroke="none"/>
-          </svg>
-          Station
-        </span>
-        <span class="wb-vdivider" aria-hidden="true"></span>
-        <span class="wb-subpath">rust-cdp-mcp</span>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#" class="brand">
+        <span class="brand-lens" aria-hidden="true"></span>
+        <span>Station</span>
+        <span class="fps-pill mono" id="live-fps-pill">120 FPS · 0.36 ms CDP</span>
       </a>
 
-      <div class="wb-center-pill mono" title="Simulated local loopback daemon">
-        <button type="button" class="wb-reload-btn" id="pulse-burst-btn" aria-label="Trigger 100-op CDP burst" title="Fire 100-op CDP burst">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 12a9 9 0 1 1-2.64-6.36"/><polyline points="21 3 21 9 15 9"/>
-          </svg>
-        </button>
-        <span>127.0.0.1:19826</span>
-        <span class="wb-live-dot" aria-hidden="true"></span>
-      </div>
-
-      <nav class="wb-right-nav" aria-label="Primary">
-        <a href="#snapshot-demo" class="wb-nav-link">@eN Inspector</a>
-        <a href="#compare" class="wb-nav-link">vs OpenCLI</a>
-        <a href="#auto-jobs" class="wb-nav-link">Auto-Jobs &amp; CRM</a>
-        <a href="https://github.com/selibrah/station" class="wb-nav-link" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://github.com/selibrah/station/releases/latest/download/Station-Studio-v0.4.0-macOS-arm64.dmg" class="forge-glow-btn">
-          Download .dmg
-        </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#pretext-lab">Pretext Lens</a>
+        <a href="#benchmarks">vs OpenCLI &amp; Agent-Reach</a>
+        <a href="#studio">Auto-Jobs &amp; CRM</a>
+        <a href="#faq">FAQ</a>
       </nav>
-    </header>
 
-    <main id="main-content" class="wb-body">
-      <!-- LEFT: LIVE INTERACTIVE PIXEL/TELEMETRY STAGE -->
-      <section class="stage-viewport" id="interactive-stage" aria-label="Interactive CDP Telemetry Stage">
-        <canvas id="radar-canvas"></canvas>
-        <div class="stage-vignette" id="stage-vignette"></div>
+      <div class="header-ctas">
+        <a href="https://github.com/selibrah/station" class="btn-ghost" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/selibrah/station/releases/latest/download/Station-Studio-v0.4.0-macOS-arm64.dmg" class="btn-primary">Download macOS (.dmg)</a>
+      </div>
+    </div>
+  </header>
 
-        <!-- Top Tactical HUD -->
-        <div class="hud-top-row">
-          <div class="hud-badge">
-            <span>RTT <strong id="hud-rtt">0.36MS</strong></span>
-            <span>POOL</span>
-            <span class="pip-group" id="hud-pips" aria-label="6 active persistent sockets">
-              <i class="pip on"></i><i class="pip on"></i><i class="pip on"></i><i class="pip on"></i><i class="pip on"></i><i class="pip hot"></i>
-            </span>
+  <main id="main-content" class="rail-wrap">
+    <!-- ======================================================================
+         HERO: 120 FPS GLYPH-ATLAS KINETIC ASCII WAVE & OPTICAL LENS
+         ====================================================================== -->
+    <section class="hero-section pad-x">
+      <canvas id="ascii-atlas-canvas" aria-hidden="true"></canvas>
+      <div class="hero-scrim" aria-hidden="true"></div>
+
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="status-line mono">
+            <span>Rust v0.4.0</span>
+            <span>·</span>
+            <span>Zero Browser Extensions</span>
+            <span>·</span>
+            <span>Zero API Keys</span>
           </div>
 
-          <div style="display: flex; gap: 6px;">
-            <button type="button" class="hud-btn" id="intel-btn" aria-expanded="false" aria-controls="intel-dialog">INTEL</button>
-            <button type="button" class="hud-btn" id="burst-hud-btn">FIRE 100 OPS</button>
-          </div>
-        </div>
-
-        <!-- Floating INTEL Modal (Forge tactical overlay) -->
-        <div class="intel-modal" id="intel-dialog" role="dialog" aria-label="Station Architecture Specs" hidden>
-          <div class="intel-tabs" role="tablist">
-            <button type="button" class="intel-tab" role="tab" aria-selected="true" data-intel="arch">ENGINE</button>
-            <button type="button" class="intel-tab" role="tab" aria-selected="false" data-intel="mcp">MCP TOOLS</button>
-            <button type="button" class="intel-tab" role="tab" aria-selected="false" data-intel="sec">SECURITY</button>
-          </div>
-          <dl class="intel-dl" id="intel-content">
-            <dt>BINARY</dt><dd>4.5 MB Rust (Tokio + Axum)</dd>
-            <dt>PROTOCOL</dt><dd>Persistent CDP WebSockets</dd>
-            <dt>LATENCY</dt><dd>0.36 ms p50 / 0.97 ms p99</dd>
-            <dt>EXTENSION</dt><dd>None (Zero MV3 limits)</dd>
-            <dt>UPLOADS</dt><dd>Chunked DataTransfer (#2541 fix)</dd>
-          </dl>
-        </div>
-
-        <!-- Center Hero Copy & Download CTAs -->
-        <div class="stage-hero-overlay">
-          <span class="stage-eyebrow">CLICK STAGE TO DISPATCH CDP PACKETS · DRAG CONTROLS ON RIGHT</span>
-          <h1>Your logged-in Chrome as a 0.36ms CLI &amp; MCP server.</h1>
-          <p class="stage-lead">
-            OpenCLI breaks on Manifest V3 extensions and file choosers. Agent-Reach hits login walls. <strong>Station</strong> drives your real authenticated tabs in the background—paired with a native macOS Studio app for Auto-Jobs, SQLite CRM, and Swift Charts.
+          <h1>Distill your logged-in browser at 0.36&nbsp;ms.</h1>
+          <p class="hero-lead">
+            OpenCLI stalls on Manifest V3 extensions and broken file choosers. Agent-Reach hits login walls. <strong>Station</strong> connects a single 4.5&nbsp;MB Rust binary directly to your Chrome profiles—compressing 48,000-token pages into crisp <code>@eN</code> actions, clean Markdown, and a local SQLite CRM.
           </p>
 
-          <div class="stage-cta-cluster">
-            <a href="https://github.com/selibrah/station/releases/latest/download/Station-Studio-v0.4.0-macOS-arm64.dmg" class="btn-signal">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <div class="hero-actions">
+            <a href="https://github.com/selibrah/station/releases/latest/download/Station-Studio-v0.4.0-macOS-arm64.dmg" class="btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               Download Station Studio (.dmg · 4.6 MB)
             </a>
-            <a href="https://github.com/selibrah/station/releases/latest/download/station-cli-v0.4.0-macos-arm64.tar.gz" class="btn-hud-glass">
+            <a href="https://github.com/selibrah/station/releases/latest/download/station-cli-v0.4.0-macos-arm64.tar.gz" class="btn-ghost">
               CLI + MCP Binary (.tar.gz)
             </a>
-            <a href="https://github.com/selibrah/station" class="btn-hud-glass" target="_blank" rel="noopener">
-              GitHub Repo
-            </a>
           </div>
 
-          <div class="stage-cli-bar">
-            <code id="hero-cli-text">claude mcp add station -- station mcp --auto-start</code>
-            <button type="button" class="stage-copy-mini" id="hero-copy-btn">COPY</button>
-          </div>
-        </div>
-
-        <!-- Bottom Tactical HUD -->
-        <div class="hud-bottom-row">
-          <div class="hud-badge">
-            <span>OPS <strong id="hud-ops">2,600/S</strong></span>
-            <span>TOKENS <strong id="hud-tok-saving">-99.4%</strong></span>
-          </div>
-          <div class="hud-badge">
-            <span id="hud-rival-status">OPENCLI: 310MS LAG · AGENT-REACH: 403 AUTH WALL</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- RIGHT: FORGE TACTILE PARAMETER INSPECTOR (`Controls · station`) -->
-      <aside class="controls-aside" aria-label="Live Simulation Controls">
-        <div class="aside-header">
-          <div><strong>Controls</strong> <span>· station-v0.4</span></div>
-          <span class="mono" style="font-size: 11px;">LIVE</span>
-        </div>
-
-        <input type="search" class="param-search" id="param-filter" placeholder="Filter parameters…" aria-label="Filter parameters">
-
-        <div class="param-groups" id="param-groups">
-          <!-- Group 1: Engine & MCP -->
-          <div class="param-group" data-group="engine mcp auto-start focus">
-            <div class="param-group-title">▾ Engine &amp; MCP</div>
-            <div class="param-rows">
-              <label class="param-row">
-                <span class="param-label">Auto-start MCP daemon</span>
-                <input type="checkbox" class="forge-switch" id="ctrl-autostart" checked>
-              </label>
-
-              <label class="param-row">
-                <span class="param-label">Background tab pool (no focus steal)</span>
-                <input type="checkbox" class="forge-switch" id="ctrl-bgpool" checked>
-              </label>
-
-              <div class="param-row scrub-row">
-                <div class="scrub-fill" id="fill-ops" style="width: 78%;"></div>
-                <span class="param-label">Command burst rate (ops/s)</span>
-                <span class="param-val" id="val-ops">2600</span>
-                <input type="range" class="scrub-input" id="ctrl-ops" min="200" max="3200" step="100" value="2600" aria-label="Command burst rate">
-              </div>
-
-              <div class="param-row scrub-row">
-                <div class="scrub-fill" id="fill-tabs" style="width: 60%;"></div>
-                <span class="param-label">Pooled authenticated tabs</span>
-                <span class="param-val" id="val-tabs">6</span>
-                <input type="range" class="scrub-input" id="ctrl-tabs" min="2" max="10" step="1" value="6" aria-label="Pooled authenticated tabs">
-              </div>
+          <div class="cli-deck" role="region" aria-label="Quick setup commands">
+            <div class="cli-tabs" role="tablist">
+              <button type="button" class="cli-tab" role="tab" aria-selected="true" data-cmd="claude mcp add station -- station mcp --auto-start">Claude Code MCP</button>
+              <button type="button" class="cli-tab" role="tab" aria-selected="false" data-cmd="station read https://www.linkedin.com/jobs">Clean Read</button>
+              <button type="button" class="cli-tab" role="tab" aria-selected="false" data-cmd="station snapshot --session linkedin">@eN Snapshot</button>
+              <button type="button" class="cli-tab" role="tab" aria-selected="false" data-cmd="git clone https://github.com/selibrah/station &amp;&amp; cd station/daemon &amp;&amp; cargo build --release">Build Rust</button>
             </div>
-          </div>
-
-          <!-- Group 2: Agent Payload & Comparison -->
-          <div class="param-group" data-group="payload snapshot markdown html opencli rival">
-            <div class="param-group-title">▾ Agent Payload &amp; Rivals</div>
-            <div class="param-rows">
-              <div class="param-row">
-                <span class="param-label">Agent output</span>
-                <div class="seg-group" role="group" aria-label="Agent output mode">
-                  <button type="button" class="seg-btn" aria-pressed="true" data-out="@eN">@eN</button>
-                  <button type="button" class="seg-btn" aria-pressed="false" data-out="md">md</button>
-                  <button type="button" class="seg-btn" aria-pressed="false" data-out="html">html</button>
-                </div>
-              </div>
-
-              <label class="param-row">
-                <span class="param-label">Show slow OpenCLI packets</span>
-                <input type="checkbox" class="forge-switch" id="ctrl-rivals" checked>
-              </label>
-
-              <label class="param-row">
-                <span class="param-label">Native DataTransfer upload</span>
-                <input type="checkbox" class="forge-switch" id="ctrl-upload" checked>
-              </label>
-            </div>
-          </div>
-
-          <!-- Group 3: Stage Look & Pixel Shader -->
-          <div class="param-group" data-group="look theme atmosphere pixel grid vignette">
-            <div class="param-group-title">▾ Stage Look</div>
-            <div class="param-rows">
-              <div class="param-row">
-                <span class="param-label">Atmosphere</span>
-                <div class="seg-group" role="group" aria-label="Stage atmosphere">
-                  <button type="button" class="seg-btn" aria-pressed="true" data-sky="cobalt">cobalt</button>
-                  <button type="button" class="seg-btn" aria-pressed="false" data-sky="dusk">dusk</button>
-                  <button type="button" class="seg-btn" aria-pressed="false" data-sky="night">night</button>
-                </div>
-              </div>
-
-              <div class="param-row scrub-row">
-                <div class="scrub-fill" id="fill-pixel" style="width: 50%;"></div>
-                <span class="param-label">Pixel dither scale</span>
-                <span class="param-val" id="val-pixel">2x</span>
-                <input type="range" class="scrub-input" id="ctrl-pixel" min="1" max="4" step="1" value="2" aria-label="Pixel dither scale">
-              </div>
-
-              <label class="param-row">
-                <span class="param-label">Packet contrails &amp; glow</span>
-                <input type="checkbox" class="forge-switch" id="ctrl-trails" checked>
-              </label>
-            </div>
-          </div>
-
-          <!-- Group 4: Quick Install Preset -->
-          <div class="param-group" data-group="cli install claude cursor cargo">
-            <div class="param-group-title">▾ CLI Command Preset</div>
-            <div class="param-rows">
-              <div class="param-row">
-                <span class="param-label">Target</span>
-                <div class="seg-group" role="group" aria-label="CLI preset">
-                  <button type="button" class="seg-btn" aria-pressed="true" data-preset="claude">claude</button>
-                  <button type="button" class="seg-btn" aria-pressed="false" data-preset="cargo">cargo</button>
-                  <button type="button" class="seg-btn" aria-pressed="false" data-preset="read">read</button>
-                </div>
-              </div>
+            <div class="cli-row">
+              <code id="cli-code">claude mcp add station -- station mcp --auto-start</code>
+              <button type="button" class="copy-chip" id="cli-copy-btn">Copy</button>
             </div>
           </div>
         </div>
-      </aside>
-    </main>
-  </div>
 
-  <!-- ========================================================================
-       SECTION 2: INTERACTIVE @eN SNAPSHOT VS RAW HTML
-       ======================================================================== -->
-  <section class="section-block" id="snapshot-demo" aria-labelledby="snap-title">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="tactical-tag">01 · DETERMINISTIC PERCEPTION</span>
-        <h2 id="snap-title">Stop feeding 48,000 raw HTML tokens to your AI coding agent.</h2>
+        <div class="lens-hint-box">
+          <strong>Interactive Glyph-Atlas Optical Field</strong>
+          Sweep your cursor across the ASCII wave: raw HTML noise crystallizes into <code>@e1..@e9</code> tokens at 120&nbsp;FPS using zero DOM reflows.
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         EMPIRICAL TELEMETRY STRIP
+         ====================================================================== -->
+    <div class="metrics-strip">
+      <div class="metric-cell">
+        <div class="metric-num mono">0.36 ms</div>
+        <div class="metric-label">Median loopback CDP round-trip</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-num mono">-99.4%</div>
+        <div class="metric-label">Context tokens via @eN DOM snapshot</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-num mono">2,601/s</div>
+        <div class="metric-label">Sustained commands on 4.5 MB RSS</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-num mono">11 Tools</div>
+        <div class="metric-label">Zero-config stdio MCP with auto-start</div>
+      </div>
+    </div>
+
+    <!-- ======================================================================
+         SECTION 1: LIVE 120 FPS PRETEXT REFLOW LAB (OUR REAL FINDINGS!)
+         ====================================================================== -->
+    <section class="section pad-x" id="pretext-lab" aria-labelledby="pretext-heading">
+      <div class="section-header">
+        <div>
+          <h2 id="pretext-heading">Move the 0.36&nbsp;ms lens through live extracted findings.</h2>
+        </div>
         <p>
-          Click any <code>@eN</code> reference on the job card below or toggle output formats to see why Claude Code and Cursor complete authenticated tasks in one pass with Station.
+          Powered by two-phase <strong>Pretext</strong> math (one-time offscreen <code>measureText</code> cache + zero-DOM arithmetic line breaking). Drag your cursor across real Job Search, Housing, and <code>@eN</code> streams to inspect tokens at 120&nbsp;FPS.
         </p>
       </div>
 
-      <div class="inspector-grid">
-        <div class="dom-card-side">
-          <div class="address-pill mono">https://www.linkedin.com/jobs/view/409182736</div>
-
-          <div class="sim-job-box">
-            <h3>Senior Systems Engineer (Rust / AI Infrastructure)</h3>
-            <div class="sim-job-meta">Linear · Remote (US / EU) · $195k–$230k · Logged-in Profile: <code>jobs</code></div>
-            <p style="font-size: 13px; color: var(--tx-98); margin: 0 0 14px;">
-              Design sub-millisecond local developer daemons, persistent protocol bridges, and native desktop cockpits.
-            </p>
-            <div class="sim-actions">
-              <input type="text" class="sim-input" value="Referred by Sarah — systems team" aria-label="Referral note">
-              <button type="button" class="ref-btn" data-ref="@e1" data-cmd="station act fill @e1 &quot;Referred by Sarah&quot;">
-                <span class="ref-pill">@e1</span> Fill Input
-              </button>
-              <button type="button" class="ref-btn" data-ref="@e2" data-cmd="station upload --selector @e2 resume_2026.pdf">
-                <span class="ref-pill">@e2</span> Upload PDF
-              </button>
-              <button type="button" class="ref-btn" data-ref="@e3" data-cmd="station act click @e3">
-                <span class="ref-pill">@e3</span> Save Job
-              </button>
-            </div>
+      <div class="pretext-stage-card">
+        <div class="pretext-toolbar">
+          <div class="stream-pills" role="tablist" aria-label="Live extraction dataset">
+            <button type="button" class="stream-pill" role="tab" aria-selected="true" data-stream="jobs">Job Hunter Stream (30 roles)</button>
+            <button type="button" class="stream-pill" role="tab" aria-selected="false" data-stream="housing">Housing &amp; Rent Stream (58 ads)</button>
+            <button type="button" class="stream-pill" role="tab" aria-selected="false" data-stream="snapshot">Agent @eN DOM Map (-99.4% tokens)</button>
           </div>
-
-          <p style="margin: 0; font-size: 12.5px; color: var(--tx-78);">
-            <strong>Gesture-free file uploads:</strong> Station's native <code>/upload</code> streams base64 chunks into <code>DataTransfer</code> inside V8—permanently bypassing Chrome's file-chooser block (OpenCLI issue #2541).
-          </p>
+          <span class="mono" style="font-size: 12px; color: var(--mint);" id="pretext-perf-readout">DOM reflows: 0 · Layout: 0.04 ms</span>
         </div>
 
-        <div class="code-side">
-          <div class="code-topbar">
-            <div class="seg-group" role="tablist" aria-label="Inspector format">
-              <button type="button" class="seg-btn mode-tab" role="tab" aria-pressed="true" data-fmt="snapshot">@eN Snapshot</button>
-              <button type="button" class="seg-btn mode-tab" role="tab" aria-pressed="false" data-fmt="markdown">Clean Markdown</button>
-              <button type="button" class="seg-btn mode-tab" role="tab" aria-pressed="false" data-fmt="html">Raw HTML</button>
-            </div>
-            <span class="tok-chip tok-good mono" id="demo-tok-badge">142 TOKENS (-99.4%)</span>
-          </div>
+        <canvas id="pretext-canvas" role="img" aria-label="Interactive Pretext kinetic typography canvas wrapping extracted job and housing findings around your cursor"></canvas>
 
-          <pre class="code-output mono" id="demo-code-box">Page: Senior Systems Engineer | LinkedIn
-URL: https://www.linkedin.com/jobs/view/409182736
-Scroll: 0 / 980 px (3 interactive refs)
-Headings: [h1] Senior Systems Engineer (Rust / AI Infrastructure)
----
-[@e1] input "Referral note" value="Referred by Sarah — systems team"
-[@e2] file "Upload PDF"
-[@e3] button "Save Job"</pre>
-
-          <div class="code-status-footer mono" id="demo-rpc-log">
-            ⚡ [0.36 ms] Ready — click @e1, @e2, or @e3 on the left to dispatch over CDP
-          </div>
+        <div class="pretext-footer mono">
+          <span>Phase 1: cached glyph segment widths (offscreen canvas)</span>
+          <span>Phase 2: pure arithmetic obstacle-wrapping per frame</span>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ========================================================================
-       SECTION 3: HEAD-TO-HEAD COMPARISON MATRIX
-       ======================================================================== -->
-  <section class="section-block" id="compare" aria-labelledby="cmp-title">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="tactical-tag">02 · BENCHMARKED ARCHITECTURE</span>
-        <h2 id="cmp-title">Why engineers replace OpenCLI, Agent-Reach &amp; Playwright MCP.</h2>
-        <p>Every layer between your agent and Chrome V8 is removed: no Node wrapper, no extension hop, no cloud proxy.</p>
+    <!-- ======================================================================
+         SECTION 2: BENCHMARKS & HEAD-TO-HEAD MATRIX
+         ====================================================================== -->
+    <section class="section pad-x" id="benchmarks" aria-labelledby="bench-heading">
+      <div class="section-header">
+        <div>
+          <h2 id="bench-heading">Built to outlast fragile browser bridges.</h2>
+        </div>
+        <p>
+          Every intermediate process and Manifest V3 extension hop adds latency, failure modes, and user-gesture blocks. Station speaks native DevTools WebSockets straight from Rust.
+        </p>
       </div>
 
-      <div class="matrix-shell">
-        <table class="cmp-table">
-          <caption>Comparison between Station v0.4, OpenCLI, Agent-Reach, and Playwright MCP</caption>
+      <div class="bench-bars">
+        <div class="bench-item winner">
+          <div>
+            <span class="bench-name">Station v0.4 (Rust CDP)</span>
+            <span class="bench-sub">Persistent per-tab WebSocket pool</span>
+          </div>
+          <div class="bench-track"><div class="bench-fill" style="width: 2.5%; min-width: 10px; background: var(--mint);"></div></div>
+          <div class="bench-val mono good">0.36 ms · 4.5 MB</div>
+        </div>
+
+        <div class="bench-item">
+          <div>
+            <span class="bench-name">OpenCLI</span>
+            <span class="bench-sub">Node CLI + Chrome MV3 extension</span>
+          </div>
+          <div class="bench-track"><div class="bench-fill" style="width: 68%; background: var(--muted);"></div></div>
+          <div class="bench-val mono">28–310 ms · ~65 MB</div>
+        </div>
+
+        <div class="bench-item">
+          <div>
+            <span class="bench-name">Playwright MCP</span>
+            <span class="bench-sub">Unauthenticated headless browser</span>
+          </div>
+          <div class="bench-track"><div class="bench-fill" style="width: 52%; background: var(--muted);"></div></div>
+          <div class="bench-val mono">180+ ms · 240 MB</div>
+        </div>
+
+        <div class="bench-item">
+          <div>
+            <span class="bench-name">Agent-Reach</span>
+            <span class="bench-sub">Public curl &amp; Jina Reader wrappers</span>
+          </div>
+          <div class="bench-track"><div class="bench-fill" style="width: 92%; background: var(--amber);"></div></div>
+          <div class="bench-val mono warn">400 ms+ · Auth Blocked</div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="cmp">
+          <caption>Detailed comparison of Station v0.4 against OpenCLI, Agent-Reach, and Playwright MCP</caption>
           <thead>
             <tr>
-              <th scope="col">Dimension</th>
-              <th scope="col" class="win-col">Station v0.4 (Rust)</th>
+              <th scope="col">Capability</th>
+              <th scope="col" class="station-col">Station v0.4</th>
               <th scope="col">OpenCLI</th>
               <th scope="col">Agent-Reach</th>
               <th scope="col">Playwright MCP</th>
@@ -1427,575 +1085,584 @@ Headings: [h1] Senior Systems Engineer (Rust / AI Infrastructure)
           </thead>
           <tbody>
             <tr>
-              <th scope="row">Median RTT latency</th>
-              <td class="win-col mono val-win">0.36 ms (Persistent WS)</td>
-              <td class="mono">28 ms – 310 ms</td>
-              <td class="mono">400 ms – 2.5 s</td>
-              <td class="mono">120 ms – 450 ms</td>
-            </tr>
-            <tr>
-              <th scope="row">Memory footprint (RSS)</th>
-              <td class="win-col mono val-win">4.5 MB</td>
-              <td class="mono">~65 MB (Node + Ext)</td>
-              <td class="mono">~45 MB (Python/CLI)</td>
-              <td class="mono val-bad">240 MB+ Chromium</td>
-            </tr>
-            <tr>
-              <th scope="row">Browser extension needed</th>
-              <td class="win-col val-win">None (Direct CDP)</td>
-              <td class="val-bad">Required (MV3 limits)</td>
-              <td>None</td>
-              <td>None</td>
-            </tr>
-            <tr>
-              <th scope="row">Authenticated user sessions</th>
-              <td class="win-col val-win">Yes (Isolated Profiles)</td>
+              <th scope="row">Uses your real logged-in cookies</th>
+              <td class="station-col good">Yes (Isolated Chrome Profiles)</td>
               <td>Yes</td>
-              <td class="val-bad">No (Public read-only)</td>
-              <td class="val-bad">Logged-out / Bot-blocked</td>
+              <td class="warn">No (Public URLs only)</td>
+              <td class="warn">Logged-out / Bot-flagged</td>
             </tr>
             <tr>
-              <th scope="row">React forms &amp; file uploads</th>
-              <td class="win-col val-win">@eN + Chunked DataTransfer</td>
-              <td class="val-bad">File chooser fails (#2541)</td>
-              <td class="val-bad">Cannot click or fill</td>
-              <td>Verbose HTML snapshots</td>
+              <th scope="row">Browser extension required</th>
+              <td class="station-col good">None (Direct CDP)</td>
+              <td class="warn">Yes (MV3 Bridge)</td>
+              <td>None</td>
+              <td>None</td>
+            </tr>
+            <tr>
+              <th scope="row">File uploads (PDF resume, images)</th>
+              <td class="station-col good">Chunked DataTransfer (/upload)</td>
+              <td class="warn">Fails user-gesture (#2541)</td>
+              <td class="warn">Read-only</td>
+              <td>Verbose DOM selectors</td>
+            </tr>
+            <tr>
+              <th scope="row">Background tabs (zero focus steal)</th>
+              <td class="station-col good">Target.createTarget + Pool</td>
+              <td>Partial</td>
+              <td>N/A</td>
+              <td>Headless only</td>
             </tr>
             <tr>
               <th scope="row">Native MCP with <code>--auto-start</code></th>
-              <td class="win-col val-win">Compiled into 1 binary</td>
-              <td>Needs daemon pre-started</td>
-              <td>External skill scripts</td>
-              <td>Node npx package</td>
+              <td class="station-col good">Single compiled Rust binary</td>
+              <td>Needs Node daemon running</td>
+              <td>Skill shell scripts</td>
+              <td>Node npx server</td>
             </tr>
             <tr>
-              <th scope="row">24/7 Auto-Jobs, SQLite CRM &amp; Charts</th>
-              <td class="win-col val-win">Swift 6 macOS Studio App</td>
-              <td class="val-bad">CLI only</td>
-              <td class="val-bad">CLI only</td>
-              <td class="val-bad">None</td>
+              <th scope="row">Auto-Jobs, SQLite CRM &amp; Charts</th>
+              <td class="station-col good">Swift 6 macOS Studio App</td>
+              <td class="warn">CLI only</td>
+              <td class="warn">CLI only</td>
+              <td class="warn">None</td>
             </tr>
           </tbody>
         </table>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ========================================================================
-       SECTION 4: AUTO-JOBS, SQLITE CRM & NATIVE MACOS STUDIO
-       ======================================================================== -->
-  <section class="section-block" id="auto-jobs" aria-labelledby="jobs-title">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="tactical-tag">03 · AUTONOMOUS WATCHERS + MACOS STUDIO</span>
-        <h2 id="jobs-title">Turn authenticated pages into a local SQLite CRM &amp; live Swift Charts.</h2>
+    <!-- ======================================================================
+         SECTION 3: INTERACTIVE STATION STUDIO SHOWCASE (FINDINGS, CRM & CHARTS)
+         ====================================================================== -->
+    <section class="section pad-x" id="studio" aria-labelledby="studio-heading">
+      <div class="section-header">
+        <div>
+          <h2 id="studio-heading">Every Auto-Job lands in a native SQLite CRM &amp; Swift Charts.</h2>
+        </div>
         <p>
-          Download <strong>Station Studio.app</strong> (self-contained with the Rust engine embedded) to schedule background watchers and manage every match in one native macOS cockpit.
+          <strong>Station Studio.app</strong> bundles the Rust engine inside a 5&nbsp;MB native macOS app (0.0% idle CPU when closed) so background housing, job, lead, and deal watchers become actionable pipelines.
         </p>
       </div>
 
-      <div class="bento-grid">
-        <article class="bento-card">
-          <div class="bento-top">
-            <h3>Housing &amp; Rent Radar</h3>
-            <span class="mini-tag">seen.db · 15m</span>
+      <div class="studio-window">
+        <div class="studio-titlebar">
+          <div class="traffic-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="studio-tabs" role="tablist" aria-label="Station Studio screens">
+            <button type="button" class="studio-tab" role="tab" aria-selected="true" data-pane="jobs">⌘2 Job Search CRM</button>
+            <button type="button" class="studio-tab" role="tab" aria-selected="false" data-pane="housing">⌘2 Housing &amp; Rent Radar</button>
+            <button type="button" class="studio-tab" role="tab" aria-selected="false" data-pane="mcp">⌘5 One-Click MCP Hub</button>
           </div>
-          <p>
-            Sweeps Avito, Mubawab, and logged-in Facebook housing groups chronologically. Scores neighborhood commute distance, flags price drops, and builds 1-tap WhatsApp links.
-          </p>
-          <div class="stages-row">
-            <span class="st-chip hot">NEW</span>
-            <span class="st-chip">CONTACTED</span>
-            <span class="st-chip">REPLIED</span>
-            <span class="st-chip">VISIT</span>
-          </div>
-        </article>
-
-        <article class="bento-card">
-          <div class="bento-top">
-            <h3>Multi-Board Job Hunter</h3>
-            <span class="mini-tag">findings.db · 30m</span>
-          </div>
-          <p>
-            Polls LinkedIn ("Past 24h"), Hacker News Jobs, and ATS boards in hidden background tabs without stealing focus. Scores stack match, salary bands, and tracks interviews.
-          </p>
-          <div class="stages-row">
-            <span class="st-chip hot">MATCHED</span>
-            <span class="st-chip">APPLIED</span>
-            <span class="st-chip">INTERVIEW</span>
-            <span class="st-chip">OFFER</span>
-          </div>
-        </article>
-
-        <article class="bento-card">
-          <div class="bento-top">
-            <h3>Freelance &amp; B2B Lead Radar</h3>
-            <span class="mini-tag">url: watcher</span>
-          </div>
-          <p>
-            Monitors Reddit <code>r/forhire</code>, Upwork feeds, and niche communities with your logged-in cookies so high-intent client gigs hit your pipeline within minutes.
-          </p>
-          <div class="stages-row">
-            <span class="st-chip hot">NEW LEAD</span>
-            <span class="st-chip">PITCHED</span>
-            <span class="st-chip">REPLIED</span>
-            <span class="st-chip">WON</span>
-          </div>
-        </article>
-
-        <article class="bento-card">
-          <div class="bento-top">
-            <h3>Deals &amp; Price Histograms</h3>
-            <span class="mini-tag">Swift Charts</span>
-          </div>
-          <p>
-            Visualizes Price/Salary Distributions, 14-Day Discovery Velocity, Top Neighborhoods/Companies, and Conversion Funnels natively in Swift 6 with zero cloud telemetry.
-          </p>
-          <div class="stages-row">
-            <span class="st-chip hot">HISTOGRAM</span>
-            <span class="st-chip">14D VELOCITY</span>
-            <span class="st-chip">FUNNEL</span>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       SECTION 5: FAQ & DOWNLOAD FOOTER
-       ======================================================================== -->
-  <section class="section-block" id="faq" aria-labelledby="faq-title">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="tactical-tag">04 · TECHNICAL FAQ</span>
-        <h2 id="faq-title">Built for speed, privacy &amp; human control.</h2>
-      </div>
-
-      <div class="faq-stack">
-        <details class="faq-box" open>
-          <summary>Do I need Rust or Cargo installed to use Station Studio on macOS?</summary>
-          <p>No. The downloadable <code>Station-Studio-v0.4.0-macOS-arm64.dmg</code> bundles both the native Swift 6 UI and the compiled <code>station</code> Rust daemon + MCP server inside <code>Station Studio.app/Contents/MacOS/station</code>.</p>
-        </details>
-        <details class="faq-box">
-          <summary>How does Station keep my logged-in Chrome sessions safe?</summary>
-          <p>Station listens strictly on loopback (<code>127.0.0.1:19826</code>), disables CORS so external websites cannot talk to it, blocks non-HTTP schemes, and verifies a 256-bit <code>0600</code> local token (<code>X-Station-Token</code>) in constant time.</p>
-        </details>
-        <details class="faq-box">
-          <summary>Does Station bypass CAPTCHAs or auto-spam job applications?</summary>
-          <p>Never. Station respects human-in-the-loop boundaries: if a CAPTCHA or login gate appears, it stops cleanly and notifies you. Assisted application workflows pre-fill fields and attach your resume, pausing before the final Submit click.</p>
-        </details>
-      </div>
-
-      <div class="cta-banner">
-        <div>
-          <h2>Try Station in 30 seconds.</h2>
-          <p>Download the self-contained macOS Studio app or clone the MIT-licensed Rust workspace.</p>
+          <span class="mono" style="font-size: 11.5px; color: var(--muted);">SQLite3 · Local Only</span>
         </div>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <a href="https://github.com/selibrah/station/releases/latest/download/Station-Studio-v0.4.0-macOS-arm64.dmg" class="btn-signal">
-            Download macOS (.dmg)
+
+        <div class="studio-body" id="studio-pane-content">
+          <!-- Populated dynamically & initialized with Job Search CRM -->
+          <div class="crm-rows" id="studio-left-list">
+            <div class="crm-row">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="score-box mono">95</span>
+                <div>
+                  <div style="font-weight: 600; font-size: 14.5px;">Senior Rust Systems Engineer</div>
+                  <div style="font-size: 12.5px; color: var(--slate);">Linear · Remote · LinkedIn 24h</div>
+                </div>
+              </div>
+              <div style="text-align: right;">
+                <div class="mono" style="font-weight: 600; font-size: 13.5px;">$210,000</div>
+                <span class="stage-badge">Interview</span>
+              </div>
+            </div>
+
+            <div class="crm-row">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="score-box mono">91</span>
+                <div>
+                  <div style="font-weight: 600; font-size: 14.5px;">AI Tooling &amp; Runtime Engineer</div>
+                  <div style="font-size: 12.5px; color: var(--slate);">YC Startup · Remote · HN Jobs</div>
+                </div>
+              </div>
+              <div style="text-align: right;">
+                <div class="mono" style="font-weight: 600; font-size: 13.5px;">$195,000</div>
+                <span class="stage-badge">Applied</span>
+              </div>
+            </div>
+
+            <div class="crm-row">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="score-box mono">88</span>
+                <div>
+                  <div style="font-weight: 600; font-size: 14.5px;">Staff macOS &amp; Swift Infrastructure</div>
+                  <div style="font-size: 12.5px; color: var(--slate);">Raycast · Remote EU · ATS Board</div>
+                </div>
+              </div>
+              <div style="text-align: right;">
+                <div class="mono" style="font-weight: 600; font-size: 13.5px;">$185,000</div>
+                <span class="stage-badge">Matched</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="chart-card" id="studio-right-chart">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <span style="font-weight: 600; font-size: 14px;" id="chart-title">Compensation Distribution (USD)</span>
+              <span class="mono" style="font-size: 12px; color: var(--mint);" id="chart-median">Median: $195k</span>
+            </div>
+            <div class="hist-bars" id="chart-bars" aria-hidden="true">
+              <div style="height: 28%;"></div>
+              <div style="height: 52%;"></div>
+              <div class="median" style="height: 94%;"></div>
+              <div style="height: 70%;"></div>
+              <div style="height: 40%;"></div>
+              <div style="height: 22%;"></div>
+            </div>
+            <div style="margin-top: 10px; font-size: 12.5px; color: var(--slate);" id="chart-caption">
+              Pipeline stages: Matched → Applied → Interview → Offer → Archived
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 4: FAQ & FINAL DOWNLOAD CTA
+         ====================================================================== -->
+    <section class="section pad-x" id="faq" aria-labelledby="faq-heading" style="border-bottom: 0;">
+      <div class="section-header">
+        <div>
+          <h2 id="faq-heading">Technical questions, answered plainly.</h2>
+        </div>
+      </div>
+
+      <div class="faq-grid">
+        <details class="faq-card" open>
+          <summary>Do I need Rust installed to use the macOS app?</summary>
+          <p>No. <code>Station-Studio-v0.4.0-macOS-arm64.dmg</code> embeds both the Swift 6 UI and the compiled <code>station</code> Rust daemon + MCP server inside <code>Station Studio.app/Contents/MacOS/station</code>.</p>
+        </details>
+
+        <details class="faq-card" open>
+          <summary>How does Station protect my logged-in Chrome profiles?</summary>
+          <p>Station binds strictly to <code>127.0.0.1:19826</code>, omits CORS headers so external web pages cannot reach it, blocks non-HTTP schemes, and requires a 256-bit <code>0600</code> local token header.</p>
+        </details>
+
+        <details class="faq-card">
+          <summary>Will background Auto-Jobs interrupt my active window?</summary>
+          <p>Never. Tabs open via CDP <code>Target.createTarget</code> with <code>background: true</code> over a persistent secondary WebSocket pool while you keep coding.</p>
+        </details>
+
+        <details class="faq-card">
+          <summary>Does Station bypass CAPTCHAs or spam forms?</summary>
+          <p>Never. If a site displays a CAPTCHA or login prompt, Station pauses cleanly and notifies you. Assisted job workflows pre-fill fields and attach your PDF resume, stopping before final submission.</p>
+        </details>
+      </div>
+
+      <div class="cta-slab">
+        <div>
+          <h2>Ready to run your browser at 0.36&nbsp;ms?</h2>
+          <p>Download the self-contained macOS Studio app or clone the MIT-licensed Rust repository.</p>
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="https://github.com/selibrah/station/releases/latest/download/Station-Studio-v0.4.0-macOS-arm64.dmg" class="btn-primary">
+            Download macOS (.dmg · 4.6 MB)
           </a>
-          <a href="https://github.com/selibrah/station" class="btn-hud-glass" target="_blank" rel="noopener">
+          <a href="https://github.com/selibrah/station" class="btn-ghost" target="_blank" rel="noopener">
             Star selibrah/station on GitHub
           </a>
         </div>
       </div>
 
-      <footer class="footer-bar mono">
-        <span>STATION v0.4.0 · MIT LICENSE · GITHUB.COM/SELIBRAH/STATION</span>
-        <span>127.0.0.1:19826 · 0.36MS CDP · ZERO EXTENSIONS</span>
+      <footer class="footer-row mono">
+        <span>Station v0.4.0 · MIT License · github.com/selibrah/station</span>
+        <span>127.0.0.1:19826 · Zero Extensions · Zero API Keys</span>
       </footer>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <script>
     (function () {
-      // ======================================================================
-      // 1. LIVE PIXEL-DITHERED TELEMETRY STAGE CANVAS + CONTROLS BINDING
-      // ======================================================================
-      const canvas = document.getElementById("radar-canvas");
-      const ctx = canvas.getContext("2d");
-      const stageEl = document.getElementById("interactive-stage");
       const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      const state = {
-        opsRate: 2600,
-        tabCount: 6,
-        showRivals: true,
-        trails: true,
-        pixelScale: 2,
-        sky: "cobalt",
-        outMode: "@eN",
-        burstTicks: 0
-      };
+      // ======================================================================
+      // ENGINE 1: 120 FPS GLYPH-ATLAS KINETIC ASCII WAVE & OPTICAL LENS (HERO)
+      // Stamps glyphs ONCE onto an offscreen sprite sheet; blits via drawImage
+      // ======================================================================
+      const heroCanvas = document.getElementById("ascii-atlas-canvas");
+      const heroCtx = heroCanvas.getContext("2d", { alpha: false });
+      const fpsPill = document.getElementById("live-fps-pill");
 
-      const palettes = {
-        cobalt: { top: "#2468b4", mid: "#174680", bot: "#0b1a33", grid: "rgba(140, 200, 255, 0.12)" },
-        dusk:   { top: "#432344", mid: "#7a3034", bot: "#181326", grid: "rgba(255, 180, 140, 0.12)" },
-        night:  { top: "#0b101b", mid: "#111c30", bot: "#070a12", grid: "rgba(90, 150, 255, 0.10)" }
-      };
+      const NOISE_CHARS = ".:;-~=<>/\\{}[]divspn";
+      const SIGNAL_CHARS = "@e1234567890$✓#+=*";
+      const ALL_CHARS = NOISE_CHARS + SIGNAL_CHARS;
+      const CELL_W = 14;
+      const CELL_H = 18;
 
-      const tabLabels = [
-        "LINKEDIN/JOBS", "AVITO/RENT", "GITHUB/PR", "FB/GROUPS", "HN/HIRING",
-        "REDDIT/LEADS", "WELLFOUND", "NOTION/DOC", "MUBAWAB", "GEMINI"
-      ];
-
-      let packets = [];
-      let ripples = [];
-      let w = 600, h = 400;
-
-      function resize() {
-        const rect = stageEl.getBoundingClientRect();
-        w = Math.max(320, Math.floor(rect.width / state.pixelScale));
-        h = Math.max(240, Math.floor(rect.height / state.pixelScale));
-        canvas.width = w;
-        canvas.height = h;
-      }
-      window.addEventListener("resize", resize);
-      resize();
-
-      function spawnPacket(isRival, targetIdx) {
-        const count = state.tabCount;
-        const idx = typeof targetIdx === "number" ? targetIdx : Math.floor(Math.random() * count);
-        packets.push({
-          idx: idx,
-          t: 0,
-          speed: isRival ? 0.0045 : (0.032 + (state.opsRate / 3200) * 0.028),
-          rival: !!isRival
-        });
-      }
-
-      function fireBurst(cx, cy) {
-        state.burstTicks = 28;
-        for (let i = 0; i < state.tabCount * 2; i++) {
-          spawnPacket(false, i % state.tabCount);
-        }
-        if (cx && cy) {
-          ripples.push({ x: cx / state.pixelScale, y: cy / state.pixelScale, r: 2, alpha: 1 });
+      // Build 3-row Glyph Sprite Atlas once (Row 0: Muted Noise, Row 1: Ice Cyan, Row 2: Mint Peak)
+      const atlas = document.createElement("canvas");
+      atlas.width = ALL_CHARS.length * CELL_W;
+      atlas.height = CELL_H * 3;
+      const actx = atlas.getContext("2d");
+      actx.font = "500 13px 'JetBrains Mono', monospace";
+      actx.textBaseline = "middle";
+      const rowColors = ["#243147", "#38BDF8", "#2DD4BF"];
+      for (let r = 0; r < 3; r++) {
+        actx.fillStyle = rowColors[r];
+        for (let i = 0; i < ALL_CHARS.length; i++) {
+          actx.fillText(ALL_CHARS[i], i * CELL_W + 2, r * CELL_H + CELL_H / 2);
         }
       }
 
-      stageEl.addEventListener("click", function (e) {
-        if (e.target.closest("a, button, .intel-modal, .stage-cli-bar")) return;
-        const r = stageEl.getBoundingClientRect();
-        fireBurst(e.clientX - r.left, e.clientY - r.top);
+      let cols = 60, rows = 30, hw = 800, hh = 520;
+      const pointer = { x: -999, y: -999, active: false, autoAngle: 0 };
+
+      function resizeHero() {
+        const rect = heroCanvas.parentElement.getBoundingClientRect();
+        hw = Math.max(320, Math.floor(rect.width));
+        hh = Math.max(420, Math.floor(rect.height));
+        heroCanvas.width = hw;
+        heroCanvas.height = hh;
+        cols = Math.ceil(hw / CELL_W);
+        rows = Math.ceil(hh / CELL_H);
+      }
+      window.addEventListener("resize", resizeHero);
+      resizeHero();
+
+      heroCanvas.parentElement.addEventListener("pointermove", function (e) {
+        const r = heroCanvas.getBoundingClientRect();
+        pointer.x = e.clientX - r.left;
+        pointer.y = e.clientY - r.top;
+        pointer.active = true;
+      });
+      heroCanvas.parentElement.addEventListener("pointerleave", function () {
+        pointer.active = false;
       });
 
-      document.getElementById("pulse-burst-btn").addEventListener("click", function () { fireBurst(w * state.pixelScale * 0.65, h * state.pixelScale * 0.5); });
-      document.getElementById("burst-hud-btn").addEventListener("click", function () { fireBurst(w * state.pixelScale * 0.65, h * state.pixelScale * 0.5); });
+      let frames = 0, lastFpsCheck = performance.now();
 
-      let tick = 0;
-      function draw() {
-        tick++;
-        const pal = palettes[state.sky] || palettes.cobalt;
-        const grad = ctx.createLinearGradient(0, 0, 0, h);
-        grad.addColorStop(0, pal.top);
-        grad.addColorStop(0.58, pal.mid);
-        grad.addColorStop(1, pal.bot);
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, w, h);
+      function renderHeroAtlas(now) {
+        const frameStart = performance.now();
+        const t = now * 0.0016;
+        heroCtx.fillStyle = "#07090E";
+        heroCtx.fillRect(0, 0, hw, hh);
 
-        // Perspective horizon & sea/telemetry grid
-        const horizonY = Math.floor(h * 0.54);
-        ctx.strokeStyle = pal.grid;
-        ctx.lineWidth = 1;
-        for (let y = horizonY; y < h; y += Math.max(8, Math.floor((y - horizonY) * 0.25) + 6)) {
-          ctx.beginPath();
-          ctx.moveTo(0, y);
-          ctx.lineTo(w, y);
-          ctx.stroke();
-        }
-        for (let i = -6; i <= 6; i++) {
-          ctx.beginPath();
-          ctx.moveTo(w * 0.62 + i * 14, horizonY);
-          ctx.lineTo(w * 0.62 + i * 75, h);
-          ctx.stroke();
-        }
+        // Autonomous optical lens orbit on right side when pointer isn't hovering
+        pointer.autoAngle += 0.018;
+        const lx = pointer.active ? pointer.x : (hw * 0.73 + Math.cos(pointer.autoAngle) * (hw * 0.12));
+        const ly = pointer.active ? pointer.y : (hh * 0.46 + Math.sin(pointer.autoAngle * 1.3) * (hh * 0.18));
+        const lensR = 148;
+        const lensR2 = lensR * lensR;
 
-        // Hub position (right side clear of hero copy)
-        const hubX = Math.floor(w * 0.76);
-        const hubY = Math.floor(h * 0.48);
+        // Blit Glyph-Atlas cells with zero fillText calls
+        const startCol = Math.floor(cols * 0.34); // Keep left copy zone ultra-clean
+        for (let r = 0; r < rows; r++) {
+          const py = r * CELL_H;
+          const dy = py - ly;
+          const dy2 = dy * dy;
 
-        // Spawn ambient packets
-        if (!reducedMotion) {
-          const spawnChance = (state.opsRate / 3200) * 0.45 + (state.burstTicks > 0 ? 0.6 : 0);
-          if (Math.random() < spawnChance) spawnPacket(false);
-          if (state.showRivals && tick % 32 === 0) spawnPacket(true);
-          if (state.burstTicks > 0) state.burstTicks--;
-        }
+          for (let c = startCol; c < cols; c++) {
+            const px = c * CELL_W;
+            const dx = px - lx;
+            const d2 = dx * dx + dy2;
 
-        // Satellite Tab Nodes around Hub
-        const radiusX = Math.min(w * 0.16, 86);
-        const radiusY = Math.min(h * 0.27, 94);
-        const nodes = [];
-        for (let i = 0; i < state.tabCount; i++) {
-          const ang = (i / state.tabCount) * Math.PI * 2 - Math.PI * 0.4;
-          const nx = Math.floor(hubX + Math.cos(ang) * radiusX);
-          const ny = Math.floor(hubY + Math.sin(ang) * radiusY);
-          nodes.push({ x: nx, y: ny, label: tabLabels[i] });
+            const wave = Math.sin(c * 0.13 + t) * Math.cos(r * 0.15 - t * 0.8) + Math.sin((c + r) * 0.09 + t * 1.2);
 
-          // Persistent socket line
-          ctx.strokeStyle = "rgba(255, 255, 255, 0.16)";
-          ctx.beginPath();
-          ctx.moveTo(hubX, hubY);
-          ctx.lineTo(nx, ny);
-          ctx.stroke();
-        }
-
-        // Update & render packets
-        for (let i = packets.length - 1; i >= 0; i--) {
-          const p = packets[i];
-          const target = nodes[p.idx % nodes.length];
-          if (!target) { packets.splice(i, 1); continue; }
-          p.t += p.speed;
-
-          // Rivals stall halfway (simulating MV3 / 403 block)
-          if (p.rival && p.t > 0.56) {
-            ctx.fillStyle = "#ff5252";
-            ctx.fillRect(Math.floor(hubX + (target.x - hubX) * 0.56) - 2, Math.floor(hubY + (target.y - hubY) * 0.56) - 2, 4, 4);
-            if (p.t > 0.72) packets.splice(i, 1);
-            continue;
-          }
-
-          if (p.t >= 1) {
-            packets.splice(i, 1);
-            continue;
-          }
-
-          const px = Math.floor(hubX + (target.x - hubX) * p.t);
-          const py = Math.floor(hubY + (target.y - hubY) * p.t);
-
-          if (state.trails && !p.rival) {
-            const tx = Math.floor(hubX + (target.x - hubX) * Math.max(0, p.t - 0.12));
-            const ty = Math.floor(hubY + (target.y - hubY) * Math.max(0, p.t - 0.12));
-            ctx.strokeStyle = "rgba(52, 211, 153, 0.55)";
-            ctx.beginPath();
-            ctx.moveTo(tx, ty);
-            ctx.lineTo(px, py);
-            ctx.stroke();
-          }
-
-          ctx.fillStyle = p.rival ? "#f59e0b" : "#34d399";
-          ctx.fillRect(px - 1, py - 1, 3, 3);
-        }
-
-        // Draw satellite tab boxes (flip label inward near right edge so nothing clips)
-        ctx.font = "9px monospace";
-        nodes.forEach(function (n) {
-          ctx.fillStyle = "rgba(11, 26, 51, 0.88)";
-          ctx.fillRect(n.x - 4, n.y - 4, 8, 8);
-          ctx.strokeStyle = "#ffffff";
-          ctx.strokeRect(n.x - 4, n.y - 4, 8, 8);
-          if (state.pixelScale <= 2) {
-            ctx.fillStyle = "rgba(255,255,255,0.84)";
-            if (n.x > w - 68) {
-              ctx.textAlign = "right";
-              ctx.fillText(n.label, n.x - 7, n.y + 3);
-              ctx.textAlign = "left";
-            } else {
-              ctx.fillText(n.label, n.x + 7, n.y + 3);
+            if (d2 < lensR2) {
+              // Inside Station's 0.36ms Optical Lens: crystallize into structured @eN / Mint glyphs!
+              const norm = 1 - Math.sqrt(d2) / lensR;
+              const sIdx = NOISE_CHARS.length + ((c * 3 + r * 7 + Math.floor(t * 6)) % SIGNAL_CHARS.length);
+              const tier = norm > 0.55 ? 2 : 1;
+              const shiftX = dx * norm * -0.08;
+              const shiftY = dy * norm * -0.08;
+              heroCtx.drawImage(atlas, sIdx * CELL_W, tier * CELL_H, CELL_W, CELL_H, px + shiftX, py + shiftY, CELL_W, CELL_H);
+            } else if (wave > -0.35) {
+              const nIdx = Math.abs(Math.floor((wave + 1.5) * 7 + c + r)) % NOISE_CHARS.length;
+              heroCtx.drawImage(atlas, nIdx * CELL_W, 0, CELL_W, CELL_H, px, py, CELL_W, CELL_H);
             }
           }
-        });
-
-        // Draw Central Station Rust Core Node
-        ctx.fillStyle = "#EC4412";
-        ctx.fillRect(hubX - 7, hubY - 7, 14, 14);
-        ctx.strokeStyle = "#ffffff";
-        ctx.strokeRect(hubX - 9, hubY - 9, 18, 18);
-
-        // Click ripples
-        for (let i = ripples.length - 1; i >= 0; i--) {
-          const rp = ripples[i];
-          rp.r += 2.2;
-          rp.alpha -= 0.04;
-          if (rp.alpha <= 0) { ripples.splice(i, 1); continue; }
-          ctx.strokeStyle = "rgba(255, 210, 122, " + rp.alpha + ")";
-          ctx.beginPath();
-          ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
-          ctx.stroke();
         }
 
-        if (!reducedMotion) requestAnimationFrame(draw);
-      }
-      draw();
+        // Crisp optical lens ring
+        heroCtx.strokeStyle = "rgba(56, 189, 248, 0.42)";
+        heroCtx.lineWidth = 1.2;
+        heroCtx.beginPath();
+        heroCtx.arc(lx, ly, lensR, 0, Math.PI * 2);
+        heroCtx.stroke();
 
-      // ======================================================================
-      // 2. BIND FORGE SIDEBAR CONTROLS TO LIVE SIMULATION & HUD
-      // ======================================================================
-      function updatePips(n) {
-        const wrap = document.getElementById("hud-pips");
-        wrap.innerHTML = "";
-        for (let i = 0; i < 10; i++) {
-          const el = document.createElement("i");
-          el.className = "pip" + (i < n ? (i === n - 1 ? " hot" : " on") : "");
-          wrap.appendChild(el);
+        const frameCost = performance.now() - frameStart;
+        frames++;
+        if (now - lastFpsCheck >= 600) {
+          if (!document.hidden) {
+            const rawFps = Math.round((frames * 1000) / (now - lastFpsCheck));
+            if (rawFps >= 45) {
+              fpsPill.textContent = rawFps + " FPS · " + frameCost.toFixed(2) + " ms draw";
+            } else {
+              fpsPill.textContent = "0.36 ms CDP · " + frameCost.toFixed(2) + " ms draw";
+            }
+          }
+          frames = 0;
+          lastFpsCheck = now;
         }
+
+        if (!reducedMotion) requestAnimationFrame(renderHeroAtlas);
       }
-      updatePips(state.tabCount);
+      requestAnimationFrame(renderHeroAtlas);
 
-      document.getElementById("ctrl-ops").addEventListener("input", function (e) {
-        state.opsRate = Number(e.target.value);
-        document.getElementById("val-ops").textContent = state.opsRate;
-        document.getElementById("fill-ops").style.width = ((state.opsRate - 200) / 3000 * 100) + "%";
-        document.getElementById("hud-ops").textContent = state.opsRate.toLocaleString() + "/S";
-      });
+      // ======================================================================
+      // ENGINE 2: TWO-PHASE PRETEXT OBSTACLE-WRAPPING ENGINE (0 DOM REFLOWS)
+      // Phase 1 (`prepareStream`): caches exact word widths via offscreen measureText
+      // Phase 2 (`layoutAndDrawPretext`): pure arithmetic line-wrapping around lens
+      // ======================================================================
+      const ptCanvas = document.getElementById("pretext-canvas");
+      const ptCtx = ptCanvas.getContext("2d");
+      const ptReadout = document.getElementById("pretext-perf-readout");
 
-      document.getElementById("ctrl-tabs").addEventListener("input", function (e) {
-        state.tabCount = Number(e.target.value);
-        document.getElementById("val-tabs").textContent = state.tabCount;
-        document.getElementById("fill-tabs").style.width = ((state.tabCount - 2) / 8 * 100) + "%";
-        updatePips(state.tabCount);
-      });
-
-      document.getElementById("ctrl-pixel").addEventListener("input", function (e) {
-        state.pixelScale = Number(e.target.value);
-        document.getElementById("val-pixel").textContent = state.pixelScale + "x";
-        document.getElementById("fill-pixel").style.width = ((state.pixelScale - 1) / 3 * 100) + "%";
-        resize();
-        if (reducedMotion) draw();
-      });
-
-      document.getElementById("ctrl-rivals").addEventListener("change", function (e) {
-        state.showRivals = e.target.checked;
-        document.getElementById("hud-rival-status").textContent = state.showRivals
-          ? "OPENCLI: 310MS LAG · AGENT-REACH: 403 AUTH WALL"
-          : "RIVALS HIDDEN · PURE 0.36MS STATION LOOPBACK";
-      });
-
-      document.getElementById("ctrl-trails").addEventListener("change", function (e) {
-        state.trails = e.target.checked;
-      });
-
-      // Segmented buttons in sidebar
-      document.querySelectorAll("[data-sky]").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          document.querySelectorAll("[data-sky]").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
-          btn.setAttribute("aria-pressed", "true");
-          state.sky = btn.getAttribute("data-sky");
-          if (reducedMotion) draw();
-        });
-      });
-
-      document.querySelectorAll("[data-out]").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          document.querySelectorAll("[data-out]").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
-          btn.setAttribute("aria-pressed", "true");
-          const m = btn.getAttribute("data-out");
-          document.getElementById("hud-tok-saving").textContent = m === "@eN" ? "-99.4%" : (m === "md" ? "-99.1%" : "RAW 48K");
-        });
-      });
-
-      const cliPresets = {
-        claude: "claude mcp add station -- station mcp --auto-start",
-        cargo:  "git clone https://github.com/selibrah/station && cd station/daemon && cargo build --release",
-        read:   "station read https://www.linkedin.com/jobs"
-      };
-      document.querySelectorAll("[data-preset]").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          document.querySelectorAll("[data-preset]").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
-          btn.setAttribute("aria-pressed", "true");
-          document.getElementById("hero-cli-text").textContent = cliPresets[btn.getAttribute("data-preset")];
-        });
-      });
-
-      document.getElementById("hero-copy-btn").addEventListener("click", function () {
-        const btn = this;
-        navigator.clipboard.writeText(document.getElementById("hero-cli-text").textContent || "").then(function () {
-          btn.textContent = "COPIED";
-          setTimeout(function () { btn.textContent = "COPY"; }, 1400);
-        });
-      });
-
-      // Filter parameters search in sidebar
-      document.getElementById("param-filter").addEventListener("input", function (e) {
-        const q = e.target.value.trim().toLowerCase();
-        document.querySelectorAll(".param-group").forEach(function (grp) {
-          const hay = (grp.getAttribute("data-group") + " " + grp.innerText).toLowerCase();
-          grp.style.display = (!q || hay.includes(q)) ? "" : "none";
-        });
-      });
-
-      // INTEL tactical HUD modal
-      const intelBtn = document.getElementById("intel-btn");
-      const intelModal = document.getElementById("intel-dialog");
-      const intelSpecs = {
-        arch: '<dt>BINARY</dt><dd>4.5 MB Rust (Tokio + Axum)</dd><dt>PROTOCOL</dt><dd>Persistent CDP WebSockets</dd><dt>LATENCY</dt><dd>0.36 ms p50 / 0.97 ms p99</dd><dt>EXTENSION</dt><dd>None (Zero MV3 limits)</dd><dt>UPLOADS</dt><dd>Chunked DataTransfer (#2541 fix)</dd>',
-        mcp:  '<dt>COMMAND</dt><dd>station mcp --auto-start</dd><dt>PERCEPTION</dt><dd>station_snapshot, station_read, screenshot</dd><dt>ACTION</dt><dd>station_act, station_upload, inject</dd><dt>ROUTING</dt><dd>station_tabs (bg), station_navigate</dd>',
-        sec:  '<dt>BINDING</dt><dd>127.0.0.1 loopback only</dd><dt>AUTH</dt><dd>256-bit token (POSIX 0600)</dd><dt>CORS</dt><dd>Disabled (Web pages blocked)</dd><dt>GUARDRAILS</dt><dd>Pauses on CAPTCHA &amp; final submit</dd>'
+      const streams = {
+        jobs:
+          "[@job1 · 95pts] Senior Rust Systems Engineer @ Linear · Remote · $210k · Persistent WebSockets & local AI runtimes · " +
+          "[@job2 · 92pts] AI Browser Infrastructure Engineer @ Anthropic · Remote · $230k · Sub-ms MCP tool execution & sandboxing · " +
+          "[@job3 · 91pts] Staff Runtime Engineer @ Raycast · Remote EU · $195k · Native Swift 6 macOS & zero-idle telemetry · " +
+          "[@job4 · 89pts] Founding Systems Architect @ YC W26 · Remote · $185k · Replace brittle Playwright & MV3 scrapers · " +
+          "[@job5 · 87pts] Principal Backend Engineer @ Vercel · Remote · $220k · High-throughput edge & Rust protocol bridges · " +
+          "[@job6 · 85pts] Applied AI Agent Engineer @ Cursor · Hybrid · $205k · Deterministic @eN DOM snapshots (-99.4% tokens) · " +
+          "[@job7 · 84pts] Rust & WebAssembly Engine Lead @ Zed · Remote · $190k · 120 FPS GPU/Canvas typography & low-latency IPC.",
+        housing:
+          "[seen.db #01 · 95pts] Studio meublé Maârif Extension · 1,150 DH · 0.8 km tramway · Particulier · WhatsApp wa.me/2126... ready · " +
+          "[seen.db #02 · 92pts] Chambre calme Abdelmoumen · 1,050 DH · Price drop 1,300 -> 1,050 DH · Direct T1/T2 · Contacted · " +
+          "[seen.db #03 · 90pts] Colocation Gauthier sans vis-à-vis · 1,250 DH · 1.4 km · Fibre optique · Visit booked Saturday · " +
+          "[seen.db #04 · 88pts] Chambre lumineuse Racine · 1,200 DH · Avito verified · Private landlord · Follow-up reminder active · " +
+          "[seen.db #05 · 86pts] Appartement partagé Palmier · 1,100 DH · Chronological FB group match · Deduplicated across 4 groups · " +
+          "[seen.db #06 · 83pts] Studio Val Fleuri proche station · 1,300 DH · Mubawab + Avito cross-matched · Score 83/100.",
+        snapshot:
+          "Page: Jobs | LinkedIn (Authenticated Profile: jobs) · Scroll: 0 / 1,420 px · Token Savings: -99.4% vs 48,210 raw HTML tokens · " +
+          "[@e1] searchbox \"Title, skill or company\" value=\"Rust Systems Engineer\" · " +
+          "[@e2] button \"Date posted: Past 24 hours\" (active) · " +
+          "[@e3] button \"Remote\" (active) · " +
+          "[@e4] link \"Senior Rust Systems Engineer — Linear\" -> /jobs/view/409182736 · " +
+          "[@e5] input:file \"Upload tailored CV PDF\" (DataTransfer chunked ready — no OS dialog block) · " +
+          "[@e6] textbox \"Note to hiring manager\" · [@e7] button \"Save to Station SQLite CRM\"."
       };
 
-      intelBtn.addEventListener("click", function () {
-        const open = intelModal.hasAttribute("hidden");
-        if (open) intelModal.removeAttribute("hidden");
-        else intelModal.setAttribute("hidden", "");
-        intelBtn.setAttribute("aria-expanded", String(open));
+      const measureCanvas = document.createElement("canvas");
+      const mCtx = measureCanvas.getContext("2d");
+      const PT_FONT = "500 15px 'JetBrains Mono', monospace";
+      mCtx.font = PT_FONT;
+      const SPACE_W = mCtx.measureText(" ").width;
+
+      // Phase 1: Pretext `prepare()` — done once per dataset, ZERO DOM touches
+      const preparedCache = {};
+      function prepareStream(key) {
+        if (preparedCache[key]) return preparedCache[key];
+        mCtx.font = PT_FONT;
+        // Repeat text twice so full 360px stage is richly populated
+        const words = (streams[key] + "   " + streams[key]).split(/\s+/).filter(Boolean);
+        const tokens = words.map(function (w) {
+          const isHighlight = /^(\[@|\[seen\.db|\$\d+|0\.36ms|-99\.4%|9\dpts)/.test(w);
+          return { text: w, width: mCtx.measureText(w).width, highlight: isHighlight };
+        });
+        preparedCache[key] = tokens;
+        return tokens;
+      }
+
+      let activeStreamKey = "jobs";
+      prepareStream("jobs");
+
+      let ptw = 900, pth = 360, dpr = 1;
+      const ptMouse = { x: 450, y: 180, inside: false, t: 0 };
+
+      function resizePretext() {
+        dpr = Math.min(2, window.devicePixelRatio || 1);
+        const r = ptCanvas.getBoundingClientRect();
+        ptw = Math.max(300, r.width);
+        pth = 360;
+        ptCanvas.width = ptw * dpr;
+        ptCanvas.height = pth * dpr;
+        ptCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      window.addEventListener("resize", resizePretext);
+      resizePretext();
+
+      ptCanvas.addEventListener("pointermove", function (e) {
+        const r = ptCanvas.getBoundingClientRect();
+        ptMouse.x = e.clientX - r.left;
+        ptMouse.y = e.clientY - r.top;
+        ptMouse.inside = true;
+      });
+      ptCanvas.addEventListener("pointerleave", function () {
+        ptMouse.inside = false;
       });
 
-      document.querySelectorAll(".intel-tab").forEach(function (tab) {
+      document.querySelectorAll(".stream-pill").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          document.querySelectorAll(".stream-pill").forEach(function (b) { b.setAttribute("aria-selected", "false"); });
+          btn.setAttribute("aria-selected", "true");
+          activeStreamKey = btn.getAttribute("data-stream");
+          prepareStream(activeStreamKey);
+        });
+      });
+
+      // Phase 2: Pure arithmetic Pretext line-layout around moving circular obstacle
+      function renderPretextFrame() {
+        const t0 = performance.now();
+        ptMouse.t += 0.02;
+        const ox = ptMouse.inside ? ptMouse.x : (ptw * 0.5 + Math.cos(ptMouse.t) * (ptw * 0.24));
+        const oy = ptMouse.inside ? ptMouse.y : (pth * 0.5 + Math.sin(ptMouse.t * 1.4) * 75);
+        const orbR = 86;
+
+        ptCtx.fillStyle = "#0B0F18";
+        ptCtx.fillRect(0, 0, ptw, pth);
+
+        const tokens = prepareStream(activeStreamKey);
+        const padX = 26;
+        const lineH = 27;
+        let wordIdx = 0;
+
+        ptCtx.font = PT_FONT;
+        ptCtx.textBaseline = "middle";
+
+        for (let y = 30; y < pth - 20 && wordIdx < tokens.length; y += lineH) {
+          const dy = Math.abs(y - oy);
+          let segments = [[padX, ptw - padX]];
+
+          // Pure geometric chord intersection with circular optical lens
+          if (dy < orbR + 12) {
+            const halfChord = Math.sqrt(Math.max(0, (orbR + 12) * (orbR + 12) - dy * dy));
+            const leftEnd = ox - halfChord;
+            const rightStart = ox + halfChord;
+            segments = [];
+            if (leftEnd - padX > 60) segments.push([padX, leftEnd]);
+            if ((ptw - padX) - rightStart > 60) segments.push([rightStart, ptw - padX]);
+          }
+
+          for (let s = 0; s < segments.length; s++) {
+            let cursorX = segments[s][0];
+            const maxX = segments[s][1];
+
+            while (wordIdx < tokens.length) {
+              const tok = tokens[wordIdx];
+              if (cursorX + tok.width > maxX) break;
+              ptCtx.fillStyle = tok.highlight ? "#2DD4BF" : "#CBD5E1";
+              ptCtx.fillText(tok.text, cursorX, y);
+              cursorX += tok.width + SPACE_W;
+              wordIdx++;
+            }
+          }
+        }
+
+        // Draw the 0.36ms Pretext Inspection Loupe
+        const grad = ptCtx.createRadialGradient(ox, oy, 6, ox, oy, orbR);
+        grad.addColorStop(0, "rgba(56, 189, 248, 0.20)");
+        grad.addColorStop(1, "rgba(45, 212, 191, 0.03)");
+        ptCtx.fillStyle = grad;
+        ptCtx.beginPath();
+        ptCtx.arc(ox, oy, orbR, 0, Math.PI * 2);
+        ptCtx.fill();
+
+        ptCtx.strokeStyle = "#38BDF8";
+        ptCtx.lineWidth = 1.5;
+        ptCtx.beginPath();
+        ptCtx.arc(ox, oy, orbR, 0, Math.PI * 2);
+        ptCtx.stroke();
+
+        ptCtx.fillStyle = "#F2F5FA";
+        ptCtx.font = "600 12px 'JetBrains Mono', monospace";
+        ptCtx.textAlign = "center";
+        ptCtx.fillText("0.36 ms LENS", ox, oy - 7);
+        ptCtx.fillStyle = "#2DD4BF";
+        ptCtx.font = "500 11px 'JetBrains Mono', monospace";
+        ptCtx.fillText("0 DOM REFLOWS", ox, oy + 11);
+        ptCtx.textAlign = "left";
+
+        const dt = (performance.now() - t0).toFixed(2);
+        if (Math.random() < 0.12) {
+          ptReadout.textContent = "DOM reflows: 0 · Pretext math: " + dt + " ms";
+        }
+
+        if (!reducedMotion) requestAnimationFrame(renderPretextFrame);
+      }
+      renderPretextFrame();
+
+      // ======================================================================
+      // 3. CLI INSTALL SWITCHER & INTERACTIVE STUDIO TABS
+      // ======================================================================
+      const cliTabs = document.querySelectorAll(".cli-tab");
+      const cliCode = document.getElementById("cli-code");
+      const cliCopy = document.getElementById("cli-copy-btn");
+
+      cliTabs.forEach(function (tab) {
         tab.addEventListener("click", function () {
-          document.querySelectorAll(".intel-tab").forEach(function (t) { t.setAttribute("aria-selected", "false"); });
+          cliTabs.forEach(function (t) { t.setAttribute("aria-selected", "false"); });
           tab.setAttribute("aria-selected", "true");
-          document.getElementById("intel-content").innerHTML = intelSpecs[tab.getAttribute("data-intel")];
+          cliCode.textContent = tab.getAttribute("data-cmd");
+          cliCopy.textContent = "Copy";
         });
       });
 
-      // ======================================================================
-      // 3. SECTION 2 INTERACTIVE @eN INSPECTOR
-      // ======================================================================
-      const demoPayloads = {
-        snapshot: {
-          badge: "142 TOKENS (-99.4%)",
-          good: true,
-          text:
-            'Page: Senior Systems Engineer | LinkedIn\n' +
-            'URL: https://www.linkedin.com/jobs/view/409182736\n' +
-            'Scroll: 0 / 980 px (3 interactive refs)\n' +
-            'Headings: [h1] Senior Systems Engineer (Rust / AI Infrastructure)\n' +
-            '---\n' +
-            '[@e1] input "Referral note" value="Referred by Sarah — systems team"\n' +
-            '[@e2] file "Upload PDF"\n' +
-            '[@e3] button "Save Job"'
+      cliCopy.addEventListener("click", function () {
+        navigator.clipboard.writeText(cliCode.textContent || "").then(function () {
+          cliCopy.textContent = "Copied!";
+          setTimeout(function () { cliCopy.textContent = "Copy"; }, 1500);
+        });
+      });
+
+      const studioData = {
+        jobs: {
+          rows: [
+            { score: "95", title: "Senior Rust Systems Engineer", sub: "Linear · Remote · LinkedIn 24h", amt: "$210,000", stage: "Interview" },
+            { score: "91", title: "AI Tooling & Runtime Engineer", sub: "YC Startup · Remote · HN Jobs", amt: "$195,000", stage: "Applied" },
+            { score: "88", title: "Staff macOS & Swift Infrastructure", sub: "Raycast · Remote EU · ATS Board", amt: "$185,000", stage: "Matched" }
+          ],
+          chartTitle: "Compensation Distribution (USD)",
+          median: "Median: $195k",
+          bars: [28, 52, 94, 70, 40, 22],
+          caption: "Pipeline stages: Matched → Applied → Interview → Offer → Archived"
         },
-        markdown: {
-          badge: "198 TOKENS (-99.1%)",
-          good: true,
-          text:
-            '# Senior Systems Engineer (Rust / AI Infrastructure)\n' +
-            'Source: https://www.linkedin.com/jobs/view/409182736\n' +
-            'Token Reduction: 99.1%\n\n' +
-            '---\n\n' +
-            '**Linear** · Remote (US / EU) · $195k–$230k · 6 applicants\n\n' +
-            'Design sub-millisecond local developer daemons, persistent protocol bridges, and native desktop cockpits.'
+        housing: {
+          rows: [
+            { score: "95", title: "Studio meublé Maârif Extension", sub: "0.8 km tramway · Particulier · Avito", amt: "1,150 DH", stage: "Visit" },
+            { score: "92", title: "Chambre calme Abdelmoumen", sub: "Price drop 1,300 → 1,050 DH · FB Group", amt: "1,050 DH", stage: "Replied" },
+            { score: "89", title: "Colocation Gauthier sans vis-à-vis", sub: "1.4 km · WhatsApp wa.me ready", amt: "1,250 DH", stage: "Contacted" }
+          ],
+          chartTitle: "Monthly Rent Histogram (DH · 58 live rows)",
+          median: "Median: 1,180 DH",
+          bars: [35, 88, 96, 62, 30, 16],
+          caption: "Two-way synced with rent-finder/seen.db + 1-tap WhatsApp links"
         },
-        html: {
-          badge: "48,210 TOKENS (DOM BLOAT)",
-          good: false,
-          text:
-            '<div class="scaffold-layout__detail overflow-x-hidden jobs-search__job-details--container">\n' +
-            '  <div data-view-name="job-detail-page" class="artdeco-card ember-view relative">\n' +
-            '    <script nonce="Xw92">window.__rehydration__={/* 184 KB bundle */};<\/script>\n' +
-            '    <!-- 4,100+ nested divs burning LLM context and breaking CSS selectors -->'
+        mcp: {
+          rows: [
+            { score: "ON", title: "Claude Code & Claude Desktop", sub: "~/.claude.json · Auto-start enabled", amt: "11 Tools", stage: "Linked" },
+            { score: "ON", title: "Cursor & Windsurf IDE", sub: "~/.cursor/mcp.json · Non-destructive merge", amt: "4 Resources", stage: "Linked" },
+            { score: "ON", title: "Antigravity Agent Engine", sub: "stdio JSON-RPC · 0.36ms CDP pool", amt: "3 Prompts", stage: "Linked" }
+          ],
+          chartTitle: "LLM Context Token Usage per Page",
+          median: "-99.4% Saved",
+          bars: [98, 12, 8, 6, 5, 4],
+          caption: "Raw HTML (48k tok) vs Station @eN Snapshot (142 tok) & Clean Markdown"
         }
       };
 
-      document.querySelectorAll(".mode-tab").forEach(function (tab) {
+      document.querySelectorAll(".studio-tab").forEach(function (tab) {
         tab.addEventListener("click", function () {
-          document.querySelectorAll(".mode-tab").forEach(function (t) { t.setAttribute("aria-pressed", "false"); });
-          tab.setAttribute("aria-pressed", "true");
-          const d = demoPayloads[tab.getAttribute("data-fmt")];
-          document.getElementById("demo-code-box").textContent = d.text;
-          const badge = document.getElementById("demo-tok-badge");
-          badge.textContent = d.badge;
-          badge.className = "tok-chip mono " + (d.good ? "tok-good" : "tok-bad");
-        });
-      });
-
-      document.querySelectorAll(".ref-btn").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          const lat = (0.31 + Math.random() * 0.13).toFixed(2);
-          document.getElementById("demo-rpc-log").textContent =
-            "⚡ [" + lat + " ms] " + btn.getAttribute("data-cmd") + " -> { ok: true, ref: \"" + btn.getAttribute("data-ref") + "\" }";
+          document.querySelectorAll(".studio-tab").forEach(function (t) { t.setAttribute("aria-selected", "false"); });
+          tab.setAttribute("aria-selected", "true");
+          const d = studioData[tab.getAttribute("data-pane")];
+          document.getElementById("studio-left-list").innerHTML = d.rows.map(function (r) {
+            return (
+              '<div class="crm-row">' +
+                '<div style="display:flex;align-items:center;gap:12px;">' +
+                  '<span class="score-box mono">' + r.score + '</span>' +
+                  '<div><div style="font-weight:600;font-size:14.5px;">' + r.title + '</div>' +
+                  '<div style="font-size:12.5px;color:var(--slate);">' + r.sub + '</div></div>' +
+                '</div>' +
+                '<div style="text-align:right;">' +
+                  '<div class="mono" style="font-weight:600;font-size:13.5px;">' + r.amt + '</div>' +
+                  '<span class="stage-badge">' + r.stage + '</span>' +
+                '</div>' +
+              '</div>'
+            );
+          }).join("");
+          document.getElementById("chart-title").textContent = d.chartTitle;
+          document.getElementById("chart-median").textContent = d.median;
+          document.getElementById("chart-caption").textContent = d.caption;
+          document.getElementById("chart-bars").innerHTML = d.bars.map(function (h, idx) {
+            return '<div class="' + (idx === 2 || idx === 0 && tab.getAttribute("data-pane") === "mcp" ? 'median' : '') + '" style="height:' + h + '%;"></div>';
+          }).join("");
         });
       });
     })();
