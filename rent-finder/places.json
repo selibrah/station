@@ -1,0 +1,294 @@
+{
+  "from": "Abdelmoumen tram station",
+  "source": "OpenStreetMap, looked up 2026-11-12. Straight-line km from the area's centre; minutes are rough (14 min per km on foot, 5 min wait, 2.2 min per tram stop).",
+  "places": {
+    "Abdelmoumen": {
+      "km": 0.0,
+      "way": "On foot",
+      "minutes": 1,
+      "direct": true
+    },
+    "Abdel Moumen": {
+      "km": 0.0,
+      "way": "On foot",
+      "minutes": 1,
+      "direct": true
+    },
+    "عبد المومن": {
+      "km": 0.0,
+      "way": "On foot",
+      "minutes": 1,
+      "direct": true
+    },
+    "Hôpitaux": {
+      "km": 1.1,
+      "way": "On foot",
+      "minutes": 15,
+      "direct": true
+    },
+    "Quartier des Hôpitaux": {
+      "km": 1.1,
+      "way": "On foot",
+      "minutes": 15,
+      "direct": true
+    },
+    "Derb Ghallef": {
+      "km": 0.5,
+      "way": "On foot",
+      "minutes": 7,
+      "direct": true
+    },
+    "Derb Ghalef": {
+      "km": 0.5,
+      "way": "On foot",
+      "minutes": 7,
+      "direct": true
+    },
+    "Maarif": {
+      "km": 0.2,
+      "way": "On foot",
+      "minutes": 3,
+      "direct": true
+    },
+    "Palmier": {
+      "km": 1.3,
+      "way": "Tram T1 direct from Les Hôpitaux, 2 stops",
+      "minutes": 20,
+      "direct": true
+    },
+    "Bachkou": {
+      "km": 1.5,
+      "way": "Tram T1 direct from Mekka, 2 stops",
+      "minutes": 13,
+      "direct": true
+    },
+    "Anoual": {
+      "km": 0.2,
+      "way": "On foot",
+      "minutes": 2,
+      "direct": true
+    },
+    "Mers Sultan": {
+      "km": 2.1,
+      "way": "Tram T1 direct from Place Mohammed V, 4 stops",
+      "minutes": 18,
+      "direct": true
+    },
+    "Gauthier": {
+      "km": 2.2,
+      "way": "Tram T1 direct from Avenue Hassan II, 3 stops",
+      "minutes": 25,
+      "direct": true
+    },
+    "Racine": {
+      "km": 2.5,
+      "way": "Bus or taxi, no tram or busway stop within 1.5 km",
+      "minutes": null,
+      "direct": false
+    },
+    "Val Fleuri": {
+      "km": 1.1,
+      "way": "On foot",
+      "minutes": 16,
+      "direct": true
+    },
+    "Centre Ville": {
+      "km": 2.5,
+      "way": "Tram T1 direct from Marche Central, 6 stops",
+      "minutes": 25,
+      "direct": true
+    },
+    "Oasis": {
+      "km": 1.9,
+      "way": "Tram T1 direct from Gare Oasis, 3 stops",
+      "minutes": 12,
+      "direct": true
+    },
+    "Technopark": {
+      "km": 3.4,
+      "way": "Tram T1 direct from Zenith, 5 stops",
+      "minutes": 20,
+      "direct": true
+    },
+    "Beauséjour": {
+      "km": 2.2,
+      "way": "Tram T2 direct from Ghandi, 3 stops",
+      "minutes": 18,
+      "direct": true
+    },
+    "Hay Hassani": {
+      "km": 4.9,
+      "way": "Tram T2 direct from Sidi Abderrahmane, 10 stops",
+      "minutes": 39,
+      "direct": true
+    },
+    "Ain Diab": {
+      "km": 5.5,
+      "way": "Tram T2 direct from Ain Diab Plage, 13 stops",
+      "minutes": 44,
+      "direct": true
+    },
+    "Derb Sultan": {
+      "km": 2.8,
+      "way": "Tram T2 direct from Derb Sultan, 5 stops",
+      "minutes": 16,
+      "direct": true
+    },
+    "Al Fida": {
+      "km": 2.8,
+      "way": "Tram T2 direct from Place Sraghna, 4 stops",
+      "minutes": 24,
+      "direct": true
+    },
+    "Hay Mohammadi": {
+      "km": 6.6,
+      "way": "Tram T2 direct from Mdakra, 10 stops",
+      "minutes": 37,
+      "direct": true
+    },
+    "Ain Sebaa": {
+      "km": 9.0,
+      "way": "Tram T2 direct from Préfecture d'Aïn-Sebaâ, 16 stops",
+      "minutes": 53,
+      "direct": true
+    },
+    "Bernoussi": {
+      "km": 12.8,
+      "way": "Tram T2 direct from Terminus Sidi Bernoussi, 19 stops",
+      "minutes": 65,
+      "direct": true
+    },
+    "Sidi Bernoussi": {
+      "km": 12.8,
+      "way": "Tram T2 direct from Terminus Sidi Bernoussi, 19 stops",
+      "minutes": 65,
+      "direct": true
+    },
+    "Sidi Moumen": {
+      "km": 11.1,
+      "way": "Tram T1 direct from Ennassim, 25 stops",
+      "minutes": 63,
+      "direct": true
+    },
+    "Lissasfa": {
+      "km": 6.1,
+      "way": "Tram T1 direct from Lissasfa Terminus, 9 stops",
+      "minutes": 31,
+      "direct": true
+    },
+    "Oulfa": {
+      "km": 5.8,
+      "way": "Busway BW2 from Haj Fateh, then change to tram T1 or T2",
+      "minutes": null,
+      "direct": false
+    },
+    "Sidi Maarouf": {
+      "km": 5.0,
+      "way": "Tram T1 direct from Zenith, 5 stops",
+      "minutes": 36,
+      "direct": true
+    },
+    "Ain Chock": {
+      "km": 4.5,
+      "way": "Busway BW1 from Al Inara, then change to tram T1 or T2",
+      "minutes": null,
+      "direct": false
+    },
+    "Bourgogne": {
+      "km": 3.4,
+      "way": "Bus or taxi, no tram or busway stop within 1.5 km",
+      "minutes": null,
+      "direct": false
+    },
+    "Sidi Othmane": {
+      "km": 6.3,
+      "way": "Tram T3 from Lalla Meriem, then change to tram T1 or T2",
+      "minutes": null,
+      "direct": false
+    },
+    "Ben M'Sick": {
+      "km": 4.5,
+      "way": "Tram T3 from Dar Touzani, then change to tram T1 or T2",
+      "minutes": null,
+      "direct": false
+    },
+    "Ben Msik": {
+      "km": 4.5,
+      "way": "Tram T3 from Dar Touzani, then change to tram T1 or T2",
+      "minutes": null,
+      "direct": false
+    },
+    "Ben M'sik": {
+      "km": 4.5,
+      "way": "Tram T3 from Dar Touzani, then change to tram T1 or T2",
+      "minutes": null,
+      "direct": false
+    },
+    "Roches Noires": {
+      "km": 3.8,
+      "way": "Tram T1 direct from Place Al Yassir, 9 stops",
+      "minutes": 26,
+      "direct": true
+    },
+    "Californie": {
+      "km": 3.3,
+      "way": "Tram T1 direct from Panoramique, 4 stops",
+      "minutes": 26,
+      "direct": true
+    },
+    "Sbata": {
+      "km": 6.8,
+      "way": "Busway BW1 from Lahrizi, then change to tram T1 or T2",
+      "minutes": null,
+      "direct": false
+    },
+    "Moulay Rachid": {
+      "km": 7.5,
+      "way": "Tram T1 direct from Forces Auxilliaires, 19 stops",
+      "minutes": 60,
+      "direct": true
+    },
+    "CIL": {
+      "km": 2.9,
+      "way": "Tram T2 direct from Cité de l'Air, 9 stops",
+      "minutes": 36,
+      "direct": true
+    },
+    "Sidi Belyout": {
+      "km": 2.9,
+      "way": "Tram T1 direct from Place des Nations Unies, 5 stops",
+      "minutes": 19,
+      "direct": true
+    },
+    "2 Mars": {
+      "km": 1.2,
+      "way": "Tram T2 direct from 2 Mars, 2 stops",
+      "minutes": 9,
+      "direct": true
+    }
+  },
+  "also": {
+    "البرنوصي": "Bernoussi",
+    "برنوصي": "Bernoussi",
+    "سيدي مومن": "Sidi Moumen",
+    "عين السبع": "Ain Sebaa",
+    "المعاريف": "Maarif",
+    "معاريف": "Maarif",
+    "الحي المحمدي": "Hay Mohammadi",
+    "الحي الحسني": "Hay Hassani",
+    "درب السلطان": "Derb Sultan",
+    "درب غلف": "Derb Ghallef",
+    "الفداء": "Al Fida",
+    "ليساسفة": "Lissasfa",
+    "سباتة": "Sbata",
+    "الألفة": "Oulfa",
+    "الولفة": "Oulfa",
+    "عين الشق": "Ain Chock",
+    "مولاي رشيد": "Moulay Rachid",
+    "سيدي عثمان": "Sidi Othmane",
+    "بن مسيك": "Ben Msik",
+    "بنمسيك": "Ben Msik",
+    "بوركون": "Bourgogne",
+    "عين الذئاب": "Ain Diab"
+  }
+}

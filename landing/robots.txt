@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://selibrah.github.io/station/sitemap.xml

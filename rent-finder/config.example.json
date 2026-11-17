@@ -1,0 +1,40 @@
+{
+  "avito_searches": [
+    "https://www.avito.ma/fr/casablanca/colocations-colocation?price=900-1400"
+  ],
+  "mubawab_searches": [
+    "https://www.mubawab.ma/fr/st/casablanca/chambres-a-louer:o:n"
+  ],
+  "facebook_groups": [
+    "https://www.facebook.com/groups/YOUR_GROUP_ID"
+  ],
+  "facebook_every_minutes": 15,
+  "facebook_per_pass": 10,
+  "facebook_want": {
+    "must_words": ["coloc", "chambre"],
+    "exclude_words": ["cherche chambre", "recherche chambre", "vendre"]
+  },
+  "want": {
+    "price_min": 900,
+    "price_max": 1400,
+    "areas": ["Maarif", "Gauthier", "Racine", "Abdelmoumen"],
+    "must_words": [],
+    "exclude_words": ["par jour", "par nuit"],
+    "private_only": false,
+    "posts_any_area": true
+  },
+  "urgent": {
+    "areas": ["Abdelmoumen", "Maarif", "Gauthier", "Racine"]
+  },
+  "message": "Bonjour, je suis intéressé(e) par votre annonce « {title} » à {price} DH sur {source}. Est-elle toujours disponible ?",
+  "telegram_token": "",
+  "telegram_chat_id": "",
+  "report_hour": 20,
+  "start_station": [
+    "station",
+    "--profile-name",
+    "rent",
+    "--cdp-port",
+    "9223"
+  ]
+}

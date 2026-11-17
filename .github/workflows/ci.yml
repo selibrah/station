@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  rust-daemon:
+    name: Rust Daemon & MCP (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-14, ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: daemon
+      - name: Run cargo test
+        working-directory: daemon
+        run: cargo test --locked
+      - name: Build release binary
+        working-directory: daemon
+        run: cargo build --release --locked
+
+  macos-studio:
+    name: Station Studio Swift 6 (macOS 14+)
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build StationStudio & StationCore
+        working-directory: studio-app
+        run: swift build -c release

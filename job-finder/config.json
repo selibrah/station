@@ -1,0 +1,35 @@
+{
+  "searches": [
+    {
+      "source": "hn",
+      "category": "jobs",
+      "url": "https://news.ycombinator.com/jobs"
+    },
+    {
+      "source": "linkedin",
+      "category": "jobs",
+      "url": "https://www.linkedin.com/jobs/search/?keywords=software%20engineer&f_TPR=r86400"
+    }
+  ],
+  "want": {
+    "boost_words": [
+      "rust",
+      "swift",
+      "typescript",
+      "python",
+      "ai",
+      "agent",
+      "systems",
+      "backend",
+      "fullstack",
+      "full-stack",
+      "remote"
+    ],
+    "must_words": [],
+    "exclude_words": [
+      "unpaid",
+      "intern only",
+      "clearance required"
+    ]
+  }
+}

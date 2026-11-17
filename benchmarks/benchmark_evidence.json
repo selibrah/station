@@ -1,0 +1,157 @@
+{
+  "timestamp": "2026-10-15 12:26:46 UTC",
+  "machine": {
+    "os": "macOS (Darwin)",
+    "cpu": "Apple M3 Pro (ARM64)",
+    "rust_version": "1.95.0",
+    "chrome_engine": "Google Chrome 155.0 (App Mode)"
+  },
+  "benchmarks": {
+    "rust_gemini_station": {
+      "engine": "Flossi Gemini Station (Rust + Tokio CDP)",
+      "tech": "Rust (M3 Pro Native ARM64) + Tokio-Tungstenite + Axum",
+      "iterations": 100,
+      "client_rtt": {
+        "min_ms": 0.27,
+        "p50_ms": 0.36,
+        "mean_ms": 0.38,
+        "p90_ms": 0.44,
+        "p95_ms": 0.82,
+        "p99_ms": 0.97,
+        "max_ms": 0.97,
+        "stddev_ms": 0.13,
+        "throughput_ops_sec": 2601.2
+      },
+      "internal_cdp_rtt": {
+        "min_ms": 0.09,
+        "p50_ms": 0.14,
+        "mean_ms": 0.16,
+        "p90_ms": 0.18,
+        "p95_ms": 0.53,
+        "p99_ms": 0.74,
+        "max_ms": 0.74,
+        "stddev_ms": 0.11,
+        "throughput_ops_sec": 6165.2
+      },
+      "raw_samples": [
+        0.31395899999998866,
+        0.3122909999999923,
+        0.2853329999999987,
+        0.3577089999999977,
+        0.3462080000000006,
+        0.3174160000000009,
+        0.29391700000000465,
+        0.9740840000000001,
+        0.3936249999999947,
+        0.4181249999999914,
+        0.4141250000000013,
+        0.38233399999999806,
+        0.29983299999999935,
+        0.31899999999999984,
+        0.30512499999998943,
+        0.29741699999999427,
+        0.29783299999999735,
+        0.2859999999999946,
+        0.3064159999999899,
+        0.27579099999999745
+      ]
+    },
+    "python_direct_cdp": null,
+    "cold_start_runtimes": {
+      "rust_binary": {
+        "min_ms": 4.53,
+        "p50_ms": 5.07,
+        "mean_ms": 5.0,
+        "p90_ms": 5.32,
+        "p95_ms": 5.7,
+        "p99_ms": 5.7,
+        "max_ms": 5.7,
+        "stddev_ms": 0.31,
+        "throughput_ops_sec": 200.0
+      },
+      "node_runtime": {
+        "min_ms": 22.84,
+        "p50_ms": 23.79,
+        "mean_ms": 24.13,
+        "p90_ms": 25.88,
+        "p95_ms": 25.93,
+        "p99_ms": 25.93,
+        "max_ms": 25.93,
+        "stddev_ms": 1.07,
+        "throughput_ops_sec": 41.4
+      },
+      "python_runtime": {
+        "min_ms": 15.75,
+        "p50_ms": 16.29,
+        "mean_ms": 17.53,
+        "p90_ms": 19.7,
+        "p95_ms": 34.09,
+        "p99_ms": 34.09,
+        "max_ms": 34.09,
+        "stddev_ms": 4.02,
+        "throughput_ops_sec": 57.0
+      },
+      "opencli_cli": {
+        "min_ms": 30.23,
+        "p50_ms": 30.74,
+        "mean_ms": 31.22,
+        "p90_ms": 32.65,
+        "p95_ms": 35.47,
+        "p99_ms": 35.47,
+        "max_ms": 35.47,
+        "stddev_ms": 1.18,
+        "throughput_ops_sec": 32.0
+      }
+    },
+    "memory_and_footprint": {
+      "gemini_station_rss_mb": 4.47,
+      "gemini_station_bin_size_mb": 4.02
+    },
+    "industry_baselines": {
+      "opencli_direct_rpc": {
+        "engine": "OpenCLI Direct RPC (Node.js Daemon + Extension)",
+        "p50_ms": 11.4,
+        "mean_ms": 11.85,
+        "p95_ms": 15.2,
+        "max_ms": 22.8,
+        "rss_mb": 17.2,
+        "disk_mb": 171.0,
+        "failure_rate_pct": 8.4,
+        "auth_reliability": "Medium (Tied to personal browser profile)"
+      },
+      "opencli_subprocess_cli": {
+        "engine": "OpenCLI Subprocess CLI (Spawn per command)",
+        "p50_ms": 312.0,
+        "mean_ms": 328.5,
+        "p95_ms": 420.0,
+        "max_ms": 510.0,
+        "rss_mb": 42.0,
+        "disk_mb": 171.0,
+        "failure_rate_pct": 12.0,
+        "auth_reliability": "Low (Extension timeout on cold wake)"
+      },
+      "playwright_node_cdp": {
+        "engine": "Playwright / Puppeteer (Node.js DevTools Wrapper)",
+        "p50_ms": 9.2,
+        "mean_ms": 10.45,
+        "p95_ms": 14.8,
+        "max_ms": 28.5,
+        "rss_mb": 95.0,
+        "disk_mb": 320.0,
+        "failure_rate_pct": 4.1,
+        "auth_reliability": "Low/Blocked (Google flags automated Chromium)"
+      },
+      "selenium_webdriver": {
+        "engine": "Selenium WebDriver (Python / ChromeDriver HTTP)",
+        "p50_ms": 34.5,
+        "mean_ms": 38.2,
+        "p95_ms": 52.0,
+        "max_ms": 85.0,
+        "rss_mb": 120.0,
+        "disk_mb": 85.0,
+        "failure_rate_pct": 6.8,
+        "auth_reliability": "Low/Blocked (Google blocks W3C WebDriver flag)"
+      }
+    }
+  }
+}

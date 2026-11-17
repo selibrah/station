@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Dar Radar</title>
+<style>
+/* Mobile first: the base rules are the phone layout; the block at the bottom widens it. */
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,.10); --wash: rgba(11,11,11,.04);
+  --series: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --good: #006300; --critical: #d03b3b; --warn: #8a5a00; --wa: #0f7a40;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,.10); --wash: rgba(255,255,255,.05);
+    --series: #3987e5; --s2: #d95926; --s3: #199e70; --good: #0ca30c; --critical: #e66767; --warn: #fab219; --wa: #0f7a40;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font: 16px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+       padding-bottom: calc(64px + env(safe-area-inset-bottom)); -webkit-text-size-adjust: 100%; }
+a { color: inherit; }
+main, header .in { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+header { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 5; }
+header .in { padding-top: 10px; padding-bottom: 10px; }
+h1 { font-size: 18px; margin: 0; }
+h1 small { font-weight: 400; color: var(--ink2); font-size: 13px; margin-left: 6px; }
+#health { font-size: 13px; color: var(--ink2); margin-top: 2px; }
+#health b { font-weight: 600; }
+.ok { color: var(--good); } .bad { color: var(--critical); } .warn { color: var(--warn); }
+nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; display: flex; background: var(--surface);
+      border-top: 1px solid var(--border); padding-bottom: env(safe-area-inset-bottom); }
+nav button { flex: 1; min-height: 58px; font: inherit; font-size: 11px; background: none; border: 0; border-top: 2px solid transparent;
+             color: var(--ink2); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; padding: 4px 2px; }
+nav button .i { font-size: 19px; line-height: 1.2; }
+nav button[aria-selected="true"] { color: var(--ink); border-color: var(--ink); font-weight: 600; }
+nav button:focus-visible, .btn:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--series); outline-offset: 2px; }
+section { display: none; padding: 14px 0 24px; }
+section.on { display: block; }
+h2 { font-size: 16px; margin: 24px 0 10px; }
+h2:first-child { margin-top: 0; }
+h2 small { display: block; font-weight: 400; color: var(--ink2); font-size: 13px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; }
+.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.tile .k { font-size: 13px; color: var(--ink2); }
+.tile .v { font-size: 24px; font-weight: 650; line-height: 1.25; }
+.tile .s { font-size: 12px; color: var(--muted); }
+.offers { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.offer { display: flex; flex-direction: column; gap: 8px; }
+.offer.gone { opacity: .6; }
+.offer .top { display: flex; gap: 10px; align-items: baseline; justify-content: space-between; }
+.rank { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.price { font-size: 22px; font-weight: 650; white-space: nowrap; }
+.title { font-weight: 600; overflow-wrap: anywhere; }
+.meta { font-size: 13px; color: var(--ink2); overflow-wrap: anywhere; }
+.travel { font-size: 14px; padding: 8px 10px; border-radius: 8px; background: var(--wash); overflow-wrap: anywhere; }
+.travel b { font-weight: 600; }
+.travel.unknown { color: var(--ink2); }
+.snip { font-size: 13px; color: var(--ink2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { font-size: 12px; padding: 2px 9px; border-radius: 99px; background: var(--wash); color: var(--ink2); white-space: nowrap; }
+.chip.src { color: var(--ink); }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; background: var(--muted); }
+.dot.avito { background: var(--series); } .dot.mubawab { background: var(--s2); } .dot.facebook { background: var(--s3); }
+.chip.near { color: var(--ink); font-weight: 600; box-shadow: inset 0 0 0 1px var(--axis); }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.offer > .actions:first-of-type { margin-top: auto; }
+.btn, select, input[type=text], input[type=search] { font: inherit; font-size: 16px; min-height: 44px; padding: 8px 12px; border-radius: 9px;
+  border: 1px solid var(--axis); background: var(--surface); color: var(--ink); text-decoration: none; }
+.btn { cursor: pointer; white-space: nowrap; flex: 1; display: inline-flex; align-items: center; justify-content: center; }
+.btn:hover { background: var(--wash); }
+.btn.wa { background: var(--wa); border-color: var(--wa); color: #fff; font-weight: 600; }
+.btn.wa:hover { filter: brightness(1.1); }
+.actions select { flex: 1 1 150px; }
+.actions .note { flex: 2 1 180px; min-width: 0; }
+.filters { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.filters input[type=search], .filters label { grid-column: 1 / -1; }
+.filters select { min-width: 0; width: 100%; }
+.filters label { font-size: 14px; color: var(--ink2); display: flex; gap: 8px; align-items: center; min-height: 44px; }
+.filters input[type=checkbox] { width: 20px; height: 20px; }
+.tablewrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-size: 12px; font-weight: 600; color: var(--ink2); padding: 6px 8px; border-bottom: 1px solid var(--axis); white-space: nowrap; }
+td { padding: 9px 8px; border-bottom: 1px solid var(--grid); vertical-align: top; font-size: 14px; }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.empty { color: var(--ink2); padding: 18px; text-align: center; }
+.cols { display: grid; grid-template-columns: 1fr; gap: 10px; align-items: start; }
+.col h3 { font-size: 13px; margin: 0 0 8px; color: var(--ink2); font-weight: 600; }
+.col .item { padding: 10px 0; border-top: 1px solid var(--grid); font-size: 14px; }
+.col .item:first-of-type { border-top: 0; }
+.job { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--grid); }
+.job:first-child { border-top: 0; }
+.job > div { flex: 1 1 230px; min-width: 0; }
+.job .btn, .jobsall .btn { flex: 0 0 auto; min-width: 88px; }
+.jobsall { display: flex; gap: 8px; padding-top: 12px; border-top: 1px solid var(--axis); }
+.jobsall:empty { display: none; }
+#jobs .card + .card { margin-top: 10px; }
+#jobs pre { overflow-x: auto; }
+.grid2 { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.hbar { display: grid; grid-template-columns: minmax(84px, 32%) 1fr auto; gap: 8px; align-items: center; padding: 5px 0; font-size: 13px; }
+.hbar .track { height: 12px; }
+.hbar .fill { height: 12px; background: var(--series); border-radius: 0 4px 4px 0; }
+.hbar .val { color: var(--ink2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.vbars { display: flex; align-items: flex-end; gap: 2px; height: 130px; border-bottom: 1px solid var(--axis); margin-top: 18px; }
+.vbars .b { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; }
+.vbars .fill { width: 70%; max-width: 34px; background: var(--series); border-radius: 4px 4px 0 0; }
+.vbars .c { font-size: 12px; color: var(--ink2); font-variant-numeric: tabular-nums; }
+.vlabels { display: flex; gap: 2px; font-size: 11px; color: var(--muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
+.vlabels span { flex: 1 1 0; min-width: 0; display: flex; justify-content: center; white-space: nowrap; }
+dl { display: grid; grid-template-columns: 1fr; gap: 2px; margin: 0; font-size: 14px; }
+dt { color: var(--ink2); margin-top: 10px; } dt:first-child { margin-top: 0; } dd { margin: 0; overflow-wrap: anywhere; }
+.words { display: flex; gap: 5px; flex-wrap: wrap; }
+pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 13px; margin: 0; color: var(--ink2); }
+#tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--page); font-size: 12px; padding: 4px 8px; border-radius: 6px; display: none; z-index: 9; max-width: 260px; }
+.hint { font-size: 13px; color: var(--ink2); margin: 8px 0 0; }
+
+@media (min-width: 760px) {
+  body { padding-bottom: 0; font-size: 15px; }
+  header .in { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding-top: 12px; padding-bottom: 0; }
+  h1 { font-size: 20px; }
+  #health { margin: 0 0 0 auto; }
+  nav { position: static; width: 100%; gap: 4px; border-top: 0; padding-bottom: 0; background: none; }
+  nav button { flex: none; flex-direction: row; min-height: 0; font-size: 15px; padding: 10px 12px; border-top: 0; border-bottom: 2px solid transparent; }
+  nav button .i { display: none; }
+  section { padding: 20px 0 48px; }
+  h2 small { display: inline; margin-left: 6px; }
+  .tiles { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .tile .v { font-size: 28px; }
+  .offers { grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); }
+  .btn, select, input[type=text], input[type=search] { font-size: 14px; min-height: 36px; padding: 6px 12px; }
+  .filters { display: flex; flex-wrap: wrap; align-items: center; }
+  .filters input[type=search] { flex: 1 1 220px; }
+  .filters select { width: auto; }
+  .filters label { min-height: 0; }
+  .cols { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+  .grid2 { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+  dl { grid-template-columns: minmax(120px, 190px) 1fr; gap: 8px 14px; }
+  dt { margin-top: 0; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="in">
+    <h1>Dar Radar <small id="sub"></small></h1>
+    <div id="health" role="status">Loading…</div>
+    <nav role="tablist" aria-label="Sections">
+      <button role="tab" data-tab="overview"><span class="i" aria-hidden="true">🏠</span>Overview</button>
+      <button role="tab" data-tab="listings"><span class="i" aria-hidden="true">📋</span>Listings</button>
+      <button role="tab" data-tab="outreach"><span class="i" aria-hidden="true">💬</span>Outreach</button>
+      <button role="tab" data-tab="stats"><span class="i" aria-hidden="true">📊</span>Stats</button>
+      <button role="tab" data-tab="rules"><span class="i" aria-hidden="true">⚙️</span>Search</button>
+      <button role="tab" data-tab="jobs"><span class="i" aria-hidden="true">⏯️</span>Jobs</button>
+    </nav>
+  </div>
+</header>
+<main>
+  <section id="overview">
+    <div class="tiles" id="tiles"></div>
+    <h2>Best offers <small>ranked by distance to Abdelmoumen, then price, then how easy it is to reach the owner</small></h2>
+    <div class="offers" id="offers"></div>
+    <h2>Where you stand</h2>
+    <div class="card" id="funnel"></div>
+  </section>
+
+  <section id="listings">
+    <div class="filters">
+      <input type="search" id="q" placeholder="Search title, area or text" aria-label="Search listings">
+      <select id="fsource" aria-label="Source"><option value="">All sources</option></select>
+      <select id="fstatus" aria-label="Status"><option value="">Any status</option></select>
+      <select id="fsort" aria-label="Sort"><option value="score">Best first</option><option value="near">Nearest first</option><option value="price">Cheapest first</option><option value="new">Newest first</option></select>
+      <label><input type="checkbox" id="fgone"> <span id="gonelabel">Show no longer matching</span></label>
+    </div>
+    <div class="offers" id="rows"></div>
+  </section>
+
+  <section id="outreach">
+    <div class="cols" id="pipeline"></div>
+    <h2>The message the WhatsApp button fills in</h2>
+    <div class="card"><pre id="message"></pre><p class="hint" id="outhint">You press send in WhatsApp yourself. To change the wording, edit "message" in config.json.</p></div>
+  </section>
+
+  <section id="stats">
+    <div class="grid2">
+      <div class="card"><h2>Matching rooms by area <small>distance to Abdelmoumen and median price</small></h2><div id="byarea"></div></div>
+      <div class="card"><h2>Price spread <small>DH per month</small></h2><div id="byprice"></div></div>
+      <div class="card"><h2>Found per day <small>last 14 days</small></h2><div id="byday"></div></div>
+      <div class="card"><h2>Matching rooms by source</h2><div id="bysource"></div></div>
+    </div>
+  </section>
+
+  <section id="rules">
+    <div class="grid2">
+      <div class="card"><h2>What the watcher looks for</h2><dl id="rulelist"></dl><p class="hint">Read-only here. To change a rule, edit config.json on the Mac; the next pass picks it up.</p></div>
+      <div class="card"><h2>Watcher health</h2><div class="tablewrap"><table><thead><tr><th>Source</th><th>Searches</th><th>Checked</th><th>Every</th><th>State</th></tr></thead><tbody id="sources"></tbody></table></div><div id="problems"></div>
+        <p class="hint">Distances are straight lines from the centre of each area to Abdelmoumen tram station, and travel times are rough estimates, both from OpenStreetMap.</p></div>
+    </div>
+  </section>
+  <section id="jobs">
+    <div class="card"><h2>What runs in the background</h2><div id="joblist"></div><div class="jobsall" id="jobsall"></div><p class="hint" id="jobhint"></p></div>
+    <div class="card"><h2>Without this page, in Terminal</h2>
+<pre>cd ~/Desktop/gemini-station-workspace/rent-finder
+python3 dashboard.py --jobs     # what is running
+python3 dashboard.py --stop     # stop the watcher and its browser
+python3 dashboard.py --start    # turn them back on
+python3 dashboard.py            # this page, at http://127.0.0.1:8787</pre>
+      <p class="hint">Stopping deletes nothing: the listings, your notes, the rules and the Facebook sign-in stay as they are. To take the hosted copy off the web as well, remove the dar-radar project in Vercel.</p></div>
+  </section>
+</main>
+<div id="tip" role="tooltip"></div>
+
+<script>
+// Every listing field is text scraped from the web: it only ever reaches the page through esc().
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+const $ = id => document.getElementById(id);
+const LABEL = {new: "Not contacted", contacted: "Contacted", replied: "Replied", visit: "Visit planned", dropped: "Not interested"};
+const SOURCE = {avito: "Avito", mubawab: "Mubawab", facebook: "Facebook"};
+const dh = n => n == null ? "Price not stated" : String(n).replace(/\B(?=(\d{3})+$)/g, " ") + " DH";
+// Timestamps are the Mac's wall-clock time; S.utc_offset (minutes) turns them into real instants on any device.
+const at = iso => {
+  const m = S && S.utc_offset;
+  if (m == null || iso instanceof Date) return new Date(iso);
+  const a = Math.abs(m), p = n => String(n).padStart(2, "0");
+  return new Date(iso + (m < 0 ? "-" : "+") + p(a / 60 | 0) + ":" + p(a % 60));
+};
+const hm = iso => iso ? at(iso).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"}) : "never";
+const ago = iso => {
+  if (!iso) return "never";
+  const m = Math.max(0, Math.round((Date.now() - at(iso)) / 60000));
+  return m < 60 ? m + " min ago" : m < 2880 ? Math.round(m / 60) + " h ago" : Math.round(m / 1440) + " days ago";
+};
+let S = null;
+
+// The hosted copy is a read-only snapshot: it shows where you stand, and the Mac is where you change it.
+const statusSelect = (a, i) => S.readonly ? `<span class="chip">${LABEL[a.status]}</span>` : `<select data-status="${i}" aria-label="Status of ${esc(a.title)}">` +
+  S.statuses.map(s => `<option value="${s}"${s === a.status ? " selected" : ""}>${LABEL[s]}</option>`).join("") + `</select>`;
+const noteField = (a, i) => S.readonly ? (a.note ? `<span class="meta">“${esc(a.note)}”</span>` : "")
+  : `<input type="text" class="note" data-note="${i}" value="${esc(a.note)}" placeholder="Note" aria-label="Note for ${esc(a.title)}" maxlength="500">`;
+const reach = (a, i) =>
+  (a.wa ? `<a class="btn wa" data-wa="${i}" href="${esc(a.wa)}" target="_blank" rel="noopener noreferrer">WhatsApp</a>` : "") +
+  (a.url ? `<a class="btn" href="${esc(a.url)}" target="_blank" rel="noopener noreferrer">Open listing</a>` : "");
+// The colour is only a second cue: the tag always carries the source name.
+const COLOR = {avito: "var(--series)", mubawab: "var(--s2)", facebook: "var(--s3)"};
+const srcTag = a => `<span class="chip src"><i class="dot${SOURCE[a.source] ? " " + a.source : ""}"></i>${esc(SOURCE[a.source] || a.source)}</span>`;
+const where = a => [a.district, a.rooms ? a.rooms + " ch" : "", a.size && a.size <= 300 ? a.size + " m²" : "",
+  a.seller === "PRIVATE" ? "Particulier" : a.seller === "STORE" ? "Agence" : "", "found " + ago(a.first_seen)].filter(Boolean).map(esc).join(" · ");
+const travel = a => a.km == null ? `<div class="travel unknown">📍 Distance to Abdelmoumen not known for this area</div>`
+  : `<div class="travel"><b>${a.way === "On foot" ? "🚶" : a.direct ? "🚋" : "🚌"} ${esc(a.km)} km from Abdelmoumen</b><br>${esc(a.way)}${a.minutes ? ` · about ${esc(a.minutes)} min` : ""}</div>`;
+const chips = a => `<div class="chips">` + srcTag(a) + a.why.map(w => `<span class="chip${w.startsWith("Near") ? " near" : ""}">${w.startsWith("Near") ? "📍 " : ""}${esc(w)}</span>`).join("") +
+  (a.follow_up ? `<span class="chip warn">⏰ Follow up</span>` : "") + `</div>`;
+// One card for a listing, used by the overview (ranked, no note) and the full list (with note and phone).
+const card = (a, i, rank, full) => `<article class="card offer${a.live ? "" : " gone"}">
+  <div class="top"><span class="rank">${rank == null ? "" : `#${rank + 1} · `}score ${a.score}</span><span class="price">${esc(dh(a.price))}</span></div>
+  <div class="title">${esc(a.title)}</div><div class="meta">${where(a)}${a.live ? "" : " · no longer matching"}</div>
+  ${travel(a)}${a.snippet && a.snippet !== a.title ? `<div class="snip">${esc(a.snippet)}</div>` : ""}${chips(a)}
+  ${reach(a, i) ? `<div class="actions">${reach(a, i)}</div>` : ""}
+  <div class="actions">${statusSelect(a, i)}${full ? noteField(a, i) : ""}</div>
+  ${full && a.phone ? `<div class="meta">☎ ${esc(a.phone)}</div>` : ""}</article>`;
+
+function hbars(el, rows, max) {
+  $(el).innerHTML = rows.length ? rows.map(r => `<div class="hbar" data-tip="${esc(r.tip)}"><span>${esc(r.name)}</span>` +
+    `<div class="track"><div class="fill" style="width:${max ? 100 * r.count / max : 0}%;min-width:${r.count ? 2 : 0}px${r.color ? ";background:" + r.color : ""}"></div></div><span class="val">${esc(r.val)}</span></div>`).join("")
+    : `<div class="empty">Nothing to show yet.</div>`;
+}
+function vbars(el, rows, every) {
+  const max = Math.max(1, ...rows.map(r => r.count));
+  $(el).innerHTML = !rows.length ? `<div class="empty">Nothing to show yet.</div>` :
+    `<div class="vbars">` + rows.map(r => `<div class="b" data-tip="${esc(r.tip)}"><span class="c">${r.count || ""}</span>` +
+      `<div class="fill" style="height:${r.count ? Math.max(3, 100 * r.count / max) : 0}px"></div></div>`).join("") + `</div>` +
+    `<div class="vlabels">` + rows.map((r, i) => `<span>${i % every ? "" : esc(r.label)}</span>`).join("") + `</div>`;
+}
+
+function render() {
+  const {stats: st, health: h, rules: r, listings: L} = S;
+  const shown = L.map((a, i) => [a, i]).filter(([a]) => a.live && a.status !== "dropped");
+
+  $("sub").textContent = `${dh(r.price_min).replace(" DH", "")}–${dh(r.price_max)} · ${h.sources.length} sources`;
+  const last = h.last_pass, late = !last || (Date.now() - at(last.at)) > 40 * 60000;
+  const broken = h.sources.filter(s => s.fails > 0).map(s => SOURCE[s.name]);
+  const day = iso => at(iso).toLocaleDateString([], {day: "numeric", month: "short"}) + " " + hm(iso);
+  $("health").innerHTML = S.readonly ? (Date.now() - at(S.now) > ((S.refresh_hours || 3) + 2) * 3600000
+      ? `<b class="bad">⚠ No update since ${esc(day(S.now))}</b> · the Mac may be asleep or off`
+      : `<b class="ok">✓ Snapshot</b> from ${esc(day(S.now))} · refreshes when a listing changes, at least every ${S.refresh_hours === 1 ? "hour" : esc(S.refresh_hours || 3) + " h"}`)
+    : late ? `<b class="bad">⚠ The watcher has not run since ${last ? esc(hm(last.at)) : "it was set up"}</b>`
+    : broken.length ? `<b class="warn">⚠ ${esc(broken.join(", "))} failing</b> · last check ${esc(hm(last.at))}`
+    : `<b class="ok">✓ Watching</b> · last check ${esc(hm(last.at))} · next about ${esc(hm(new Date(at(last.at).getTime() + 15 * 60000)))}`;
+
+  const nearest = shown.map(([a]) => a).filter(a => a.km != null).sort((x, y) => x.km - y.km)[0];
+  const tile = (k, v, s) => `<div class="card tile"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${s}</div></div>`;
+  $("tiles").innerHTML =
+    tile("Matching now", st.live, st.gone ? `${st.gone} no longer match` : "across all sources") +
+    tile("New in 24 h", st.new_24h, "first seen since yesterday") +
+    tile("Closest room", nearest ? esc(nearest.km) + " km" : "–", nearest ? esc(nearest.district) + (nearest.minutes ? ` · about ${esc(nearest.minutes)} min` : "") : "no distance known") +
+    tile("Median price", st.median == null ? "–" : esc(dh(st.median)), st.lowest == null ? "" : "lowest " + esc(dh(st.lowest))) +
+    tile("Contacted", st.funnel.contacted + st.funnel.replied + st.funnel.visit, `${st.funnel.replied + st.funnel.visit} replied`) +
+    tile("To follow up", st.follow_up, "over 24 h ago, no reply");
+
+  $("offers").innerHTML = shown.slice(0, 6).map(([a, i], n) => card(a, i, n, false)).join("")
+    || `<div class="card empty">No matching listing right now. The watcher checks every 15 minutes.</div>`;
+
+  hbars("funnel", S.statuses.map(s => ({name: LABEL[s], count: st.funnel[s], val: st.funnel[s], tip: `${LABEL[s]}: ${st.funnel[s]} of ${L.length} listings`})), L.length || 1);
+
+  // All listings
+  const q = $("q").value.trim().toLowerCase(), fs = $("fsource").value, ft = $("fstatus").value, sort = $("fsort").value;
+  $("gonelabel").textContent = `Show ${st.gone} that no longer match`;
+  let rows = L.map((a, i) => [a, i]).filter(([a]) => ($("fgone").checked || a.live) && (!fs || a.source === fs) && (!ft || a.status === ft) &&
+    (!q || (a.title + " " + a.district + " " + a.snippet + " " + a.note).toLowerCase().includes(q)));
+  if (sort === "price") rows.sort((x, y) => (x[0].price ?? 1e9) - (y[0].price ?? 1e9));
+  if (sort === "near") rows.sort((x, y) => (x[0].km ?? 1e9) - (y[0].km ?? 1e9));
+  if (sort === "new") rows.sort((x, y) => y[0].first_seen.localeCompare(x[0].first_seen));
+  $("rows").innerHTML = rows.map(([a, i]) => card(a, i, null, true)).join("") || `<div class="card empty">No listing fits these filters.</div>`;
+
+  // Outreach
+  $("pipeline").innerHTML = ["contacted", "replied", "visit", "dropped"].map(s => {
+    const items = L.map((a, i) => [a, i]).filter(([a]) => a.status === s);
+    return `<div class="card col"><h3>${LABEL[s]} · ${items.length}</h3>` + (items.map(([a, i]) => `<div class="item">
+        <div class="title">${esc(a.title)}</div><div class="chips" style="margin:4px 0">${srcTag(a)}</div><div class="meta">${esc(dh(a.price))} · ${esc(a.district)} · ${esc(ago(a.status_at))}${a.follow_up ? ` · <span class="warn">⏰ follow up</span>` : ""}</div>
+        ${a.note ? `<div class="meta">“${esc(a.note)}”</div>` : ""}<div class="actions" style="margin-top:8px">${reach(a, i)}${statusSelect(a, i)}</div></div>`).join("")
+      || `<div class="meta">${s === "contacted" ? "Nobody yet. Tap WhatsApp on a listing and it lands here." : "None"}</div>`) + `</div>`;
+  }).join("");
+  $("message").textContent = r.message;
+
+  // Statistics
+  hbars("byarea", st.by_area.map(a => ({name: a.name, count: a.count, val: [a.count, a.km == null ? "" : a.km + " km", a.median == null ? "" : dh(a.median)].filter(x => x !== "").join(" · "),
+    tip: `${a.name}: ${a.count} room${a.count > 1 ? "s" : ""}` + (a.km == null ? "" : `, ${a.km} km from Abdelmoumen`) + (a.median == null ? "" : `, median ${dh(a.median)}`)})), Math.max(0, ...st.by_area.map(a => a.count)));
+  vbars("byprice", st.prices.map(b => ({count: b.count, label: b.from, tip: `${dh(b.from).replace(" DH", "")}–${dh(b.to)}: ${b.count} room${b.count === 1 ? "" : "s"}`})), 1);
+  vbars("byday", st.by_day.map(d => ({count: d.count, label: d.day.slice(8) + "/" + d.day.slice(5, 7), tip: `${d.day}: ${d.count} found`})), 2);
+  hbars("bysource", st.by_source.map(s => ({name: SOURCE[s.name] || s.name, count: s.count, val: s.count, color: COLOR[s.name], tip: `${SOURCE[s.name] || s.name}: ${s.count} matching now`})), Math.max(0, ...st.by_source.map(s => s.count)));
+
+  // Rules and health
+  const words = list => list.length ? `<div class="words">${list.map(w => `<span class="chip">${esc(w)}</span>`).join("")}</div>` : "–";
+  $("rulelist").innerHTML =
+    `<dt>Budget</dt><dd>${esc(dh(r.price_min).replace(" DH", ""))} to ${esc(dh(r.price_max))} per month</dd>` +
+    `<dt>Loud alert near</dt><dd>${words(r.near)}</dd><dt>Also accepted</dt><dd>${words(r.areas)}</dd>` +
+    `<dt>Dropped if it says</dt><dd>${words(r.exclude_words)}</dd>` +
+    `<dt>Facebook posts must say</dt><dd>${words(r.facebook_want.must_words || [])}</dd>` +
+    `<dt>Facebook posts dropped</dt><dd>${words(r.facebook_want.exclude_words || [])}</dd>` +
+    Object.entries(r.searches).map(([s, urls]) => `<dt>${esc(SOURCE[s] || s)}</dt><dd>${urls.map(u => /^https?:\/\//.test(u) ? `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(decodeURI(u).replace(/^https?:\/\/(www\.)?/, ""))}</a>` : esc(u)).join("<br>")}</dd>`).join("") +
+    `<dt>Telegram</dt><dd>${r.telegram ? "Connected" : "Not set up"} · daily report at ${esc(r.report_hour)}:00</dd>`;
+  $("sources").innerHTML = h.sources.map(s => `<tr><td>${esc(SOURCE[s.name] || s.name)}</td><td class="n">${s.searches}</td><td class="n">${esc(S.readonly ? hm(s.last) : ago(s.last))}</td><td class="n">${s.every} min</td>` +
+    `<td>${s.fails ? `<span class="bad">⚠ failed ${s.fails} in a row</span>` : `<span class="ok">✓ OK</span>`}</td></tr>`).join("");
+  const J = S.jobs || [], is = id => (J.find(j => j.id === id) || {}).on;
+  $("joblist").innerHTML = J.map(j => `<div class="job"><div><b>${esc(j.name)}</b> &nbsp;<span class="${j.on ? "ok" : "warn"}">${j.on ? "✓" : "■"} ${esc(j.state)}</span><div class="meta">${esc(j.what)}</div></div>` +
+    (S.readonly || !j.can ? "" : `<button class="btn" data-job="${esc(j.id)}" data-do="${j.on ? "stop" : "start"}">${j.on ? "Stop" : "Start"}</button>`) + `</div>`).join("") || `<p class="empty">No job information.</p>`;
+  $("jobsall").innerHTML = S.readonly ? "" : (is("watcher") || is("browser") ? `<button class="btn" data-job="all" data-do="stop">Stop everything</button>` : "") +
+    (is("watcher") ? "" : `<button class="btn" data-job="all" data-do="start">Start everything</button>`);
+  $("jobhint").textContent = S.readonly ? `As it was at ${hm(S.now)}. Stopping and starting only works on the Mac: open http://127.0.0.1:8787 there, or use the commands below.`
+    : "Stop everything turns off the watcher and its browser, and they stay off after a restart of the Mac until you press Start. The dashboard keeps running so you can turn them back on.";
+  const fine = last && last.ok && !broken.length;
+  $("problems").innerHTML = (S.readonly ? `<p class="hint">As of the snapshot taken ${esc(day(S.now))}. The dashboard on the Mac is always live.</p>` : "") +
+    `<p class="hint">${h.passes_24h} passes in the last 24 h, ${h.failed_24h} with a problem.</p>` +
+    (h.problems.length ? `<h2>${fine ? "Earlier problems <small>all sources are OK now</small>" : "Latest problems"}</h2><pre>${esc(h.problems.join("\n"))}</pre>` : "");
+}
+
+// On the Mac the page asks its own server. Hosted, the data sits under a name only your private link
+// knows: the link carries it once after the #, this browser remembers it, and it is never sent in an address.
+const LOCAL = ["127.0.0.1", "localhost"].includes(location.hostname);
+let KEY = (location.hash.match(/^#k=([\w-]{20,})$/) || [])[1];
+try { KEY ? localStorage.setItem("dar-radar-key", KEY) : KEY = localStorage.getItem("dar-radar-key"); } catch (e) {}
+async function load() {
+  if (!LOCAL && !/^[\w-]{20,}$/.test(KEY || "")) return $("health").innerHTML = `<b class="bad">⚠ Open this dashboard with its private link</b>`;
+  try {
+    const r = await fetch(LOCAL ? "/api/data" : `/d/${KEY}.json`, {cache: "no-store"});
+    if (!r.ok) throw 0;
+    S = await r.json();
+    render();
+    if (S.readonly) $("outhint").textContent = "You press send in WhatsApp yourself. This is a read-only copy: statuses and notes are changed on the Mac.";
+  } catch (e) {
+    $("health").innerHTML = LOCAL ? `<b class="bad">⚠ The dashboard server is not answering</b>` : `<b class="bad">⚠ Could not load the data. The private link may have changed.</b>`;
+  }
+}
+async function save(i, patch) {
+  const a = S.listings[i];
+  const r = await fetch("/api/status", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({source: a.source, id: a.id, ...patch})});
+  if (!r.ok) alert("Could not save that change.");
+  await load();
+}
+
+function tab(name) {
+  if (!$(name) || $(name).tagName !== "SECTION") name = "overview";
+  document.querySelectorAll("section").forEach(s => s.classList.toggle("on", s.id === name));
+  document.querySelectorAll("nav button").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === name));
+  history.replaceState(null, "", "#" + name);  // also takes the private key out of the address bar
+  scrollTo(0, 0);
+}
+document.querySelector("nav").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if (b) tab(b.dataset.tab); });
+document.addEventListener("click", async e => {
+  const b = e.target.closest("[data-job]");
+  if (!b || b.disabled) return;
+  const page = b.dataset.job === "dashboard";
+  if (page && !confirm("Stop the dashboard? This page stops answering until you run: python3 dashboard.py")) return;
+  b.disabled = true;
+  b.textContent = b.dataset.do === "stop" ? "Stopping…" : "Starting…";
+  let r = {ok: false};
+  try { r = await fetch("/api/job", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({id: b.dataset.job, do: b.dataset.do})}); } catch (err) {}
+  if (!r.ok) alert("That did not work" + (r.json ? ": " + ((await r.json().catch(() => ({}))).error || "the server refused") : "."));
+  page && r.ok ? $("joblist").innerHTML = `<p class="empty">Dashboard stopped. Start it again with: python3 dashboard.py</p>` : await load();
+});
+document.addEventListener("change", e => {
+  const t = e.target;
+  if (t.dataset.status) save(+t.dataset.status, {status: t.value});
+  else if (t.dataset.note) save(+t.dataset.note, {note: t.value});
+  else if (t.closest(".filters")) render();
+});
+$("q").addEventListener("input", render);
+// Opening WhatsApp counts as reaching out; the link itself opens in a new tab and you send the message there.
+document.addEventListener("click", e => {
+  const a = e.target.closest("[data-wa]");
+  if (a && !S.readonly && S.listings[+a.dataset.wa].status === "new") save(+a.dataset.wa, {status: "contacted"});
+});
+document.addEventListener("mousemove", e => {
+  const t = e.target.closest && e.target.closest("[data-tip]"), tip = $("tip");
+  tip.style.display = t ? "block" : "none";
+  if (t) { tip.textContent = t.dataset.tip; tip.style.left = Math.min(e.clientX + 12, innerWidth - 270) + "px"; tip.style.top = e.clientY + 14 + "px"; }
+});
+
+load().then(() => {
+  if (!S) return;
+  for (const s of S.health.sources) $("fsource").add(new Option(SOURCE[s.name] || s.name, s.name));
+  for (const s of S.statuses) $("fstatus").add(new Option(LABEL[s], s));
+});
+tab(location.hash.slice(1));
+// The private link pasted into a tab that already shows this page only changes the hash: reload so the key is read.
+addEventListener("hashchange", () => /^#k=/.test(location.hash) ? location.reload() : tab(location.hash.slice(1)));
+// Refreshes every minute, but never while you are typing a note or choosing from a menu.
+setInterval(() => ["INPUT", "SELECT"].includes(document.activeElement.tagName) || load(), 60000);
+</script>
+</body>
+</html>

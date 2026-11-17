@@ -1,0 +1,1568 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Station — 0.36ms Rust Browser CLI &amp; MCP Server (OpenCLI &amp; Agent-Reach Alternative)</title>
+  <meta name="description" content="Turn your real logged-in Chrome into a 0.36ms CLI and MCP server in one 4.5MB Rust binary. Zero browser extensions, zero API fees, built-in Auto-Jobs, SQLite CRM, and macOS Studio.">
+  <meta name="keywords" content="OpenCLI alternative, Agent-Reach alternative, Playwright MCP alternative, browser MCP server, Rust Chrome DevTools Protocol, authenticated web automation, Claude Code browser tool, Cursor MCP browser, automated job search, apartment rent watcher">
+  <meta name="author" content="Station Contributors">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://selibrah.github.io/station/">
+
+  <!-- OpenGraph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Station">
+  <meta property="og:title" content="Station — 0.36ms Rust Browser CLI &amp; MCP Server">
+  <meta property="og:description" content="Drive your already-logged-in Chrome at 2,600 ops/sec with zero extensions and zero API keys. The fast, reliable alternative to OpenCLI, Agent-Reach, and Playwright MCP.">
+  <meta property="og:url" content="https://selibrah.github.io/station/">
+  <meta property="og:image" content="https://selibrah.github.io/station/og-card.svg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Station — 0.36ms Rust Browser Daemon &amp; Native MCP">
+  <meta name="twitter:description" content="No fragile MV3 extensions. No 310ms CLI lag. No login walls. One Rust binary + macOS Studio app.">
+  <meta name="twitter:image" content="https://selibrah.github.io/station/og-card.svg">
+  <meta name="theme-color" content="#0C1017">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233B82F6'/%3E%3Cpath d='M9 20s1.5-1.5 5-1.5 6 2.5 9 2.5V8s-3 0-9-2.5S9 7 9 7v18' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+  <!-- Fonts: IBM Plex Sans + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+
+  <!-- Structured Data: SoftwareApplication + FAQPage for Rich Search & AI Engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Station",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS, Linux, Windows",
+        "softwareVersion": "0.4.0",
+        "description": "Single-binary Rust Chrome DevTools Protocol daemon and stdio MCP server that drives real authenticated browser profiles at 0.36ms median latency without browser extensions.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "0.36ms p50 round-trip over persistent CDP WebSockets",
+          "Zero Chrome extensions required",
+          "Native stdio MCP server with --auto-start for Claude Code, Cursor, Windsurf, and Antigravity",
+          "Compact @e1..@eN interactive DOM snapshots (-95% LLM tokens)",
+          "Authenticated Clean Markdown reader (-92% vs HTML)",
+          "Gesture-free chunked DataTransfer file uploads",
+          "Native Swift 6 macOS Studio app with Auto-Jobs, SQLite CRM, and Charts"
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How is Station faster and more reliable than OpenCLI?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "OpenCLI relies on a Node CLI spawning processes (~310ms) and a Manifest V3 browser extension bridge (~28ms), which also fails on Chrome user-gesture gates like file uploads. Station is a 4.5MB native Rust binary that maintains persistent DevTools WebSockets directly to Chrome tabs at 0.36ms p50 latency with native DataTransfer file attachment."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does Station compare to Agent-Reach?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Agent-Reach routes public read requests through curl and third-party readers like Jina, which cannot read logged-in pages or click and fill forms. Station reads clean Markdown AND interacts with authenticated sessions (LinkedIn, Facebook Groups, Notion, ATS forms) locally using your own browser profile."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why not use Playwright MCP or headless Chromium?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Playwright spawns a fresh, unauthenticated browser instance (200MB+ RAM) that forces you to log in repeatedly and triggers bot blocks. Station connects to persistent Chrome profiles on your machine, opens tabs silently in the background without stealing window focus, and uses 4.5MB RSS."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Station send my cookies or browsing data to the cloud?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Never. Station binds strictly to 127.0.0.1 with CORS disabled and enforces a local 256-bit POSIX 0600 token header (X-Station-Token) on every request."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root,
+    [data-theme="light"] {
+      --bg: #F6F7F9;
+      --bg-elevated: #FFFFFF;
+      --bg-subtle: #ECEFF4;
+      --bg-code: #10151F;
+      --ink: #11161D;
+      --ink-secondary: #465264;
+      --ink-muted: #6C788B;
+      --border: #D7DEE8;
+      --border-strong: #B8C3D4;
+      --signal: #0F52BA;
+      --signal-soft: rgba(15, 82, 186, 0.10);
+      --ok: #0A7E56;
+      --ok-soft: rgba(10, 126, 86, 0.12);
+      --warn: #C85A17;
+      --warn-soft: rgba(200, 90, 23, 0.12);
+      --shadow-sm: 0 1px 2px rgba(17, 22, 29, 0.05);
+      --shadow-md: 0 12px 32px rgba(17, 22, 29, 0.08);
+      color-scheme: light;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0C1017;
+      --bg-elevated: #121824;
+      --bg-subtle: #182030;
+      --bg-code: #090D14;
+      --ink: #ECF0F6;
+      --ink-secondary: #A3B1C6;
+      --ink-muted: #6E7E96;
+      --border: #222D40;
+      --border-strong: #33435E;
+      --signal: #3B82F6;
+      --signal-soft: rgba(59, 130, 246, 0.14);
+      --ok: #10B981;
+      --ok-soft: rgba(16, 185, 129, 0.14);
+      --warn: #F59E0B;
+      --warn-soft: rgba(245, 158, 11, 0.14);
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+      --shadow-md: 0 18px 44px rgba(0, 0, 0, 0.45);
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    code, pre, .mono {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 8px;
+      z-index: 100;
+      padding: 8px 14px;
+      background: var(--signal);
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .skip-link:focus { left: 12px; }
+
+    :focus-visible {
+      outline: 2px solid var(--signal);
+      outline-offset: 2px;
+    }
+
+    .wrap {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: color-mix(in srgb, var(--bg) 86%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 62px;
+      gap: 16px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: var(--signal);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .version-chip {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: var(--bg-subtle);
+      color: var(--ink-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: var(--ink-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 150ms ease;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--ink-secondary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 150ms ease, color 150ms ease;
+    }
+    .icon-btn:hover {
+      color: var(--ink);
+      border-color: var(--border-strong);
+    }
+
+    .btn-primary, .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 0 18px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 120ms ease, filter 150ms ease, border-color 150ms ease;
+    }
+    .btn-primary {
+      background: var(--signal);
+      color: #FFFFFF;
+      border: 1px solid transparent;
+    }
+    .btn-primary:hover { filter: brightness(1.08); }
+    .btn-secondary {
+      background: var(--bg-elevated);
+      color: var(--ink);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--border-strong); }
+
+    /* Hero */
+    .hero {
+      padding: 64px 0 52px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 44px;
+      align-items: start;
+    }
+
+    .telemetry-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: var(--ok-soft);
+      color: var(--ok);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--ok);
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(34px, 4.4vw, 52px);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      font-weight: 700;
+    }
+
+    .hero-lead {
+      margin: 0 0 26px;
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--ink-secondary);
+      max-width: 58ch;
+    }
+
+    /* Install Switcher */
+    .install-box {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
+    }
+
+    .install-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-subtle);
+      overflow-x: auto;
+    }
+
+    .install-tab {
+      padding: 9px 14px;
+      border: 0;
+      background: transparent;
+      color: var(--ink-secondary);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+    }
+    .install-tab[aria-selected="true"] {
+      color: var(--ink);
+      background: var(--bg-elevated);
+      border-bottom-color: var(--signal);
+    }
+
+    .install-cmd-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 16px;
+      background: var(--bg-code);
+      color: #E5ECF6;
+    }
+
+    .install-cmd-row code {
+      font-size: 13px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .copy-btn {
+      flex-shrink: 0;
+      padding: 6px 11px;
+      border-radius: 6px;
+      border: 1px solid #2A364B;
+      background: #172030;
+      color: #E5ECF6;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .copy-btn:hover { border-color: #46597A; }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Interactive Benchmark Race Instrument */
+    .race-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .race-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .race-header .btn-secondary {
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .race-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .race-sub {
+      font-size: 12px;
+      color: var(--ink-muted);
+      margin: 2px 0 0;
+    }
+
+    .race-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .race-row {
+      padding: 12px;
+      border-radius: 9px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+    }
+    .race-row.station-row {
+      background: var(--ok-soft);
+      border-color: color-mix(in srgb, var(--ok) 40%, var(--border));
+    }
+
+    .race-row-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 13px;
+      margin-bottom: 7px;
+      gap: 8px;
+    }
+
+    .race-name { font-weight: 600; }
+    .race-stat { font-size: 12px; color: var(--ink-secondary); }
+
+    .track {
+      height: 9px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--ink) 9%, transparent);
+      overflow: hidden;
+    }
+
+    .bar {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: var(--ink-muted);
+      transition: width 80ms linear;
+    }
+    .station-row .bar { background: var(--ok); }
+
+    .race-footnote {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    /* Sections */
+    .section-block {
+      padding: 72px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-head {
+      max-width: 680px;
+      margin-bottom: 36px;
+    }
+
+    .section-head h2 {
+      margin: 0 0 10px;
+      font-size: clamp(26px, 3vw, 34px);
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--ink-secondary);
+      font-size: 17px;
+    }
+
+    /* Interactive Agent Token Inspector */
+    .inspector-shell {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--bg-elevated);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .mock-browser {
+      padding: 20px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .url-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 11px;
+      border-radius: 7px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--ink-secondary);
+    }
+
+    .job-mock-card {
+      padding: 16px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+    }
+
+    .job-mock-card h3 {
+      margin: 0 0 4px;
+      font-size: 17px;
+    }
+
+    .job-mock-meta {
+      font-size: 13px;
+      color: var(--ink-secondary);
+      margin-bottom: 12px;
+    }
+
+    .mock-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .mock-input {
+      flex: 1 1 160px;
+      padding: 7px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-elevated);
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    .ref-tag-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 11px;
+      border-radius: 6px;
+      border: 1px solid var(--signal);
+      background: var(--signal-soft);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .ref-tag-btn:hover { background: color-mix(in srgb, var(--signal) 22%, transparent); }
+
+    .ref-chip {
+      font-size: 11px;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: var(--signal);
+      color: #fff;
+    }
+
+    .inspector-pane {
+      background: var(--bg-code);
+      color: #E2E8F0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .inspector-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid #1E293B;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mode-pills {
+      display: flex;
+      gap: 6px;
+    }
+
+    .mode-pill {
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid #283548;
+      background: transparent;
+      color: #94A3B8;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .mode-pill[aria-selected="true"] {
+      background: #1E293B;
+      color: #F8FAFC;
+      border-color: #475569;
+    }
+
+    .token-meter {
+      font-size: 12px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    .token-good { background: rgba(16, 185, 129, 0.18); color: #6EE7B7; }
+    .token-bad  { background: rgba(245, 158, 11, 0.18); color: #FCD34D; }
+
+    .inspector-code {
+      margin: 0;
+      padding: 16px;
+      font-size: 12.5px;
+      line-height: 1.6;
+      overflow-x: auto;
+      min-height: 235px;
+      white-space: pre-wrap;
+    }
+
+    .cdp-log-strip {
+      margin-top: auto;
+      padding: 9px 16px;
+      border-top: 1px solid #1E293B;
+      background: #06090F;
+      font-size: 12px;
+      color: #6EE7B7;
+    }
+
+    /* Head-to-Head Comparison Matrix */
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-elevated);
+      box-shadow: var(--shadow-sm);
+    }
+
+    table.cmp-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .cmp-table caption {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+    }
+
+    .cmp-table th, .cmp-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .cmp-table thead th {
+      background: var(--bg-subtle);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .cmp-table th.col-station,
+    .cmp-table td.col-station {
+      background: var(--ok-soft);
+      font-weight: 600;
+    }
+
+    .cmp-table tbody tr:last-child th,
+    .cmp-table tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .yes { color: var(--ok); font-weight: 600; }
+    .no  { color: var(--warn); }
+
+    /* Auto-Jobs & Native Studio Grid */
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .job-feature-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .job-feature-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .job-feature-card h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .job-feature-card p {
+      margin: 0;
+      color: var(--ink-secondary);
+      font-size: 14.5px;
+    }
+
+    .pipeline-preview {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 12px;
+    }
+
+    .stage-pill {
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      color: var(--ink-secondary);
+    }
+    .stage-pill.active {
+      background: var(--signal-soft);
+      border-color: color-mix(in srgb, var(--signal) 40%, var(--border));
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* Studio App Mockup Strip */
+    .studio-showcase {
+      margin-top: 24px;
+      padding: 24px;
+      border-radius: 12px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .mini-charts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .mini-chart-box {
+      padding: 14px;
+      border-radius: 9px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+    }
+
+    .mini-chart-title {
+      font-size: 12px;
+      color: var(--ink-muted);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .bars-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 76px;
+    }
+
+    .bars-row span {
+      flex: 1;
+      border-radius: 4px 4px 0 0;
+      background: var(--signal);
+      opacity: 0.82;
+    }
+
+    /* FAQ */
+    .faq-list {
+      max-width: 820px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    details.faq-item {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+    }
+
+    details.faq-item summary {
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    details.faq-item summary::-webkit-details-marker { display: none; }
+
+    details.faq-item p {
+      margin: 12px 0 0;
+      color: var(--ink-secondary);
+      font-size: 15px;
+    }
+
+    /* Footer CTA */
+    .final-cta {
+      padding: 72px 0;
+      text-align: left;
+    }
+
+    .cta-panel {
+      padding: 36px;
+      border-radius: 14px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .cta-panel h2 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      letter-spacing: -0.02em;
+    }
+
+    .cta-panel p {
+      margin: 0;
+      color: var(--ink-secondary);
+      max-width: 54ch;
+    }
+
+    .site-footer {
+      padding: 28px 0 44px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid,
+      .inspector-shell,
+      .studio-showcase,
+      .jobs-grid {
+        grid-template-columns: 1fr;
+      }
+      .mock-browser {
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-links { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .bar, .btn-primary, .btn-secondary { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="wrap nav-row">
+      <a href="#" class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+            <line x1="4" y1="22" x2="4" y2="15"/>
+          </svg>
+        </span>
+        <span>Station</span>
+        <span class="version-chip mono">v0.4 · Rust</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#how-it-works">Agent Snapshot</a>
+        <a href="#compare">vs OpenCLI &amp; Agent-Reach</a>
+        <a href="#auto-jobs">Auto-Jobs &amp; CRM</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button type="button" class="icon-btn" id="theme-toggle" aria-label="Switch color theme" title="Switch light / dark theme">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+          </svg>
+        </button>
+        <a href="https://github.com/selibrah/station" class="btn-secondary" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/selibrah/station/releases/latest/download/Station-Studio-v0.4.0-macOS-arm64.dmg" class="btn-primary">Download macOS (.dmg)</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- HERO -->
+    <section class="hero" id="install">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="telemetry-pill mono">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            <span>0.36 ms CDP p50 · 4.5 MB RAM · Zero Browser Extensions</span>
+          </div>
+
+          <h1>Your logged-in Chrome as a sub-millisecond CLI &amp; MCP server.</h1>
+          <p class="hero-lead">
+            OpenCLI breaks on Manifest V3 extensions and file choosers. Agent-Reach hits login walls. Playwright spawns bot-flagged browsers. <strong>Station</strong> is a single Rust binary that drives your real authenticated tabs in the background—with a native macOS Studio app for Auto-Jobs, SQLite CRM, and live charts.
+          </p>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px;">
+            <a href="https://github.com/selibrah/station/releases/latest/download/Station-Studio-v0.4.0-macOS-arm64.dmg" class="btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Station Studio (.dmg · 4.6 MB)
+            </a>
+            <a href="https://github.com/selibrah/station/releases/latest/download/station-cli-v0.4.0-macos-arm64.tar.gz" class="btn-secondary">
+              CLI + MCP Binary (.tar.gz)
+            </a>
+            <a href="https://github.com/selibrah/station" class="btn-secondary" target="_blank" rel="noopener">
+              View on GitHub
+            </a>
+          </div>
+
+          <div class="install-box" role="region" aria-label="Installation commands">
+            <div class="install-tabs" role="tablist">
+              <button type="button" class="install-tab" role="tab" aria-selected="true" data-cmd="claude mcp add station -- station mcp --auto-start">Claude Code MCP</button>
+              <button type="button" class="install-tab" role="tab" aria-selected="false" data-cmd="cargo install --path daemon &amp;&amp; station doctor">Cargo (Rust)</button>
+              <button type="button" class="install-tab" role="tab" aria-selected="false" data-cmd="station read https://www.linkedin.com/jobs">CLI Clean Read</button>
+              <button type="button" class="install-tab" role="tab" aria-selected="false" data-cmd="station snapshot --session linkedin">CLI @eN Snapshot</button>
+            </div>
+            <div class="install-cmd-row">
+              <code id="install-code">claude mcp add station -- station mcp --auto-start</code>
+              <button type="button" class="copy-btn" id="copy-install-btn">Copy</button>
+            </div>
+          </div>
+
+          <div class="hero-meta">
+            <span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Works with Claude, Cursor, Windsurf &amp; Antigravity
+            </span>
+            <span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              100% local (127.0.0.1 + 0600 token)
+            </span>
+          </div>
+        </div>
+
+        <!-- Interactive Live Race -->
+        <div class="race-card" aria-labelledby="race-heading">
+          <div class="race-header">
+            <div>
+              <h2 class="race-title" id="race-heading">100-Command Loopback Benchmark</h2>
+              <p class="race-sub">Measured on Apple Silicon (M3 Pro) · Click to simulate real wall-clock gap</p>
+            </div>
+            <button type="button" class="btn-secondary" id="run-race-btn">Run 100 Ops</button>
+          </div>
+
+          <div class="race-rows">
+            <div class="race-row station-row">
+              <div class="race-row-top">
+                <span class="race-name">Station v0.4 (Rust Persistent WS)</span>
+                <span class="race-stat mono" id="stat-station">0.36 ms / op · 36 ms total</span>
+              </div>
+              <div class="track"><div class="bar" id="bar-station" style="width: 100%;"></div></div>
+            </div>
+
+            <div class="race-row">
+              <div class="race-row-top">
+                <span class="race-name">OpenCLI (Extension Bridge)</span>
+                <span class="race-stat mono" id="stat-opencli">28–310 ms / op · ~3.1 s+</span>
+              </div>
+              <div class="track"><div class="bar" id="bar-opencli" style="width: 24%;"></div></div>
+            </div>
+
+            <div class="race-row">
+              <div class="race-row-top">
+                <span class="race-name">Playwright MCP (Headless Spawn)</span>
+                <span class="race-stat mono" id="stat-pw">~180 ms / op · 240 MB RAM</span>
+              </div>
+              <div class="track"><div class="bar" id="bar-pw" style="width: 42%;"></div></div>
+            </div>
+
+            <div class="race-row">
+              <div class="race-row-top">
+                <span class="race-name">Agent-Reach (Public curl / Jina)</span>
+                <span class="race-stat mono">403 / Login Wall on Auth Pages</span>
+              </div>
+              <div class="track"><div class="bar" style="width: 8%; background: var(--warn);"></div></div>
+            </div>
+          </div>
+
+          <div class="race-footnote mono">
+            <span>Throughput: ~2,600 ops/sec</span>
+            <span>Secondary Tabs: Persistent Pool</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE SNAPSHOT & TOKEN DEMO -->
+    <section class="section-block" id="how-it-works" aria-labelledby="snapshot-heading">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="snapshot-heading">See why AI agents finish in 1 step instead of burning 48,000 HTML tokens.</h2>
+          <p>
+            Click any interactive element on the simulated job card below, or switch between <strong>Station @eN Snapshot</strong>, <strong>Clean Markdown</strong>, and <strong>Raw HTML</strong> to see what reaches your model's context window.
+          </p>
+        </div>
+
+        <div class="inspector-shell">
+          <div class="mock-browser">
+            <div class="url-bar mono">
+              <span>https://www.linkedin.com/jobs/view/409182736</span>
+            </div>
+
+            <div class="job-mock-card">
+              <h3>Senior Systems Engineer (Rust / AI Tooling)</h3>
+              <div class="job-mock-meta">Linear · Remote (Europe / US) · $195k–$230k · 6 applicants</div>
+              <p style="font-size: 13.5px; color: var(--ink-secondary); margin: 0 0 14px;">
+                Build sub-millisecond local developer infrastructure, persistent protocol bridges, and native desktop experiences.
+              </p>
+
+              <div class="mock-controls">
+                <input type="text" class="mock-input" id="demo-note-input" value="Referred by Sarah — systems team" aria-label="Quick application note">
+                <button type="button" class="ref-tag-btn" data-ref="@e1" data-act="station act fill @e1 &quot;Referred by Sarah&quot;">
+                  <span class="ref-chip mono">@e1</span> Fill Note
+                </button>
+                <button type="button" class="ref-tag-btn" data-ref="@e2" data-act="station upload --selector @e2 resume_2026.pdf">
+                  <span class="ref-chip mono">@e2</span> Attach Resume PDF
+                </button>
+                <button type="button" class="ref-tag-btn" data-ref="@e3" data-act="station act click @e3">
+                  <span class="ref-chip mono">@e3</span> Save Role
+                </button>
+              </div>
+            </div>
+
+            <p style="margin: 0; font-size: 13px; color: var(--ink-muted);">
+              <strong>No user-gesture errors:</strong> Station's native <code>/upload</code> streams chunked <code>DataTransfer</code> buffers directly into <code>&lt;input type="file"&gt;</code>, solving OpenCLI bug #2541 permanently.
+            </p>
+          </div>
+
+          <div class="inspector-pane">
+            <div class="inspector-bar">
+              <div class="mode-pills" role="tablist" aria-label="Payload format">
+                <button type="button" class="mode-pill" role="tab" aria-selected="true" data-mode="snapshot">@eN Snapshot</button>
+                <button type="button" class="mode-pill" role="tab" aria-selected="false" data-mode="markdown">Clean Markdown</button>
+                <button type="button" class="mode-pill" role="tab" aria-selected="false" data-mode="html">Raw Page HTML</button>
+              </div>
+              <span class="token-meter token-good mono" id="token-badge">142 tokens (-99.4%)</span>
+            </div>
+
+            <pre class="inspector-code mono" id="inspector-output">Page: Senior Systems Engineer | LinkedIn
+URL: https://www.linkedin.com/jobs/view/409182736
+Scroll: 0 / 980 px (3 interactive refs)
+Headings: [h1] Senior Systems Engineer (Rust / AI Tooling)
+---
+[@e1] input "Quick application note" value="Referred by Sarah — systems team"
+[@e2] file "Attach Resume PDF"
+[@e3] button "Save Role"</pre>
+
+            <div class="cdp-log-strip mono" id="cdp-live-log">
+              ⚡ [0.36 ms] Ready — click @e1, @e2, or @e3 on the left to test live dispatch
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HEAD-TO-HEAD COMPARISON MATRIX -->
+    <section class="section-block" id="compare" aria-labelledby="compare-heading">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="compare-heading">Why developers switch from OpenCLI, Agent-Reach &amp; Playwright MCP.</h2>
+          <p>
+            Every architectural decision in Station removes a moving part that slows down agents or leaks browser control.
+          </p>
+        </div>
+
+        <div class="table-wrap">
+          <table class="cmp-table">
+            <caption>Feature and performance comparison between Station, OpenCLI, Agent-Reach, and Playwright MCP</caption>
+            <thead>
+              <tr>
+                <th scope="col">Capability</th>
+                <th scope="col" class="col-station">Station v0.4</th>
+                <th scope="col">OpenCLI</th>
+                <th scope="col">Agent-Reach</th>
+                <th scope="col">Playwright MCP</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Median command latency</th>
+                <td class="col-station mono yes">0.36 ms (Rust WS)</td>
+                <td class="mono">28 ms – 310 ms</td>
+                <td class="mono">400 ms – 2.5 s</td>
+                <td class="mono">120 ms – 450 ms</td>
+              </tr>
+              <tr>
+                <th scope="row">Browser extension required</th>
+                <td class="col-station yes">None (Native CDP)</td>
+                <td class="no">Yes (MV3 Bridge)</td>
+                <td>None</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <th scope="row">Uses your real logged-in sessions</th>
+                <td class="col-station yes">Yes (Isolated Profiles)</td>
+                <td>Yes</td>
+                <td class="no">No (Public / Read-only)</td>
+                <td class="no">Logged-out / Bot-flagged</td>
+              </tr>
+              <tr>
+                <th scope="row">Clicks, React forms &amp; file uploads</th>
+                <td class="col-station yes">Native @eN + DataTransfer</td>
+                <td class="no">File chooser blocked (#2541)</td>
+                <td class="no">Read-only scrapers</td>
+                <td>Yes (high token cost)</td>
+              </tr>
+              <tr>
+                <th scope="row">Background tabs (zero focus steal)</th>
+                <td class="col-station yes">Pooled persistent sockets</td>
+                <td>Partial</td>
+                <td>N/A</td>
+                <td>Headless only</td>
+              </tr>
+              <tr>
+                <th scope="row">Native MCP with <code>--auto-start</code></th>
+                <td class="col-station yes">Built into single binary</td>
+                <td>Requires Node daemon up</td>
+                <td>Skill wrapper scripts</td>
+                <td>Node npx server</td>
+              </tr>
+              <tr>
+                <th scope="row">Built-in Auto-Jobs, SQLite CRM &amp; Charts</th>
+                <td class="col-station yes">Native Swift 6 macOS App</td>
+                <td class="no">CLI only</td>
+                <td class="no">CLI only</td>
+                <td class="no">None</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- AUTO-JOBS, CRM & NATIVE CHARTS -->
+    <section class="section-block" id="auto-jobs" aria-labelledby="autojobs-heading">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="autojobs-heading">Not just a CLI: run 24/7 Auto-Jobs with a local SQLite CRM &amp; charts.</h2>
+          <p>
+            Station ships with <strong>Station Studio</strong> for macOS (under 25 MB RAM, 0.0% idle CPU when closed) so your background watchers turn messy web pages into ranked pipelines and visual market charts.
+          </p>
+        </div>
+
+        <div class="jobs-grid">
+          <article class="job-feature-card">
+            <div class="job-feature-top">
+              <h3>Housing &amp; Rent Radar</h3>
+              <span class="version-chip mono">seen.db · Every 15m</span>
+            </div>
+            <p>
+              Watches property portals and logged-in Facebook housing groups chronologically. Scores distance to your commute, detects price drops, filters noisy "looking for" posts, and generates 1-tap WhatsApp links.
+            </p>
+            <div class="pipeline-preview">
+              <span class="stage-pill active">New (18)</span>
+              <span class="stage-pill">Contacted (6)</span>
+              <span class="stage-pill">Replied (3)</span>
+              <span class="stage-pill">Visit Booked (2)</span>
+            </div>
+          </article>
+
+          <article class="job-feature-card">
+            <div class="job-feature-top">
+              <h3>Multi-Board Job Hunter</h3>
+              <span class="version-chip mono">findings.db · Every 30m</span>
+            </div>
+            <p>
+              Sweeps LinkedIn ("Past 24h"), Hacker News Jobs, Welcome to the Jungle, and ATS career boards in hidden background tabs. Scores stack fit, extracts salary bands, and prepares resume uploads without auto-spamming.
+            </p>
+            <div class="pipeline-preview">
+              <span class="stage-pill active">Matched (30)</span>
+              <span class="stage-pill">Applied (9)</span>
+              <span class="stage-pill">Interview (3)</span>
+              <span class="stage-pill">Offer (1)</span>
+            </div>
+          </article>
+
+          <article class="job-feature-card">
+            <div class="job-feature-top">
+              <h3>Freelance &amp; B2B Lead Radar</h3>
+              <span class="version-chip mono">url: watcher</span>
+            </div>
+            <p>
+              Monitors Reddit <code>r/forhire</code>, Upwork feeds, and community threads using your authenticated profile so you spot high-intent engineering gigs within minutes of posting.
+            </p>
+            <div class="pipeline-preview">
+              <span class="stage-pill active">New Leads</span>
+              <span class="stage-pill">Pitched</span>
+              <span class="stage-pill">Replied</span>
+              <span class="stage-pill">Won</span>
+            </div>
+          </article>
+
+          <article class="job-feature-card">
+            <div class="job-feature-top">
+              <h3>Marketplace &amp; Deal Sniper</h3>
+              <span class="version-chip mono">Price Histogram</span>
+            </div>
+            <p>
+              Tracks second-hand hardware, vehicles, or fare drops against rolling SQLite median prices, flagging underpriced outliers immediately with seller history.
+            </p>
+            <div class="pipeline-preview">
+              <span class="stage-pill active">Under Median</span>
+              <span class="stage-pill">Messaged</span>
+              <span class="stage-pill">Negotiating</span>
+              <span class="stage-pill">Bought</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="studio-showcase">
+          <div>
+            <h3 style="margin: 0 0 10px; font-size: 22px;">Station Studio for macOS</h3>
+            <p style="margin: 0 0 14px; color: var(--ink-secondary);">
+              Manage every watcher, test <code>@eN</code> snapshots in the 4-mode Workbench, connect Claude Code / Cursor / Windsurf in one click, and explore live histograms, 14-day discovery velocity, and conversion funnels—all backed by local SQLite files you own.
+            </p>
+            <div class="hero-meta mono">
+              <span>⌘1 Cockpit</span>
+              <span>⌘2 Findings &amp; Charts</span>
+              <span>⌘3 Auto-Jobs</span>
+              <span>⌘4 Workbench</span>
+              <span>⌘5 MCP Hub</span>
+            </div>
+          </div>
+
+          <div class="mini-charts" aria-hidden="true">
+            <div class="mini-chart-box">
+              <div class="mini-chart-title">Compensation / Rent Distribution</div>
+              <div class="bars-row">
+                <span style="height: 28%;"></span>
+                <span style="height: 54%;"></span>
+                <span style="height: 92%; background: var(--ok);"></span>
+                <span style="height: 68%;"></span>
+                <span style="height: 44%;"></span>
+                <span style="height: 22%;"></span>
+              </div>
+            </div>
+            <div class="mini-chart-box">
+              <div class="mini-chart-title">14-Day Discovery Velocity</div>
+              <div class="bars-row">
+                <span style="height: 35%;"></span>
+                <span style="height: 48%;"></span>
+                <span style="height: 42%;"></span>
+                <span style="height: 76%;"></span>
+                <span style="height: 64%;"></span>
+                <span style="height: 95%; background: var(--ok);"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section-block" id="faq" aria-labelledby="faq-heading">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="faq-heading">Frequently asked questions</h2>
+          <p>Straight answers on architecture, security, and daily workflows.</p>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>How does Station work without a Chrome extension?</summary>
+            <p>
+              Station launches or attaches to Chrome with an isolated <code>--user-data-dir</code> profile (`~/.flossi/profiles/&lt;name&gt;`) and maintains a persistent Rust WebSocket directly over the Chrome DevTools Protocol. You log into LinkedIn, GitHub, or Facebook once in that profile, and Station reuses it across restarts with zero Manifest V3 extension limits.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Will background tabs interrupt my work or steal window focus?</summary>
+            <p>
+              No. Both <code>station_tabs</code> (MCP) and Auto-Jobs create tabs via <code>Target.createTarget</code> with <code>background: true</code> and pool persistent secondary WebSockets—so agents read pages and extract data behind the scenes while you keep coding.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary>How does Station keep my logged-in browser secure?</summary>
+            <p>
+              Station binds strictly to loopback (<code>127.0.0.1:19826</code>), omits CORS headers so malicious websites cannot query the daemon from your browser, blocks <code>file:</code> / <code>javascript:</code> navigation schemes, and requires a constant-time verified 256-bit token stored at mode <code>0600</code>.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Does Station bypass CAPTCHAs or spam job applications?</summary>
+            <p>
+              Never. Station is built for human-in-the-loop power: if a site presents a CAPTCHA or login check, Station stops cleanly and alerts you. For job applications, the <code>authenticated_assist</code> workflow pre-fills forms and attaches your PDF resume, pausing before the final Submit click so you stay in control.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+      <div class="wrap">
+        <div class="cta-panel">
+          <div>
+            <h2>Ready to replace slow scrapers and broken extensions?</h2>
+            <p>Build the 4.5 MB Rust binary in 4 seconds, run <code>station doctor</code>, and link your AI coding agent in one command.</p>
+          </div>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="https://github.com/selibrah/station/releases/latest/download/Station-Studio-v0.4.0-macOS-arm64.dmg" class="btn-primary">Download macOS (.dmg)</a>
+            <a href="https://github.com/selibrah/station" class="btn-secondary" target="_blank" rel="noopener">GitHub Repository</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer wrap">
+    <span>Station v0.4 · Native Rust CDP Daemon, MCP Server &amp; macOS Studio</span>
+    <span class="mono">127.0.0.1:19826 · Zero Extensions · Zero API Keys</span>
+  </footer>
+
+  <script>
+    (function () {
+      // 1. Theme toggle (respects system preference if user hasn't toggled)
+      const root = document.documentElement;
+      const savedTheme = localStorage.getItem("station-theme");
+      if (savedTheme) {
+        root.setAttribute("data-theme", savedTheme);
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+        root.setAttribute("data-theme", "light");
+      }
+
+      document.getElementById("theme-toggle").addEventListener("click", function () {
+        const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        localStorage.setItem("station-theme", next);
+      });
+
+      // 2. Install command switcher & copy
+      const tabs = document.querySelectorAll(".install-tab");
+      const codeEl = document.getElementById("install-code");
+      const copyBtn = document.getElementById("copy-install-btn");
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          tabs.forEach(function (t) { t.setAttribute("aria-selected", "false"); });
+          tab.setAttribute("aria-selected", "true");
+          codeEl.textContent = tab.getAttribute("data-cmd");
+          copyBtn.textContent = "Copy";
+        });
+      });
+
+      copyBtn.addEventListener("click", function () {
+        navigator.clipboard.writeText(codeEl.textContent || "").then(function () {
+          copyBtn.textContent = "Copied!";
+          setTimeout(function () { copyBtn.textContent = "Copy"; }, 1600);
+        });
+      });
+
+      // 3. Interactive 100-Op Latency Race
+      const raceBtn = document.getElementById("run-race-btn");
+      const barStation = document.getElementById("bar-station");
+      const barOpencli = document.getElementById("bar-opencli");
+      const barPw = document.getElementById("bar-pw");
+      const statStation = document.getElementById("stat-station");
+      const statOpencli = document.getElementById("stat-opencli");
+      const statPw = document.getElementById("stat-pw");
+      let racing = false;
+
+      raceBtn.addEventListener("click", function () {
+        if (racing) return;
+        racing = true;
+        raceBtn.textContent = "Running…";
+        barStation.style.width = "0%";
+        barOpencli.style.width = "0%";
+        barPw.style.width = "0%";
+
+        const start = performance.now();
+        const timer = setInterval(function () {
+          const elapsed = performance.now() - start;
+          // Scaled visual time so user sees the 36ms vs 2800ms contrast clearly over ~2.4s
+          const sPct = Math.min(100, (elapsed / 90) * 100);
+          const pwPct = Math.min(100, (elapsed / 1800) * 100);
+          const ocPct = Math.min(100, (elapsed / 2400) * 100);
+
+          barStation.style.width = sPct + "%";
+          barPw.style.width = pwPct + "%";
+          barOpencli.style.width = ocPct + "%";
+
+          statStation.textContent = sPct >= 100 ? "100/100 done in 36 ms ✔" : Math.floor(sPct) + "/100 ops";
+          statPw.textContent = pwPct >= 100 ? "100/100 done (~18.0 s)" : Math.floor(pwPct) + "/100 ops";
+          statOpencli.textContent = ocPct >= 100 ? "100/100 done (~28.0 s)" : Math.floor(ocPct) + "/100 ops";
+
+          if (ocPct >= 100) {
+            clearInterval(timer);
+            raceBtn.textContent = "Run 100 Ops Again";
+            racing = false;
+          }
+        }, 30);
+      });
+
+      // 4. Interactive @eN Snapshot / Markdown / Raw HTML Inspector
+      const payloads = {
+        snapshot: {
+          badge: "142 tokens (-99.4%)",
+          good: true,
+          text:
+            'Page: Senior Systems Engineer | LinkedIn\n' +
+            'URL: https://www.linkedin.com/jobs/view/409182736\n' +
+            'Scroll: 0 / 980 px (3 interactive refs)\n' +
+            'Headings: [h1] Senior Systems Engineer (Rust / AI Tooling)\n' +
+            '---\n' +
+            '[@e1] input "Quick application note" value="Referred by Sarah — systems team"\n' +
+            '[@e2] file "Attach Resume PDF"\n' +
+            '[@e3] button "Save Role"'
+        },
+        markdown: {
+          badge: "198 tokens (-99.1%)",
+          good: true,
+          text:
+            '# Senior Systems Engineer (Rust / AI Tooling)\n' +
+            'Source: https://www.linkedin.com/jobs/view/409182736\n' +
+            'Token Reduction: 99.1%\n\n' +
+            '---\n\n' +
+            '**Linear** · Remote (Europe / US) · $195k–$230k · 6 applicants\n\n' +
+            'Build sub-millisecond local developer infrastructure, persistent protocol bridges, and native desktop experiences.'
+        },
+        html: {
+          badge: "48,210 tokens (Raw DOM bloat)",
+          good: false,
+          text:
+            '<div class="scaffold-layout__detail overflow-x-hidden jobs-search__job-details--container">\n' +
+            '  <div data-view-name="job-detail-page" class="artdeco-card ember-view relative">\n' +
+            '    <svg aria-hidden="true" viewBox="0 0 24 24" class="artdeco-button__icon">...</svg>\n' +
+            '    <script nonce="Xw92kL">window.__rehydration_payload__={/* 184 KB of tracking & CSS classes */};<\/script>\n' +
+            '    <div class="jobs-unified-top-card__content--two-pane"><span class="visually-hidden">...\n' +
+            '    <!-- 4,100+ more lines of nested divs that waste LLM quota and confuse selectors -->'
+        }
+      };
+
+      const modePills = document.querySelectorAll(".mode-pill");
+      const outPre = document.getElementById("inspector-output");
+      const tokenBadge = document.getElementById("token-badge");
+      const cdpLog = document.getElementById("cdp-live-log");
+
+      modePills.forEach(function (pill) {
+        pill.addEventListener("click", function () {
+          modePills.forEach(function (p) { p.setAttribute("aria-selected", "false"); });
+          pill.setAttribute("aria-selected", "true");
+          const item = payloads[pill.getAttribute("data-mode")];
+          outPre.textContent = item.text;
+          tokenBadge.textContent = item.badge;
+          tokenBadge.className = "token-meter mono " + (item.good ? "token-good" : "token-bad");
+        });
+      });
+
+      document.querySelectorAll(".ref-tag-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          const ref = btn.getAttribute("data-ref");
+          const act = btn.getAttribute("data-act");
+          const lat = (0.31 + Math.random() * 0.14).toFixed(2);
+          cdpLog.textContent = "⚡ [" + lat + " ms] " + act + " -> { ok: true, target: \"" + ref + "\" }";
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

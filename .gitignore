@@ -1,0 +1,41 @@
+# Build & release artifacts
+daemon/target/
+studio-app/.build/
+studio-app/dist/
+releases/
+
+# Secrets, local tokens, SQLite databases, logs & launchd user plists
+*.token
+rent-finder/config.json
+rent-finder/*.plist
+rent-finder/*.db
+rent-finder/*.db-journal
+rent-finder/*.db-wal
+rent-finder/*.log
+rent-finder/site/.vercel/
+rent-finder/site/d/
+
+# Workspace-only scratch, internal notes & old snapshots
+.claude/
+docs/
+history/
+studio-app/work/
+rent-finder/site/
+benchmarks/agy-delegate-benchmark-2026-10-16.md
+benchmarks/*.original.html
+clients/scratch-2026-10-15/
+clients/python/argon_audit.py
+clients/python/argon_blueprint.py
+clients/python/ask_argon.py
+clients/python/consult_argon_architecture.py
+clients/python/execute_argon_market_research.py
+clients/python/gemini_creative_director.py
+clients/python/gemini_studio_director.py
+clients/python/ig_stats.py
+clients/python/market_research.py
+launchers/start_station.2026-10-15.sh
+benchmarks/test_screenshot.png
+
+# OS & editor metadata
+.DS_Store
+*.swp
