@@ -86,9 +86,10 @@ def find_free_port() -> int:
 
 
 def find_chrome_binary() -> str:
-    env_bin = os.environ.get("CHROME_BIN")
-    if env_bin and os.path.exists(env_bin):
-        return env_bin
+    for env_key in ("CHROME_BIN", "CHROME_PATH"):
+        env_bin = os.environ.get(env_key)
+        if env_bin and os.path.exists(env_bin):
+            return env_bin
     candidates = [
         "google-chrome",
         "google-chrome-stable",
@@ -303,23 +304,27 @@ def main() -> int:
     cdp_port = find_free_port()
     chrome_bin = find_chrome_binary()
     user_dir = tempfile.mkdtemp(prefix="station-parity-")
+    stderr_log_path = os.path.join(user_dir, "chrome_stderr.log")
+    stderr_f = open(stderr_log_path, "w", encoding="utf-8")
     chrome_proc = subprocess.Popen(
         [
             chrome_bin,
             "--headless=new",
             "--no-sandbox",
+            "--disable-setuid-sandbox",
             "--disable-gpu",
             "--disable-dev-shm-usage",
             "--no-first-run",
             "--no-default-browser-check",
             "--window-size=1440,960",
+            "--remote-debugging-address=127.0.0.1",
             f"--remote-debugging-port={cdp_port}",
             "--remote-allow-origins=*",
             f"--user-data-dir={user_dir}",
             "about:blank",
         ],
         stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
+        stderr=stderr_f,
     )
 
     browser_ws_url = None
@@ -327,7 +332,7 @@ def main() -> int:
     ws_browser = None
 
     try:
-        for _ in range(18):
+        for _ in range(55):
             try:
                 with urllib.request.urlopen(f"http://127.0.0.1:{cdp_port}/json/version", timeout=0.6) as r:
                     ver = json.loads(r.read().decode("utf-8"))
@@ -338,14 +343,22 @@ def main() -> int:
                 pass
             if chrome_proc.poll() is not None:
                 break
-            time.sleep(0.15)
+            time.sleep(0.2)
 
         if not browser_ws_url:
-            # Fallback to active local Chrome CDP on 9222 (background tabs only, cleaned up in finally)
-            with urllib.request.urlopen("http://127.0.0.1:9222/json/version", timeout=2) as r:
-                ver = json.loads(r.read().decode("utf-8"))
-                browser_ws_url = ver["webSocketDebuggerUrl"]
-                cdp_port = 9222
+            # Fallback to active local Chrome CDP on 9222 (macOS GUI subshell seatbelt)
+            try:
+                with urllib.request.urlopen("http://127.0.0.1:9222/json/version", timeout=2) as r:
+                    ver = json.loads(r.read().decode("utf-8"))
+                    browser_ws_url = ver["webSocketDebuggerUrl"]
+                    cdp_port = 9222
+            except Exception as exc:
+                stderr_f.flush()
+                err_txt = open(stderr_log_path, "r", encoding="utf-8", errors="replace").read()
+                raise RuntimeError(
+                    f"Headless Chrome ({chrome_bin}) failed to expose CDP on port {cdp_port} "
+                    f"(exit={chrome_proc.poll()}):\n{err_txt}"
+                ) from exc
 
         ws_browser = MinimalLoopbackWs(browser_ws_url)
         t_landing = ws_browser.call(
@@ -544,6 +557,7 @@ def main() -> int:
             chrome_proc.wait(timeout=3)
         except Exception:
             chrome_proc.kill()
+        stderr_f.close()
         httpd.shutdown()
         shutil.rmtree(user_dir, ignore_errors=True)
 
