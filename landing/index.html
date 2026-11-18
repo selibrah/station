@@ -110,7 +110,7 @@
       --hairline-bright: #2B3954;
       --ivory: #F2F5FA;
       --slate: #94A3B8;
-      --muted: #5E6E87;
+      --muted: #8496B0;
       --prism: #38BDF8;
       --prism-soft: rgba(56, 189, 248, 0.12);
       --mint: #2DD4BF;
@@ -766,133 +766,202 @@
     .warn { color: var(--amber); }
 
     /* ==========================================================================
-       SECTION 1: LIVE INTERACTIVE STATION STUDIO.APP SIMULATOR
-       Mirrors MainWindow.swift, FindingsView.swift, PlaygroundView.swift,
-       AgentView.swift & MCPHubView.swift directly in the browser.
+       SECTION 1: CAUSAL DUAL-SURFACE WORKSPACE (TARGET DOM <-> STATION STUDIO)
+       Executes verbatim kernels extracted from daemon/src/dom.rs & mcp.rs.
        ========================================================================== */
-    .scenario-bar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
+    .causal-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 16px;
+      align-items: stretch;
     }
 
-    .scenario-label {
-      font-size: 13px;
-      color: var(--muted);
-      margin-right: 4px;
-    }
-
-    .scenario-pill {
-      padding: 6px 12px;
-      border-radius: 7px;
-      border: 1px solid var(--hairline-bright);
-      background: var(--surface);
-      color: var(--slate);
-      font-family: var(--font-display);
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
-    }
-    .scenario-pill:hover,
-    .scenario-pill[aria-pressed="true"] {
-      border-color: var(--prism);
-      color: var(--ivory);
-      background: var(--prism-soft);
-    }
-
+    .target-browser-win,
     .studio-window {
       border: 1px solid var(--hairline-bright);
-      border-radius: 13px;
+      border-radius: 12px;
       background: var(--surface);
       overflow: hidden;
-      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.62);
+      display: flex;
+      flex-direction: column;
+      min-height: 610px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
     }
 
-    .studio-titlebar {
-      min-height: 46px;
-      padding: 8px 16px;
+    .win-titlebar {
+      min-height: 44px;
+      padding: 7px 14px;
       background: #090D15;
       border-bottom: 1px solid var(--hairline);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
-    .studio-title-left {
+    .win-title-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      min-width: 0;
     }
 
     .traffic-dots {
       display: flex;
-      gap: 7px;
+      gap: 6px;
+      flex-shrink: 0;
     }
     .traffic-dots i {
-      width: 11px;
-      height: 11px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       display: inline-block;
       background: var(--hairline-bright);
-      transition: background 150ms ease;
     }
+    .target-browser-win:hover .traffic-dots i:nth-child(1),
     .studio-window:hover .traffic-dots i:nth-child(1) { background: #FF5F56; }
+    .target-browser-win:hover .traffic-dots i:nth-child(2),
     .studio-window:hover .traffic-dots i:nth-child(2) { background: #FFBD2E; }
+    .target-browser-win:hover .traffic-dots i:nth-child(3),
     .studio-window:hover .traffic-dots i:nth-child(3) { background: #27C93F; }
 
-    .studio-win-title {
-      font-size: 13.5px;
+    .win-title-text {
+      font-size: 13px;
       font-weight: 600;
       color: var(--ivory);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .studio-toolbar-right {
+    .fixture-bar {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--hairline);
+      background: #0A0F18;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 8px;
       flex-wrap: wrap;
     }
 
-    .sim-select,
-    .sim-input {
-      height: 30px;
+    .pill-group {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .lab-pill {
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--hairline-bright);
+      background: transparent;
+      color: var(--slate);
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+    }
+    .lab-pill:hover {
+      color: var(--ivory);
+      border-color: var(--prism);
+    }
+    .lab-pill[aria-pressed="true"] {
+      background: var(--prism-soft);
+      border-color: var(--prism);
+      color: var(--ivory);
+    }
+
+    .custom-html-drawer {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--hairline);
+      background: #070A10;
+    }
+    .custom-html-drawer[hidden] { display: none; }
+
+    .custom-html-textarea {
+      width: 100%;
+      height: 110px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--hairline-bright);
+      background: #0B101B;
+      color: var(--ivory);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      line-height: 1.45;
+      resize: vertical;
+    }
+
+    .url-omnibox {
+      padding: 6px 12px;
+      border-bottom: 1px solid var(--hairline);
+      background: #080B12;
+      font-size: 11.5px;
+      color: var(--slate);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    #target-browser-frame {
+      width: 100%;
+      flex: 1;
+      min-height: 445px;
+      border: 0;
+      background: #0B101A;
+      display: block;
+    }
+
+    .win-statusbar {
+      padding: 8px 12px;
+      border-top: 1px solid var(--hairline);
+      background: #080B12;
+      font-size: 11.5px;
+      color: var(--slate);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Right Surface: Station Studio Workspace */
+    .studio-ws-bar {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--hairline);
+      background: #0A0F18;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .sim-btn {
+      height: 29px;
       padding: 0 10px;
       border-radius: 6px;
       border: 1px solid var(--hairline-bright);
       background: var(--surface-raised);
       color: var(--ivory);
       font-family: var(--font-display);
-      font-size: 12.5px;
-    }
-    .sim-input {
-      min-width: 180px;
-    }
-
-    .sim-btn {
-      height: 30px;
-      padding: 0 11px;
-      border-radius: 6px;
-      border: 1px solid var(--hairline-bright);
-      background: var(--surface-raised);
-      color: var(--ivory);
-      font-family: var(--font-display);
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       white-space: nowrap;
-      transition: border-color 130ms ease, background 130ms ease;
+      transition: border-color 120ms ease, background 120ms ease;
     }
     .sim-btn:hover {
       border-color: var(--prism);
-      background: rgba(56, 189, 248, 0.1);
+      background: rgba(56, 189, 248, 0.12);
     }
     .sim-btn-accent {
       background: var(--prism);
@@ -905,7 +974,7 @@
     }
     .sim-btn-mint {
       background: var(--mint-soft);
-      border-color: rgba(45, 212, 191, 0.45);
+      border-color: rgba(45, 212, 191, 0.48);
       color: var(--mint);
     }
     .sim-btn-mint:hover {
@@ -913,304 +982,127 @@
       color: #07090E;
     }
 
-    .lat-pill {
-      font-size: 11.5px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: var(--mint-soft);
-      color: var(--mint);
-      border: 1px solid rgba(45, 212, 191, 0.28);
-      font-weight: 600;
-    }
-
-    /* NavigationSplitView Layout */
-    .studio-split-shell {
-      display: grid;
-      grid-template-columns: 218px minmax(0, 1fr);
-      min-height: 560px;
-    }
-
-    .studio-sidebar {
-      background: #0A0E17;
-      border-right: 1px solid var(--hairline);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .sidebar-groups {
-      padding: 12px 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .sidebar-group-label {
-      font-size: 11.5px;
-      font-weight: 600;
-      color: var(--muted);
-      padding: 0 8px 4px;
-    }
-
-    .sidebar-nav-btn {
-      width: 100%;
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--slate);
-      font-family: var(--font-display);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 7px 9px;
-      border-radius: 7px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      text-align: left;
-    }
-    .sidebar-nav-btn:hover {
-      color: var(--ivory);
-      background: rgba(255, 255, 255, 0.03);
-    }
-    .sidebar-nav-btn[aria-selected="true"] {
-      background: rgba(56, 189, 248, 0.13);
-      border-color: rgba(56, 189, 248, 0.35);
-      color: var(--ivory);
-      font-weight: 600;
-    }
-
-    .sidebar-count {
-      font-size: 11px;
-      padding: 1px 6px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.07);
-      color: var(--slate);
-    }
-    .sidebar-nav-btn[aria-selected="true"] .sidebar-count {
-      background: rgba(56, 189, 248, 0.24);
-      color: var(--ivory);
-    }
-
-    .sidebar-footer {
-      padding: 11px 13px;
-      border-top: 1px solid var(--hairline);
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      background: rgba(7, 9, 14, 0.55);
-    }
-
-    .status-dot-live {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--mint);
-      box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
-      flex-shrink: 0;
-    }
-    .status-dot-live.stopped {
-      background: var(--muted);
-      box-shadow: none;
-    }
-
-    /* Main Detail Pane */
-    .studio-detail-pane {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-      background: var(--surface);
-      position: relative;
-    }
-
-    .sim-toast {
-      position: absolute;
-      bottom: 14px;
-      right: 16px;
-      z-index: 15;
-      background: #0F1A2A;
-      border: 1px solid var(--mint);
-      color: var(--ivory);
-      padding: 9px 14px;
-      border-radius: 8px;
-      font-size: 12.5px;
-      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      max-width: 420px;
-    }
-    .sim-toast[hidden] { display: none; }
-
-    /* Sub-headers & KPI Strip inside Findings / Workbench */
-    .pane-subheader {
-      padding: 10px 16px;
-      border-bottom: 1px solid var(--hairline);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-      background: rgba(7, 9, 14, 0.35);
-    }
-
-    .cat-pills,
-    .seg-control {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .cat-pill {
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--hairline-bright);
-      background: transparent;
-      color: var(--slate);
-      font-family: var(--font-display);
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-    }
-    .cat-pill[aria-pressed="true"] {
-      background: var(--prism);
-      border-color: var(--prism);
-      color: #07090E;
-      font-weight: 600;
-    }
-
-    .seg-control {
-      background: #080B12;
-      padding: 3px;
-      border-radius: 7px;
-      border: 1px solid var(--hairline);
-    }
-    .seg-btn {
-      border: 0;
-      background: transparent;
-      color: var(--slate);
-      font-family: var(--font-display);
-      font-size: 12px;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .seg-btn[aria-selected="true"] {
-      background: var(--surface-raised);
-      color: var(--ivory);
-    }
-
-    .kpi-row {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 8px;
-      padding: 10px 16px;
-      border-bottom: 1px solid var(--hairline);
-      background: rgba(7, 9, 14, 0.2);
-    }
-
-    .kpi-tile {
-      text-align: left;
-      padding: 8px 10px;
-      border-radius: 8px;
-      border: 1px solid var(--hairline);
-      background: #0A0E17;
-      color: var(--ivory);
-      font-family: var(--font-display);
-      cursor: pointer;
-      transition: border-color 120ms ease, background 120ms ease;
-    }
-    .kpi-tile:hover { border-color: var(--hairline-bright); }
-    .kpi-tile[aria-pressed="true"] {
-      border-color: var(--prism);
-      background: rgba(56, 189, 248, 0.1);
-    }
-    .kpi-tile-label {
-      display: block;
-      font-size: 11px;
-      color: var(--slate);
-      margin-bottom: 2px;
-    }
-    .kpi-tile-val {
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    /* Findings Split View: Master List + CRM Inspector */
-    .findings-split {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      flex: 1;
-      min-height: 410px;
-    }
-
-    .findings-list-col {
-      border-right: 1px solid var(--hairline);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .findings-search-bar {
-      padding: 8px 12px;
-      border-bottom: 1px solid var(--hairline);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .findings-search-bar input {
-      width: 100%;
-      height: 30px;
-      padding: 0 10px;
+    .sim-input,
+    .sim-select {
+      height: 29px;
+      padding: 0 9px;
       border-radius: 6px;
       border: 1px solid var(--hairline-bright);
       background: #080B12;
       color: var(--ivory);
       font-family: var(--font-display);
-      font-size: 12.5px;
+      font-size: 12px;
     }
 
-    .crm-rows {
-      padding: 8px;
+    .lat-pill {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--mint-soft);
+      color: var(--mint);
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      font-weight: 600;
+    }
+
+    .studio-mount {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      max-height: 370px;
+      min-height: 445px;
+      position: relative;
+    }
+
+    .telemetry-ribbon {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--hairline);
+      background: rgba(7, 9, 14, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 11.5px;
+    }
+
+    .en-list {
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      max-height: 390px;
       overflow-y: auto;
     }
 
-    .crm-row {
-      width: 100%;
-      text-align: left;
-      font-family: var(--font-display);
-      color: var(--ivory);
-      padding: 10px 12px;
-      border-radius: 8px;
+    .en-row {
+      padding: 8px 10px;
+      border-radius: 7px;
       background: #090D14;
       border: 1px solid var(--hairline);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
+      flex-wrap: wrap;
+      transition: border-color 120ms ease;
+    }
+    .en-row:hover {
+      border-color: var(--prism);
+    }
+
+    .ref-chip {
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--prism-soft);
+      color: var(--prism);
+      font-size: 11.5px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .crm-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      flex: 1;
+      min-height: 340px;
+    }
+
+    .crm-master {
+      border-right: 1px solid var(--hairline);
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 365px;
+      overflow-y: auto;
+    }
+
+    .crm-row-btn {
+      width: 100%;
+      text-align: left;
+      padding: 9px 10px;
+      border-radius: 7px;
+      border: 1px solid var(--hairline);
+      background: #090D14;
+      color: var(--ivory);
+      font-family: var(--font-display);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
       cursor: pointer;
-      transition: border-color 120ms ease, background 120ms ease;
     }
-    .crm-row:hover {
-      border-color: var(--hairline-bright);
-    }
-    .crm-row[aria-selected="true"] {
+    .crm-row-btn[aria-selected="true"] {
       background: var(--surface-raised);
       border-color: var(--prism);
     }
 
     .score-box {
-      width: 34px;
-      height: 26px;
+      width: 30px;
+      height: 24px;
       border-radius: 5px;
       background: var(--mint-soft);
       color: var(--mint);
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
       display: inline-flex;
       align-items: center;
@@ -1220,8 +1112,8 @@
 
     .stage-badge {
       display: inline-block;
-      font-size: 11px;
-      padding: 2px 8px;
+      font-size: 10.5px;
+      padding: 2px 7px;
       border-radius: 999px;
       background: var(--prism-soft);
       color: var(--prism);
@@ -1232,31 +1124,31 @@
       color: var(--mint);
     }
     .stage-badge.amber {
-      background: rgba(251, 191, 36, 0.14);
+      background: rgba(251, 191, 36, 0.15);
       color: var(--amber);
     }
 
-    .crm-inspector {
-      padding: 16px 18px;
+    .crm-detail {
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 10px;
       background: rgba(9, 13, 20, 0.45);
     }
 
     .stage-stepper {
       display: flex;
       flex-wrap: wrap;
-      gap: 5px;
+      gap: 4px;
     }
     .stage-step-btn {
-      padding: 5px 10px;
-      border-radius: 6px;
+      padding: 4px 8px;
+      border-radius: 5px;
       border: 1px solid var(--hairline-bright);
       background: #090D14;
       color: var(--slate);
       font-family: var(--font-display);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       cursor: pointer;
     }
@@ -1266,30 +1158,16 @@
       color: #07090E;
     }
 
-    .sim-note-box {
-      width: 100%;
-      min-height: 62px;
-      padding: 8px 10px;
-      border-radius: 7px;
-      border: 1px solid var(--hairline-bright);
-      background: #080B12;
-      color: var(--ivory);
-      font-family: var(--font-display);
-      font-size: 12.5px;
-      resize: vertical;
-    }
-
-    /* Data Charts Grid (4 Swift Charts equivalents) */
-    .charts-grid-2x2 {
-      padding: 16px;
+    .charts-2col {
+      padding: 12px;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
 
     .chart-card {
-      padding: 15px 16px;
-      border-radius: 9px;
+      padding: 12px 14px;
+      border-radius: 8px;
       background: #090D14;
       border: 1px solid var(--hairline);
     }
@@ -1297,29 +1175,37 @@
     .hist-bars {
       display: flex;
       align-items: flex-end;
-      gap: 8px;
-      height: 112px;
-      margin-top: 14px;
-      padding-bottom: 6px;
+      gap: 6px;
+      height: 108px;
+      margin-top: 12px;
+      padding-bottom: 5px;
       border-bottom: 1px solid var(--hairline);
     }
-    .hist-bars div {
+    .hist-col {
       flex: 1;
-      border-radius: 4px 4px 0 0;
-      background: linear-gradient(180deg, var(--prism) 0%, rgba(56, 189, 248, 0.22) 100%);
-      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 4px;
     }
-    .hist-bars div.median {
-      background: linear-gradient(180deg, var(--mint) 0%, rgba(45, 212, 191, 0.28) 100%);
+    .hist-bar-fill {
+      width: 100%;
+      border-radius: 3px 3px 0 0;
+      background: linear-gradient(180deg, var(--prism) 0%, rgba(56, 189, 248, 0.25) 100%);
+    }
+    .hist-bar-fill.median {
+      background: linear-gradient(180deg, var(--mint) 0%, rgba(45, 212, 191, 0.3) 100%);
     }
 
     .funnel-row {
       display: grid;
-      grid-template-columns: 82px 1fr 34px;
+      grid-template-columns: 74px 1fr 28px;
       align-items: center;
       gap: 8px;
-      font-size: 12px;
-      margin-top: 8px;
+      font-size: 11.5px;
+      margin-top: 7px;
     }
     .funnel-bar-bg {
       height: 8px;
@@ -1333,46 +1219,14 @@
       background: var(--prism);
     }
 
-    /* Workbench / Cockpit / Auto-Jobs / MCP Cards */
-    .pane-pad {
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .sim-card {
-      padding: 15px 16px;
-      border-radius: 10px;
-      background: #090D14;
-      border: 1px solid var(--hairline);
-    }
-
-    .en-row {
-      padding: 9px 12px;
-      border-radius: 7px;
-      background: #090D14;
-      border: 1px solid var(--hairline);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .ref-chip {
-      padding: 2px 7px;
-      border-radius: 5px;
-      background: var(--prism-soft);
-      color: var(--prism);
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .mcp-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
+    .sql-log-bar {
+      padding: 8px 12px;
+      border-top: 1px solid var(--hairline);
+      background: #070A10;
+      font-size: 11px;
+      color: var(--mint);
+      white-space: nowrap;
+      overflow-x: auto;
     }
 
     /* FAQ */
@@ -1436,33 +1290,22 @@
       gap: 12px;
     }
 
+    @media (max-width: 1060px) {
+      .causal-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 960px) {
       .hero-grid,
-      .studio-split-shell,
-      .findings-split,
-      .charts-grid-2x2,
-      .mcp-grid,
+      .crm-split,
+      .charts-2col,
       .faq-grid {
         grid-template-columns: 1fr;
       }
-      .studio-sidebar {
+      .crm-master {
         border-right: 0;
         border-bottom: 1px solid var(--hairline);
-      }
-      .sidebar-groups {
-        flex-direction: row;
-        overflow-x: auto;
-        gap: 6px;
-        padding: 10px;
-      }
-      .sidebar-group-label { display: none; }
-      .sidebar-nav-btn { width: auto; white-space: nowrap; }
-      .findings-list-col {
-        border-right: 0;
-        border-bottom: 1px solid var(--hairline);
-      }
-      .kpi-row {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       .metrics-strip {
         grid-template-columns: repeat(2, 1fr);
@@ -1586,107 +1429,93 @@
     </div>
 
     <!-- ======================================================================
-         SECTION 1: LIVE INTERACTIVE STATION STUDIO.APP EXPERIENCE
-         Hands-on simulator of the Swift 6 macOS app + Rust CDP Engine
+         SECTION 1: ZERO-MOCK DUAL-SURFACE CAUSAL WORKSPACE
+         Left: Sandboxed <iframe srcdoc> Target Browser with hostile HTML & React/file inputs
+         Right: Station Studio executing verbatim Rust kernels from daemon/src/{dom,mcp}.rs
          ====================================================================== -->
     <section class="section pad-x" id="studio" aria-labelledby="studio-heading">
       <div class="section-header">
         <div>
-          <h2 id="studio-heading">Step inside Station Studio.app right here.</h2>
+          <h2 id="studio-heading">Zero-mock causal lab: watch Rust DOM kernels drive a live browser frame.</h2>
         </div>
         <p>
-          Test-drive the real Swift 6 macOS workspace before downloading. Triage jobs &amp; apartments in the SQLite CRM, flip to live Data Charts, trigger a background Auto-Job scan, test <code>@eN</code> snapshots &amp; PDF uploads in Workbench, or link Claude Code &amp; Cursor in one click.
+          No canned <code>setTimeout</code> theater. The left pane is a real sandboxed DOM with React-controlled inputs, <code>&lt;input type="file"&gt;</code>, and hydration bloat—or paste your own HTML. The right pane runs the verbatim JavaScript kernels compiled into <code>station v0.4.0</code>.
         </p>
       </div>
 
-      <div class="scenario-bar" role="group" aria-label="Guided interactive workflows">
-        <span class="scenario-label">Quick walkthroughs:</span>
-        <button type="button" class="scenario-pill" data-scenario="jobs-crm" aria-pressed="true">Triage jobs &amp; advance stages</button>
-        <button type="button" class="scenario-pill" data-scenario="rent-charts" aria-pressed="false">Explore rent &amp; salary charts</button>
-        <button type="button" class="scenario-pill" data-scenario="run-autojob" aria-pressed="false">Run live Auto-Job scan</button>
-        <button type="button" class="scenario-pill" data-scenario="workbench-en" aria-pressed="false">Inspect @eN &amp; attach CV PDF</button>
-        <button type="button" class="scenario-pill" data-scenario="mcp-link" aria-pressed="false">Link Claude Code &amp; Cursor</button>
-      </div>
-
-      <div class="studio-window" role="region" aria-label="Interactive Station Studio macOS application preview">
-        <!-- macOS Titlebar & Toolbar (MainWindow.swift) -->
-        <div class="studio-titlebar">
-          <div class="studio-title-left">
-            <div class="traffic-dots" aria-hidden="true"><i></i><i></i><i></i></div>
-            <span class="studio-win-title" id="sim-window-title">Station Studio — Findings &amp; Charts</span>
+      <div class="causal-grid">
+        <!-- LEFT SURFACE: LIVE SANDBOXED TARGET BROWSER TAB -->
+        <div class="target-browser-win" role="region" aria-label="Sandboxed target browser tab">
+          <div class="win-titlebar">
+            <div class="win-title-left">
+              <div class="traffic-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+              <span class="win-title-text" id="target-win-title">Authenticated Chrome Tab (Target DOM)</span>
+            </div>
+            <span class="mono" style="font-size: 11px; color: var(--mint);" id="target-overlay-pill">@eN Overlay: ON</span>
           </div>
 
-          <div class="studio-toolbar-right">
-            <label for="sim-session-select" class="skip-link">Active Chrome Session</label>
-            <select id="sim-session-select" class="sim-select" title="Choose authenticated Chrome profile / session">
-              <option value="jobs">Session: jobs · LinkedIn (3 tabs)</option>
-              <option value="housing">Session: housing · Avito + FB (4 tabs)</option>
-              <option value="github">Session: github · Pull Requests (2 tabs)</option>
-              <option value="gemini">Session: gemini · Deep Research (1 tab)</option>
-            </select>
-            <span class="lat-pill mono" id="sim-toolbar-lat">0.36 ms</span>
-            <button type="button" class="sim-btn" id="sim-reload-tab-btn" title="Reload active Chrome tab via CDP">↻ Reload Tab</button>
+          <div class="fixture-bar">
+            <div class="pill-group" role="group" aria-label="Target HTML fixture">
+              <button type="button" class="lab-pill" data-fixture="ats-job" aria-pressed="true">ATS Job Form</button>
+              <button type="button" class="lab-pill" data-fixture="rent-casa" aria-pressed="false">Darija/FR Rent</button>
+              <button type="button" class="lab-pill" data-fixture="custom" aria-pressed="false">Paste Any HTML</button>
+            </div>
+            <button type="button" class="sim-btn" id="reset-fixture-btn" title="Reload pristine fixture DOM">↻ Reset DOM</button>
+          </div>
+
+          <div class="custom-html-drawer" id="custom-html-drawer" hidden>
+            <label for="custom-html-input" style="display:block;font-size:11.5px;color:var(--slate);margin-bottom:5px;">
+              Paste or edit any raw HTML below—Station's verbatim <code>dom.rs</code> kernels will index, act, distil Markdown, and score it live:
+            </label>
+            <textarea id="custom-html-input" class="custom-html-textarea" spellcheck="false"></textarea>
+            <div style="display:flex;justify-content:flex-end;margin-top:6px;">
+              <button type="button" class="sim-btn sim-btn-accent" id="mount-custom-html-btn">Mount HTML &amp; Run Snapshot</button>
+            </div>
+          </div>
+
+          <div class="url-omnibox mono">
+            <span id="target-omnibox-url" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">https://boards.linear.app/jobs/409182-senior-rust-systems</span>
+            <span style="color: var(--muted); flex-shrink: 0;">ws://127.0.0.1:9222</span>
+          </div>
+
+          <iframe
+            id="target-browser-frame"
+            sandbox="allow-same-origin allow-scripts allow-forms"
+            title="Live target DOM driven by Station kernels"
+          ></iframe>
+
+          <div class="win-statusbar mono">
+            <span id="target-raw-stats">Raw DOM: — bytes</span>
+            <span id="target-file-stats" style="color: var(--slate);">input[type=file]: 0 files</span>
           </div>
         </div>
 
-        <!-- NavigationSplitView: Sidebar + Active Detail View -->
-        <div class="studio-split-shell">
-          <aside class="studio-sidebar" aria-label="Station Studio sidebar">
-            <div class="sidebar-groups" role="tablist" aria-orientation="vertical">
-              <div>
-                <div class="sidebar-group-label">Automation &amp; Data</div>
-                <button type="button" class="sidebar-nav-btn" role="tab" aria-selected="false" data-sim-pane="cockpit">
-                  <span>Cockpit</span>
-                  <span class="mono sidebar-count">⌘1</span>
-                </button>
-                <button type="button" class="sidebar-nav-btn" role="tab" aria-selected="true" data-sim-pane="findings">
-                  <span>Findings &amp; Charts</span>
-                  <span class="mono sidebar-count" id="sim-findings-badge">8</span>
-                </button>
-                <button type="button" class="sidebar-nav-btn" role="tab" aria-selected="false" data-sim-pane="autojobs">
-                  <span>Auto-Jobs</span>
-                  <span class="mono sidebar-count" id="sim-jobs-badge">3</span>
-                </button>
-              </div>
-
-              <div>
-                <div class="sidebar-group-label">Browser &amp; Agents</div>
-                <button type="button" class="sidebar-nav-btn" role="tab" aria-selected="false" data-sim-pane="workbench">
-                  <span>Workbench</span>
-                  <span class="mono sidebar-count">@eN</span>
-                </button>
-                <button type="button" class="sidebar-nav-btn" role="tab" aria-selected="false" data-sim-pane="mcp">
-                  <span>MCP Hub</span>
-                  <span class="mono sidebar-count" id="sim-mcp-badge">4/5</span>
-                </button>
-              </div>
-
-              <div>
-                <div class="sidebar-group-label">System</div>
-                <button type="button" class="sidebar-nav-btn" role="tab" aria-selected="false" data-sim-pane="activity">
-                  <span>Activity</span>
-                  <span class="mono sidebar-count" id="sim-act-badge">5</span>
-                </button>
-              </div>
+        <!-- RIGHT SURFACE: STATION STUDIO.APP (VERBATIM KERNELS + RELATIONAL CRM + MCP WIRE) -->
+        <div class="studio-window" role="region" aria-label="Station Studio live inspector and SQLite CRM">
+          <div class="win-titlebar">
+            <div class="win-title-left">
+              <div class="traffic-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+              <span class="win-title-text">Station Studio.app</span>
+              <span class="mono" style="font-size: 11px; color: var(--muted);" id="kernel-sha-badge">dom.rs</span>
             </div>
-
-            <div class="sidebar-footer">
-              <span class="status-dot-live" id="sim-daemon-dot" aria-hidden="true"></span>
-              <div style="min-width: 0;">
-                <div style="font-size: 12.5px; font-weight: 600;" id="sim-daemon-status">Online <span class="mono" style="color: var(--muted); font-weight: 400;">v0.4.0</span></div>
-                <div class="mono" style="font-size: 11px; color: var(--slate);" id="sim-daemon-sub">127.0.0.1:19826 · 0.36 ms</div>
-              </div>
+            <div style="display:flex;align-items:center;gap:7px;">
+              <span class="lat-pill mono" id="studio-exec-ms">0.00 ms</span>
+              <button type="button" class="sim-btn sim-btn-mint" id="harvest-to-crm-btn" title="Extract Clean Markdown, score 0-100, and UPSERT into SQLite CRM">Harvest Tab → CRM</button>
             </div>
-          </aside>
+          </div>
 
-          <!-- Dynamic Detail Pane -->
-          <div class="studio-detail-pane">
-            <div id="sim-detail-mount"></div>
-            <div class="sim-toast" id="sim-toast" hidden>
-              <span style="color: var(--mint); font-weight: 700;">✓</span>
-              <span id="sim-toast-msg">Saved to local SQLite</span>
-              <button type="button" class="sim-btn sim-btn-mint" id="sim-toast-cta" hidden style="height: 24px; font-size: 11.5px; padding: 0 8px;">View</button>
+          <div class="studio-ws-bar">
+            <div class="pill-group" role="group" aria-label="Station Studio workspace">
+              <button type="button" class="lab-pill" data-ws="workbench" aria-pressed="true">1. Workbench (@eN · Read · Upload)</button>
+              <button type="button" class="lab-pill" data-ws="crm" aria-pressed="false">2. SQLite CRM &amp; Charts (<span id="crm-count-badge">6</span>)</button>
+              <button type="button" class="lab-pill" data-ws="mcp" aria-pressed="false">3. MCP Wire (<span id="mcp-count-badge">11</span>)</button>
             </div>
+          </div>
+
+          <div class="studio-mount" id="studio-mount"></div>
+
+          <div class="sql-log-bar mono" id="studio-sql-log" aria-live="polite">
+            READY · Verbatim kernels loaded from daemon/src/dom.rs &amp; daemon/src/mcp.rs
           </div>
         </div>
       </div>
@@ -1924,6 +1753,7 @@
     </section>
   </main>
 
+  <script src="station-kernels.js"></script>
   <script>
     (function () {
       const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -2635,1271 +2465,8 @@
         });
       });
 
-      // Safe HTML escaping helper
-      function esc(str) {
-        return String(str == null ? "" : str)
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;");
-      }
-
-      const STAGE_LABELS = {
-        jobs:    { new: "Matched", contacted: "Applied", replied: "Interview", visit: "Offer", archived: "Archived" },
-        housing: { new: "New", contacted: "Contacted", replied: "Replied", visit: "Visit", archived: "Archived" },
-        leads:   { new: "New Lead", contacted: "Outreached", replied: "Discovery", visit: "Won", archived: "Archived" }
-      };
-      const STAGE_KEYS = ["new", "contacted", "replied", "visit", "archived"];
-
-      const simState = {
-        pane: "findings",
-        daemonOnline: true,
-        latencyMs: 0.36,
-        latencySamples: [0.39, 0.36, 0.34, 0.41, 0.35, 0.37, 0.33, 0.36, 0.38, 0.35, 0.34, 0.36],
-        session: "jobs",
-        quickUrl: "https://www.linkedin.com/jobs/search/?keywords=rust+systems&f_TPR=r86400",
-        // Findings state
-        category: "jobs",     // all | jobs | housing | leads
-        submode: "pipeline",  // pipeline | charts
-        kpiFilter: "all",     // all | new | pipeline | followup
-        searchQuery: "",
-        selectedUid: "j1",
-        showAddForm: false,
-        // Workbench state
-        wbMode: "snapshot",   // snapshot | markdown | eval
-        wbFilter: "",
-        mdViewRaw: false,
-        jsExpr: "Array.from(document.querySelectorAll('a[href*=\"/jobs/view\"]')).slice(0, 3).map(a => a.textContent.trim())",
-        jsOutput: "[\n  \"Senior Rust Systems Engineer — Linear\",\n  \"AI Runtime & MCP Engineer — Anthropic\",\n  \"Staff macOS Swift Infrastructure — Raycast\"\n]",
-        elements: [
-          { ref: "e1", role: "searchbox", label: "Title, skill, or company", val: "Rust Systems Engineer", active: false, kind: "input" },
-          { ref: "e2", role: "button", label: "Date posted: Past 24 hours", val: "", active: true, kind: "toggle" },
-          { ref: "e3", role: "button", label: "Remote filter", val: "", active: true, kind: "toggle" },
-          { ref: "e4", role: "link", label: "Senior Rust Systems Engineer — Linear ($210k)", val: "/jobs/view/409182", active: false, kind: "link" },
-          { ref: "e5", role: "input:file", label: "Resume / CV PDF attachment", val: "Ready (DataTransfer)", active: false, kind: "file" },
-          { ref: "e6", role: "button", label: "Easy Apply (pauses before final submit)", val: "", active: false, kind: "apply" }
-        ],
-        // Auto-Jobs state
-        schedulerActive: true,
-        runningJobId: null,
-        scanStepText: "",
-        missions: [
-          {
-            id: "m-jobs",
-            title: "Rust & AI Systems Remote Jobs",
-            category: "jobs",
-            interval: "Every 30m",
-            goal: "Scan LinkedIn 24h + HN Who's Hiring via session 'jobs' -> score & deduplicate into findings.db",
-            lastResult: "4m ago · 30 live roles indexed (top 95 pts)"
-          },
-          {
-            id: "m-rent",
-            title: "Casablanca Rent Radar (< 1,350 DH)",
-            category: "housing",
-            interval: "Every 15m",
-            goal: "Scan Avito + 4 chronological FB Groups + Mubawab -> two-way sync with rent-finder/seen.db",
-            lastResult: "8m ago · 58 apartments tracked · 1 price drop alert"
-          },
-          {
-            id: "m-leads",
-            title: "High-Intent Browser Automation Leads",
-            category: "leads",
-            interval: "Every 60m",
-            goal: "Monitor GitHub issues & X threads mentioning broken MV3 file uploads or 403 Jina walls",
-            lastResult: "22m ago · 2 warm engineering teams flagged"
-          }
-        ],
-        // MCP Hub state
-        mcpTestOutput: "// Click any MCP tool button above to inspect the live stdio JSON-RPC 2.0 response.",
-        mcpClients: [
-          { id: "claude-code", name: "Claude Code CLI", path: "~/.claude.json", linked: true },
-          { id: "cursor", name: "Cursor IDE", path: "~/.cursor/mcp.json", linked: true },
-          { id: "antigravity", name: "Google Antigravity", path: "~/.gemini/antigravity/mcp_config.json", linked: true },
-          { id: "claude-desk", name: "Claude Desktop", path: "~/Library/Application Support/Claude/claude_desktop_config.json", linked: true },
-          { id: "windsurf", name: "Windsurf Editor", path: "~/.codeium/windsurf/mcp_config.json", linked: false }
-        ],
-        // Findings SQLite dataset
-        findings: [
-          {
-            uid: "j1", category: "jobs", score: 95, title: "Senior Rust Systems Engineer",
-            subtitle: "Linear · Remote · LinkedIn 24h", source: "LinkedIn", amount: 210000, currency: "$",
-            status: "replied", followUp: true,
-            url: "https://www.linkedin.com/jobs/view/409182736",
-            note: "System design round Thursday 15:00 UTC. Emphasize persistent CDP socket pool (0.36 ms)."
-          },
-          {
-            uid: "j2", category: "jobs", score: 93, title: "AI Runtime & MCP Tooling Engineer",
-            subtitle: "Anthropic · Remote · Direct ATS", source: "ATS Board", amount: 235000, currency: "$",
-            status: "contacted", followUp: false,
-            url: "https://boards.greenhouse.io/anthropic/jobs/410928",
-            note: "Attached tailored CV via Station /upload DataTransfer in 0.41 ms."
-          },
-          {
-            uid: "j3", category: "jobs", score: 90, title: "Staff macOS & Swift 6 Infrastructure",
-            subtitle: "Raycast · Remote EU · HN Jobs", source: "HN Jobs", amount: 195000, currency: "$",
-            status: "new", followUp: false,
-            url: "https://news.ycombinator.com/item?id=42918210",
-            note: ""
-          },
-          {
-            uid: "j4", category: "jobs", score: 87, title: "Founding Browser Agent Engineer",
-            subtitle: "YC W26 Startup · Remote · HN Jobs", source: "HN Jobs", amount: 185000, currency: "$",
-            status: "new", followUp: false,
-            url: "https://news.ycombinator.com/item?id=42918994",
-            note: "Replacing fragile Playwright headless cluster with authenticated profile automation."
-          },
-          {
-            uid: "h1", category: "housing", score: 95, title: "Studio meublé Maârif Extension",
-            subtitle: "0.8 km tramway · Particulier · Sans vis-à-vis", source: "Avito", amount: 1150, currency: "DH",
-            status: "visit", followUp: true,
-            phone: "+212 6 61 48 •• ••",
-            url: "https://www.avito.ma/fr/maarif/locations_immobilieres/studio_91827.htm",
-            note: "Owner confirmed fiber internet + sunny balcony. Saturday 11:00 visit booked."
-          },
-          {
-            uid: "h2", category: "housing", score: 92, title: "Chambre calme Abdelmoumen T1/T2",
-            subtitle: "Price drop 1,300 → 1,050 DH · Direct tramway", source: "FB Group", amount: 1050, currency: "DH",
-            status: "replied", followUp: false,
-            phone: "+212 6 70 19 •• ••",
-            url: "https://www.facebook.com/groups/colocation.casablanca/posts/9182731/",
-            note: "Deduplicated across 3 Casablanca groups automatically."
-          },
-          {
-            uid: "h3", category: "housing", score: 89, title: "Colocation Gauthier lumineuse",
-            subtitle: "1.4 km · 2 colocataires · Cuisine équipée", source: "Mubawab", amount: 1250, currency: "DH",
-            status: "contacted", followUp: false,
-            phone: "+212 6 55 82 •• ••",
-            url: "https://www.mubawab.ma/fr/a/7891234/colocation-gauthier",
-            note: "Sent initial WhatsApp greeting via 1-tap wa.me link."
-          },
-          {
-            uid: "l1", category: "leads", score: 91, title: "QA Platform Team migrating off MV3 Bridge",
-            subtitle: "Series B DevTools · Needs gesture-free file upload", source: "GitHub", amount: 9500, currency: "$",
-            status: "new", followUp: true,
-            url: "https://github.com/selibrah/station/discussions",
-            note: "Blocked by Chrome fileChooser user-gesture gate (#2541); Station /upload solves directly."
-          }
-        ],
-        liveSpawnPool: {
-          jobs: [
-            { title: "Principal Rust Protocol Engineer", subtitle: "Zed Industries · Remote · LinkedIn 1h ago", source: "LinkedIn", amount: 215000, currency: "$", score: 96 },
-            { title: "Staff Local-First AI Systems Engineer", subtitle: "Linear · Remote · ATS Direct", source: "ATS Board", amount: 225000, currency: "$", score: 94 }
-          ],
-          housing: [
-            { title: "Studio propre Racine proche Anfa", subtitle: "0.9 km · Particulier vérifié · Just posted", source: "Avito", amount: 1120, currency: "DH", score: 94, phone: "+212 6 62 90 •• ••" }
-          ],
-          leads: [
-            { title: "FinTech Workflow Team replacing headless scrapers", subtitle: "Inbound · Authenticated internal portal automation", source: "GitHub", amount: 12000, currency: "$", score: 93 }
-          ]
-        },
-        activity: [
-          { time: "Just now", method: "SQLite", path: "SYNC seen.db + findings.db (two-way)", ms: "0.14 ms" },
-          { time: "12s ago", method: "GET", path: "/snapshot?viewport_only=false -> 142 @eN tokens", ms: "0.38 ms" },
-          { time: "28s ago", method: "POST", path: "/upload @e5 resume_2026.pdf (184 KB DataTransfer)", ms: "0.41 ms" },
-          { time: "1m ago", method: "GET", path: "/read?session=jobs -> Clean Markdown (-99.3%)", ms: "0.39 ms" },
-          { time: "4m ago", method: "CDP", path: "Target.createTarget (background: true, focus steal: 0)", ms: "0.35 ms" }
-        ]
-      };
-
-      const simMount = document.getElementById("sim-detail-mount");
-      const simWinTitle = document.getElementById("sim-window-title");
-      const simToolbarLat = document.getElementById("sim-toolbar-lat");
-      const simFindingsBadge = document.getElementById("sim-findings-badge");
-      const simJobsBadge = document.getElementById("sim-jobs-badge");
-      const simMcpBadge = document.getElementById("sim-mcp-badge");
-      const simActBadge = document.getElementById("sim-act-badge");
-      const simToast = document.getElementById("sim-toast");
-      const simToastMsg = document.getElementById("sim-toast-msg");
-      const simToastCta = document.getElementById("sim-toast-cta");
-      let toastTimer = null;
-
-      function formatAmount(amt, cur) {
-        if (!amt) return "—";
-        const num = Number(amt).toLocaleString();
-        return cur === "$" ? "$" + num : num + " " + cur;
-      }
-
-      function stageLabelFor(item) {
-        const map = STAGE_LABELS[item.category] || STAGE_LABELS.jobs;
-        return map[item.status] || item.status;
-      }
-
-      function stageBadgeClass(status) {
-        if (status === "visit" || status === "replied") return "stage-badge mint";
-        if (status === "new") return "stage-badge amber";
-        return "stage-badge";
-      }
-
-      function logSimActivity(method, path, customMs) {
-        const msVal = customMs || (0.32 + Math.random() * 0.11);
-        const msStr = typeof msVal === "number" ? msVal.toFixed(2) + " ms" : msVal;
-        if (typeof msVal === "number") {
-          simState.latencyMs = msVal;
-          simState.latencySamples.push(msVal);
-          if (simState.latencySamples.length > 14) simState.latencySamples.shift();
-          simToolbarLat.textContent = msVal.toFixed(2) + " ms";
-        }
-        simState.activity.unshift({ time: "Just now", method: method, path: path, ms: msStr });
-        if (simState.activity.length > 18) simState.activity.pop();
-        syncSimChrome();
-      }
-
-      function showSimToast(msg, ctaLabel, ctaFn) {
-        clearTimeout(toastTimer);
-        simToastMsg.textContent = msg;
-        if (ctaLabel && ctaFn) {
-          simToastCta.textContent = ctaLabel;
-          simToastCta.removeAttribute("hidden");
-          simToastCta.onclick = function () {
-            simToast.setAttribute("hidden", "");
-            ctaFn();
-          };
-        } else {
-          simToastCta.setAttribute("hidden", "");
-          simToastCta.onclick = null;
-        }
-        simToast.removeAttribute("hidden");
-        toastTimer = setTimeout(function () {
-          simToast.setAttribute("hidden", "");
-        }, 4200);
-      }
-
-      function syncSimChrome() {
-        const titles = {
-          cockpit: "Station Studio — Cockpit",
-          findings: "Station Studio — Findings & Charts",
-          autojobs: "Station Studio — Auto-Jobs",
-          workbench: "Station Studio — Workbench",
-          mcp: "Station Studio — MCP Hub",
-          activity: "Station Studio — Activity"
-        };
-        simWinTitle.textContent = titles[simState.pane] || "Station Studio";
-        simFindingsBadge.textContent = String(simState.findings.length);
-        simJobsBadge.textContent = String(simState.missions.length);
-        const linkedCount = simState.mcpClients.filter(function (c) { return c.linked; }).length;
-        simMcpBadge.textContent = linkedCount + "/" + simState.mcpClients.length;
-        simActBadge.textContent = String(simState.activity.length);
-
-        const dot = document.getElementById("sim-daemon-dot");
-        const st = document.getElementById("sim-daemon-status");
-        const sub = document.getElementById("sim-daemon-sub");
-        if (simState.daemonOnline) {
-          dot.className = "status-dot-live";
-          st.innerHTML = 'Online <span class="mono" style="color:var(--muted);font-weight:400;">v0.4.0</span>';
-          sub.textContent = "127.0.0.1:19826 · " + simState.latencyMs.toFixed(2) + " ms";
-          simToolbarLat.textContent = simState.latencyMs.toFixed(2) + " ms";
-        } else {
-          dot.className = "status-dot-live stopped";
-          st.textContent = "Offline (0.0% CPU)";
-          sub.textContent = "127.0.0.1:19826 stopped";
-          simToolbarLat.textContent = "Stopped";
-        }
-
-        document.querySelectorAll(".sidebar-nav-btn").forEach(function (btn) {
-          btn.setAttribute("aria-selected", String(btn.getAttribute("data-sim-pane") === simState.pane));
-        });
-      }
-
-      function getFilteredFindings() {
-        return simState.findings.filter(function (f) {
-          if (simState.category !== "all" && f.category !== simState.category) return false;
-          if (simState.kpiFilter === "new" && f.status !== "new") return false;
-          if (simState.kpiFilter === "pipeline" && ["contacted", "replied", "visit"].indexOf(f.status) === -1) return false;
-          if (simState.kpiFilter === "followup" && !f.followUp) return false;
-          if (simState.searchQuery) {
-            const q = simState.searchQuery.toLowerCase();
-            const hay = (f.title + " " + f.subtitle + " " + f.source + " " + f.note).toLowerCase();
-            if (hay.indexOf(q) === -1) return false;
-          }
-          return true;
-        }).sort(function (a, b) { return b.score - a.score; });
-      }
-
-      function computeMedian(items) {
-        const vals = items.map(function (i) { return i.amount; }).filter(Boolean).sort(function (a, b) { return a - b; });
-        if (!vals.length) return "—";
-        const mid = vals[Math.floor(vals.length / 2)];
-        const cur = items[0].currency || "$";
-        return formatAmount(mid, cur);
-      }
-
-      // Render Pane 1: Findings & Charts (Pipeline CRM + 4 Swift Charts)
-      function renderFindingsPane() {
-        const catItems = simState.findings.filter(function (f) {
-          return simState.category === "all" ? true : f.category === simState.category;
-        });
-        const newCount = catItems.filter(function (f) { return f.status === "new"; }).length;
-        const pipeCount = catItems.filter(function (f) { return ["contacted", "replied", "visit"].indexOf(f.status) !== -1; }).length;
-        const followCount = catItems.filter(function (f) { return f.followUp; }).length;
-        const medianStr = simState.category === "all" ? "$202k / 1,150 DH" : computeMedian(catItems);
-
-        const visible = getFilteredFindings();
-        let selected = visible.find(function (f) { return f.uid === simState.selectedUid; }) || visible[0] || null;
-        if (selected) simState.selectedUid = selected.uid;
-
-        const countsByCat = {
-          all: simState.findings.length,
-          jobs: simState.findings.filter(function (f) { return f.category === "jobs"; }).length,
-          housing: simState.findings.filter(function (f) { return f.category === "housing"; }).length,
-          leads: simState.findings.filter(function (f) { return f.category === "leads"; }).length
-        };
-
-        let html = '' +
-          '<div class="pane-subheader">' +
-            '<div class="cat-pills" role="group" aria-label="Domain filter">' +
-              '<button type="button" class="cat-pill" data-cat="all" aria-pressed="' + (simState.category === "all") + '">All (' + countsByCat.all + ')</button>' +
-              '<button type="button" class="cat-pill" data-cat="jobs" aria-pressed="' + (simState.category === "jobs") + '">Jobs (' + countsByCat.jobs + ')</button>' +
-              '<button type="button" class="cat-pill" data-cat="housing" aria-pressed="' + (simState.category === "housing") + '">Housing &amp; Rent (' + countsByCat.housing + ')</button>' +
-              '<button type="button" class="cat-pill" data-cat="leads" aria-pressed="' + (simState.category === "leads") + '">Leads (' + countsByCat.leads + ')</button>' +
-            '</div>' +
-            '<div style="display:flex;align-items:center;gap:8px;">' +
-              '<div class="seg-control" role="tablist" aria-label="Findings view mode">' +
-                '<button type="button" class="seg-btn" role="tab" data-submode="pipeline" aria-selected="' + (simState.submode === "pipeline") + '">Pipeline &amp; CRM</button>' +
-                '<button type="button" class="seg-btn" role="tab" data-submode="charts" aria-selected="' + (simState.submode === "charts") + '">Data Charts</button>' +
-              '</div>' +
-              '<button type="button" class="sim-btn" id="sim-toggle-add-btn">+ Add</button>' +
-            '</div>' +
-          '</div>' +
-
-          '<div class="kpi-row">' +
-            '<button type="button" class="kpi-tile" data-kpi="all" aria-pressed="' + (simState.kpiFilter === "all") + '">' +
-              '<span class="kpi-tile-label">Total Matched</span><span class="kpi-tile-val mono">' + catItems.length + '</span>' +
-            '</button>' +
-            '<button type="button" class="kpi-tile" data-kpi="new" aria-pressed="' + (simState.kpiFilter === "new") + '">' +
-              '<span class="kpi-tile-label">Unreviewed (New)</span><span class="kpi-tile-val mono" style="color:var(--prism);">' + newCount + '</span>' +
-            '</button>' +
-            '<button type="button" class="kpi-tile" data-kpi="pipeline" aria-pressed="' + (simState.kpiFilter === "pipeline") + '">' +
-              '<span class="kpi-tile-label">In Pipeline</span><span class="kpi-tile-val mono" style="color:var(--mint);">' + pipeCount + '</span>' +
-            '</button>' +
-            '<button type="button" class="kpi-tile" data-kpi="followup" aria-pressed="' + (simState.kpiFilter === "followup") + '">' +
-              '<span class="kpi-tile-label">Follow-Up Due</span><span class="kpi-tile-val mono" style="color:var(--amber);">' + followCount + '</span>' +
-            '</button>' +
-            '<div class="kpi-tile" style="cursor:default;">' +
-              '<span class="kpi-tile-label">Median Comp / Rent</span><span class="kpi-tile-val mono">' + esc(medianStr) + '</span>' +
-            '</div>' +
-          '</div>';
-
-        if (simState.showAddForm) {
-          html += '' +
-            '<div style="padding:10px 16px;border-bottom:1px solid var(--hairline);background:#090D16;display:flex;flex-wrap:wrap;gap:8px;align-items:center;">' +
-              '<input type="text" id="sim-new-title" class="sim-input" placeholder="Title (e.g. Rust Engineer @ Cloudflare or Studio Anfa)" style="flex:1;min-width:210px;">' +
-              '<input type="number" id="sim-new-amt" class="sim-input mono" placeholder="Amount (e.g. 205000)" style="width:150px;min-width:120px;">' +
-              '<button type="button" class="sim-btn sim-btn-accent" id="sim-save-new-btn">Save to SQLite</button>' +
-              '<button type="button" class="sim-btn" id="sim-cancel-new-btn">Cancel</button>' +
-            '</div>';
-        }
-
-        if (simState.submode === "pipeline") {
-          const rowsHtml = visible.length ? visible.map(function (item) {
-            const isSel = selected && item.uid === selected.uid;
-            return '' +
-              '<button type="button" class="crm-row" data-uid="' + esc(item.uid) + '" aria-selected="' + isSel + '">' +
-                '<div style="display:flex;align-items:center;gap:10px;min-width:0;">' +
-                  '<span class="score-box mono">' + item.score + '</span>' +
-                  '<div style="min-width:0;">' +
-                    '<div style="font-weight:600;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' +
-                      esc(item.title) +
-                      (item.followUp ? ' <span style="font-size:10.5px;color:var(--amber);margin-left:4px;">● Follow up</span>' : '') +
-                    '</div>' +
-                    '<div style="font-size:12px;color:var(--slate);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + esc(item.subtitle) + '</div>' +
-                  '</div>' +
-                '</div>' +
-                '<div style="text-align:right;flex-shrink:0;">' +
-                  '<div class="mono" style="font-weight:600;font-size:13px;">' + esc(formatAmount(item.amount, item.currency)) + '</div>' +
-                  '<span class="' + stageBadgeClass(item.status) + '">' + esc(stageLabelFor(item)) + '</span>' +
-                '</div>' +
-              '</button>';
-          }).join("") : '<div style="padding:28px 16px;text-align:center;color:var(--slate);font-size:13px;">No matches for this filter. Click "Total Matched" above to reset.</div>';
-
-          let inspectorHtml = '';
-          if (selected) {
-            const stageMap = STAGE_LABELS[selected.category] || STAGE_LABELS.jobs;
-            const stageButtons = STAGE_KEYS.map(function (k) {
-              return '<button type="button" class="stage-step-btn" data-set-stage="' + k + '" aria-pressed="' + (selected.status === k) + '">' + esc(stageMap[k]) + '</button>';
-            }).join("");
-
-            let primaryActions = '';
-            if (selected.category === "housing") {
-              primaryActions = '' +
-                '<button type="button" class="sim-btn sim-btn-mint" id="sim-act-whatsapp">WhatsApp Landlord (' + esc(selected.phone || "wa.me") + ')</button>' +
-                '<button type="button" class="sim-btn" id="sim-act-visit">Book Saturday Visit</button>';
-            } else if (selected.category === "jobs") {
-              primaryActions = '' +
-                '<button type="button" class="sim-btn sim-btn-accent" id="sim-act-apply">Attach CV &amp; Pre-fill (/upload)</button>' +
-                '<button type="button" class="sim-btn" id="sim-act-open-wb">Inspect @eN in Workbench</button>';
-            } else {
-              primaryActions = '' +
-                '<button type="button" class="sim-btn sim-btn-accent" id="sim-act-open-wb">Open Thread in Workbench</button>';
-            }
-
-            inspectorHtml = '' +
-              '<div>' +
-                '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">' +
-                  '<div>' +
-                    '<div style="font-size:16px;font-weight:700;letter-spacing:-0.02em;">' + esc(selected.title) + '</div>' +
-                    '<div style="font-size:12.5px;color:var(--slate);margin-top:2px;">' + esc(selected.subtitle) + ' · <span class="mono" style="color:var(--prism);">' + esc(selected.source) + '</span></div>' +
-                  '</div>' +
-                  '<div class="mono" style="font-size:16px;font-weight:700;color:var(--mint);">' + esc(formatAmount(selected.amount, selected.currency)) + '</div>' +
-                '</div>' +
-              '</div>' +
-
-              '<div>' +
-                '<div style="font-size:12px;color:var(--slate);margin-bottom:6px;">Pipeline stage (click to update SQLite row):</div>' +
-                '<div class="stage-stepper">' + stageButtons + '</div>' +
-              '</div>' +
-
-              '<div style="display:flex;flex-wrap:wrap;gap:8px;">' +
-                primaryActions +
-                '<button type="button" class="sim-btn" id="sim-act-followup">' + (selected.followUp ? '✓ Follow-Up Active' : 'Remind Follow-Up') + '</button>' +
-              '</div>' +
-
-              '<div>' +
-                '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--slate);margin-bottom:5px;">' +
-                  '<span>Local CRM note (<code>findings.db</code>)</span>' +
-                  '<span class="mono">Score ' + selected.score + '/100</span>' +
-                '</div>' +
-                '<textarea id="sim-note-input" class="sim-note-box" placeholder="Add interview notes, rent negotiation details, or landlord contact…">' + esc(selected.note) + '</textarea>' +
-                '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">' +
-                  '<span class="mono" style="font-size:11px;color:var(--muted);max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + esc(selected.url) + '</span>' +
-                  '<button type="button" class="sim-btn" id="sim-save-note-btn">Save Note</button>' +
-                '</div>' +
-              '</div>';
-          }
-
-          html += '' +
-            '<div class="findings-split">' +
-              '<div class="findings-list-col">' +
-                '<div class="findings-search-bar">' +
-                  '<input type="search" id="sim-findings-search" placeholder="Search title, company, neighborhood, or note…" value="' + esc(simState.searchQuery) + '">' +
-                '</div>' +
-                '<div class="crm-rows">' + rowsHtml + '</div>' +
-              '</div>' +
-              '<div class="crm-inspector">' + inspectorHtml + '</div>' +
-            '</div>';
-        } else {
-          // Mode 2: 4 Native Swift Charts Equivalents!
-          const chartTargetCat = simState.category === "all" ? "jobs" : simState.category;
-          const chartItems = simState.findings.filter(function (f) { return f.category === chartTargetCat; });
-          const stageMap = STAGE_LABELS[chartTargetCat] || STAGE_LABELS.jobs;
-
-          // Funnel counts
-          const funnelHtml = STAGE_KEYS.map(function (k) {
-            const c = chartItems.filter(function (f) { return f.status === k; }).length;
-            const pct = chartItems.length ? Math.max(8, Math.round((c / chartItems.length) * 100)) : 8;
-            return '' +
-              '<div class="funnel-row">' +
-                '<span style="color:var(--slate);">' + esc(stageMap[k]) + '</span>' +
-                '<div class="funnel-bar-bg"><div class="funnel-bar-fill" style="width:' + (c ? pct : 0) + '%;background:' + (k === "visit" || k === "replied" ? "var(--mint)" : "var(--prism)") + ';"></div></div>' +
-                '<span class="mono" style="text-align:right;">' + c + '</span>' +
-              '</div>';
-          }).join("");
-
-          // Source breakdown
-          const srcCounts = {};
-          chartItems.forEach(function (f) { srcCounts[f.source] = (srcCounts[f.source] || 0) + 1; });
-          const srcHtml = Object.keys(srcCounts).map(function (src) {
-            const c = srcCounts[src];
-            const pct = Math.round((c / chartItems.length) * 100);
-            return '' +
-              '<div class="funnel-row">' +
-                '<span style="color:var(--ivory);">' + esc(src) + '</span>' +
-                '<div class="funnel-bar-bg"><div class="funnel-bar-fill" style="width:' + pct + '%;background:var(--mint);"></div></div>' +
-                '<span class="mono" style="text-align:right;">' + c + '</span>' +
-              '</div>';
-          }).join("");
-
-          // Scatter plot points (SVG)
-          const amounts = chartItems.map(function (i) { return i.amount || 1; });
-          const minA = Math.min.apply(null, amounts);
-          const maxA = Math.max.apply(null, amounts) || 1;
-          const dotsSvg = chartItems.map(function (item) {
-            const nx = maxA === minA ? 0.5 : (item.amount - minA) / (maxA - minA);
-            const ny = (item.score - 80) / 20;
-            const cx = Math.round(24 + nx * 250);
-            const cy = Math.round(98 - Math.max(0, Math.min(1, ny)) * 76);
-            return '<circle cx="' + cx + '" cy="' + cy + '" r="6" fill="#2DD4BF" stroke="#07090E" stroke-width="1.5" style="cursor:pointer;" data-scatter-uid="' + esc(item.uid) + '"><title>' + esc(item.title + " · " + formatAmount(item.amount, item.currency) + " · Score " + item.score) + '</title></circle>';
-          }).join("");
-
-          const histHeights = chartTargetCat === "housing" ? [38, 92, 86, 54, 26] : [30, 58, 95, 72, 44];
-
-          html += '' +
-            '<div class="charts-grid-2x2">' +
-              '<div class="chart-card">' +
-                '<div style="display:flex;justify-content:space-between;align-items:baseline;">' +
-                  '<span style="font-weight:600;font-size:13.5px;">' + (chartTargetCat === "housing" ? "Monthly Rent Histogram (DH)" : "Compensation Distribution (USD)") + '</span>' +
-                  '<span class="mono" style="font-size:12px;color:var(--mint);">Median: ' + esc(computeMedian(chartItems)) + '</span>' +
-                '</div>' +
-                '<div class="hist-bars">' +
-                  histHeights.map(function (h, idx) {
-                    return '<div class="' + (idx === 2 ? "median" : "") + '" style="height:' + h + '%;"></div>';
-                  }).join("") +
-                '</div>' +
-                '<div style="margin-top:8px;font-size:11.5px;color:var(--slate);">Mint bar marks SQLite median rule across ' + esc(chartTargetCat) + ' matches.</div>' +
-              '</div>' +
-
-              '<div class="chart-card">' +
-                '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">' +
-                  '<span style="font-weight:600;font-size:13.5px;">Live CRM Stage Funnel</span>' +
-                  '<span class="mono" style="font-size:11.5px;color:var(--slate);">Updates as you triage</span>' +
-                '</div>' +
-                funnelHtml +
-              '</div>' +
-
-              '<div class="chart-card">' +
-                '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">' +
-                  '<span style="font-weight:600;font-size:13.5px;">Authenticated Source Share</span>' +
-                  '<span class="mono" style="font-size:11.5px;color:var(--prism);">Deduplicated</span>' +
-                '</div>' +
-                srcHtml +
-              '</div>' +
-
-              '<div class="chart-card">' +
-                '<div style="display:flex;justify-content:space-between;align-items:baseline;">' +
-                  '<span style="font-weight:600;font-size:13.5px;">Score vs. Amount (click a point)</span>' +
-                  '<span class="mono" style="font-size:11.5px;color:var(--mint);">y = Score · x = Price</span>' +
-                '</div>' +
-                '<svg viewBox="0 0 300 112" style="width:100%;height:112px;margin-top:8px;border-bottom:1px solid var(--hairline);border-left:1px solid var(--hairline);">' +
-                  '<line x1="0" y1="56" x2="300" y2="56" stroke="rgba(148,163,184,0.12)" stroke-dasharray="3 3"/>' +
-                  dotsSvg +
-                '</svg>' +
-              '</div>' +
-            '</div>';
-        }
-
-        simMount.innerHTML = html;
-
-        // Wire Findings event listeners
-        simMount.querySelectorAll("[data-cat]").forEach(function (b) {
-          b.addEventListener("click", function () {
-            simState.category = b.getAttribute("data-cat");
-            renderSim();
-          });
-        });
-        simMount.querySelectorAll("[data-submode]").forEach(function (b) {
-          b.addEventListener("click", function () {
-            simState.submode = b.getAttribute("data-submode");
-            logSimActivity("UI", "Switched Findings view -> " + simState.submode, 0.18);
-            renderSim();
-          });
-        });
-        simMount.querySelectorAll("[data-kpi]").forEach(function (b) {
-          b.addEventListener("click", function () {
-            const k = b.getAttribute("data-kpi");
-            simState.kpiFilter = (simState.kpiFilter === k && k !== "all") ? "all" : k;
-            renderSim();
-          });
-        });
-        const addToggle = document.getElementById("sim-toggle-add-btn");
-        if (addToggle) {
-          addToggle.addEventListener("click", function () {
-            simState.showAddForm = !simState.showAddForm;
-            renderSim();
-          });
-        }
-        const cancelNew = document.getElementById("sim-cancel-new-btn");
-        if (cancelNew) {
-          cancelNew.addEventListener("click", function () {
-            simState.showAddForm = false;
-            renderSim();
-          });
-        }
-        const saveNew = document.getElementById("sim-save-new-btn");
-        if (saveNew) {
-          saveNew.addEventListener("click", function () {
-            const t = (document.getElementById("sim-new-title").value || "").trim();
-            const a = Number(document.getElementById("sim-new-amt").value || 0);
-            if (!t) return;
-            const cat = simState.category === "all" ? "jobs" : simState.category;
-            const uid = "u" + Date.now();
-            simState.findings.unshift({
-              uid: uid,
-              category: cat,
-              score: 92,
-              title: t,
-              subtitle: "Manual entry · Local SQLite",
-              source: "Studio",
-              amount: a || (cat === "housing" ? 1200 : 190000),
-              currency: cat === "housing" ? "DH" : "$",
-              status: "new",
-              followUp: false,
-              url: "local://findings.db/" + uid,
-              note: ""
-            });
-            simState.selectedUid = uid;
-            simState.showAddForm = false;
-            logSimActivity("SQLite", "INSERT INTO findings ('" + t.slice(0, 28) + "')", 0.15);
-            showSimToast("Inserted '" + t + "' into findings.db");
-            renderSim();
-          });
-        }
-
-        const searchEl = document.getElementById("sim-findings-search");
-        if (searchEl) {
-          searchEl.addEventListener("input", function () {
-            simState.searchQuery = this.value;
-            const pos = this.selectionStart;
-            renderSim();
-            const nextEl = document.getElementById("sim-findings-search");
-            if (nextEl) { nextEl.focus(); nextEl.setSelectionRange(pos, pos); }
-          });
-        }
-
-        simMount.querySelectorAll(".crm-row[data-uid]").forEach(function (row) {
-          row.addEventListener("click", function () {
-            simState.selectedUid = row.getAttribute("data-uid");
-            renderSim();
-          });
-        });
-
-        simMount.querySelectorAll("[data-set-stage]").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            if (!selected) return;
-            selected.status = btn.getAttribute("data-set-stage");
-            const label = stageLabelFor(selected);
-            logSimActivity("SQLite", "UPDATE findings SET status='" + selected.status + "' (" + selected.title.slice(0, 22) + ")", 0.12);
-            showSimToast("Moved to '" + label + "' — synced to local SQLite");
-            renderSim();
-          });
-        });
-
-        const waBtn = document.getElementById("sim-act-whatsapp");
-        if (waBtn && selected) {
-          waBtn.addEventListener("click", function () {
-            selected.status = "contacted";
-            logSimActivity("OPEN", "wa.me link opened with pre-filled Darija/French inquiry", 0.29);
-            showSimToast("Opened WhatsApp chat & marked listing as Contacted");
-            renderSim();
-          });
-        }
-        const visitBtn = document.getElementById("sim-act-visit");
-        if (visitBtn && selected) {
-          visitBtn.addEventListener("click", function () {
-            selected.status = "visit";
-            selected.followUp = true;
-            logSimActivity("SQLite", "Scheduled Saturday visit + follow-up flag", 0.14);
-            showSimToast("Visit scheduled & added to Follow-Up Due");
-            renderSim();
-          });
-        }
-        const applyBtn = document.getElementById("sim-act-apply");
-        if (applyBtn && selected) {
-          applyBtn.addEventListener("click", function () {
-            selected.status = "contacted";
-            selected.note = (selected.note ? selected.note + " · " : "") + "CV attached via /upload (0.41 ms).";
-            logSimActivity("POST", "/upload resume_2026.pdf (DataTransfer · 0 OS dialog block)", 0.41);
-            showSimToast("Attached resume_2026.pdf in 0.41 ms & paused before final submit!");
-            renderSim();
-          });
-        }
-        const openWb = document.getElementById("sim-act-open-wb");
-        if (openWb) {
-          openWb.addEventListener("click", function () {
-            simState.pane = "workbench";
-            simState.wbMode = "snapshot";
-            renderSim();
-          });
-        }
-        const fuBtn = document.getElementById("sim-act-followup");
-        if (fuBtn && selected) {
-          fuBtn.addEventListener("click", function () {
-            selected.followUp = !selected.followUp;
-            showSimToast(selected.followUp ? "Follow-up reminder enabled" : "Follow-up cleared");
-            renderSim();
-          });
-        }
-        const saveNoteBtn = document.getElementById("sim-save-note-btn");
-        if (saveNoteBtn && selected) {
-          saveNoteBtn.addEventListener("click", function () {
-            const val = document.getElementById("sim-note-input").value;
-            selected.note = val;
-            logSimActivity("SQLite", "UPDATE findings SET note=... WHERE uid='" + selected.uid + "'", 0.13);
-            showSimToast("Note saved to ~/.flossi/agent_home/memory/findings.db");
-          });
-        }
-        simMount.querySelectorAll("[data-scatter-uid]").forEach(function (dot) {
-          dot.addEventListener("click", function () {
-            simState.selectedUid = dot.getAttribute("data-scatter-uid");
-            simState.submode = "pipeline";
-            renderSim();
-          });
-        });
-      }
-
-      // Render Pane 2: Cockpit Overview (MainWindow.swift -> OverviewView)
-      function renderCockpitPane() {
-        if (!simState.daemonOnline) {
-          simMount.innerHTML = '' +
-            '<div style="padding:72px 24px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;">' +
-              '<div class="mono" style="font-size:32px;color:var(--muted);">⚡</div>' +
-              '<div style="font-size:20px;font-weight:700;">Station daemon is stopped</div>' +
-              '<p style="margin:0;color:var(--slate);max-width:420px;font-size:14px;">0.0% background CPU when stopped. Launch the embedded 4.5 MB Rust CDP binary to inspect tabs, run Auto-Jobs, or serve MCP tools.</p>' +
-              '<button type="button" class="sim-btn sim-btn-accent" id="sim-start-daemon-btn" style="height:36px;padding:0 18px;font-size:13.5px;">▶ Start Station Daemon (127.0.0.1:19826)</button>' +
-            '</div>';
-          document.getElementById("sim-start-daemon-btn").addEventListener("click", function () {
-            simState.daemonOnline = true;
-            logSimActivity("BOOT", "station --profile " + simState.session + " listening on 127.0.0.1:19826", 0.36);
-            showSimToast("Station Rust daemon online in 14 ms");
-            renderSim();
-          });
-          return;
-        }
-
-        // Build Sparkline SVG path from latencySamples
-        const pts = simState.latencySamples.map(function (v, idx) {
-          const x = Math.round((idx / (simState.latencySamples.length - 1)) * 280);
-          const y = Math.round(52 - ((v - 0.25) / 0.30) * 40);
-          return x + "," + Math.max(8, Math.min(54, y));
-        });
-        const linePath = "M " + pts.join(" L ");
-        const areaPath = linePath + " L 280,60 L 0,60 Z";
-
-        simMount.innerHTML = '' +
-          '<div class="pane-pad">' +
-            '<div class="sim-card" style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">' +
-              '<div>' +
-                '<div style="font-size:12px;color:var(--slate);margin-bottom:4px;">Loopback CDP Engine · Persistent Tab Pool</div>' +
-                '<div class="mono" style="font-size:34px;font-weight:700;line-height:1.05;color:var(--ivory);">' + simState.latencyMs.toFixed(2) + ' <span style="font-size:16px;color:var(--slate);font-weight:500;">ms</span></div>' +
-                '<div class="mono" style="font-size:11.5px;color:var(--mint);margin-top:4px;">min 0.31 ms · peak 0.52 ms · 4.5 MB RSS</div>' +
-              '</div>' +
-              '<svg viewBox="0 0 280 60" style="width:280px;height:60px;flex:1;min-width:180px;max-width:340px;" aria-label="Loopback latency sparkline">' +
-                '<path d="' + areaPath + '" fill="rgba(56,189,248,0.16)"/>' +
-                '<path d="' + linePath + '" fill="none" stroke="#38BDF8" stroke-width="2"/>' +
-              '</svg>' +
-              '<div style="display:flex;gap:8px;">' +
-                '<button type="button" class="sim-btn" id="sim-ping-btn">Ping (0.36ms)</button>' +
-                '<button type="button" class="sim-btn" id="sim-stop-daemon-btn" style="color:#FB7185;">Stop Daemon</button>' +
-              '</div>' +
-            '</div>' +
-
-            '<div class="sim-card" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">' +
-              '<div>' +
-                '<div style="font-weight:600;font-size:14px;">Unified SQLite Findings Pulse</div>' +
-                '<div style="font-size:12.5px;color:var(--slate);">' + simState.findings.length + ' indexed matches across Jobs, Housing &amp; Leads · Two-way synced with <code>seen.db</code></div>' +
-              '</div>' +
-              '<div style="display:flex;gap:8px;">' +
-                '<button type="button" class="sim-btn sim-btn-mint" id="sim-jump-findings">Open CRM &amp; Charts →</button>' +
-                '<button type="button" class="sim-btn" id="sim-jump-autojobs">Manage Auto-Jobs</button>' +
-              '</div>' +
-            '</div>' +
-
-            '<div class="sim-card">' +
-              '<div style="font-size:12.5px;font-weight:600;margin-bottom:8px;">Quick Navigate &amp; Distill (Authenticated Session: <span class="mono" style="color:var(--prism);">' + esc(simState.session) + '</span>)</div>' +
-              '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
-                '<input type="text" id="sim-quick-url" class="sim-input mono" style="flex:1;" value="' + esc(simState.quickUrl) + '">' +
-                '<button type="button" class="sim-btn sim-btn-accent" id="sim-go-snapshot">Snapshot @eN</button>' +
-                '<button type="button" class="sim-btn" id="sim-go-markdown">Clean Markdown</button>' +
-              '</div>' +
-            '</div>' +
-
-            '<div class="sim-card">' +
-              '<div style="font-size:12px;color:var(--slate);margin-bottom:8px;">Recent Loopback Stream</div>' +
-              simState.activity.slice(0, 3).map(function (a) {
-                return '<div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--hairline);font-size:12px;">' +
-                  '<span class="mono"><strong style="color:var(--prism);">' + esc(a.method) + '</strong> ' + esc(a.path) + '</span>' +
-                  '<span class="mono" style="color:var(--mint);flex-shrink:0;">' + esc(a.ms) + '</span>' +
-                '</div>';
-              }).join("") +
-            '</div>' +
-          '</div>';
-
-        document.getElementById("sim-ping-btn").addEventListener("click", function () {
-          logSimActivity("GET", "/health -> status: ok, tabs_pooled: 4");
-          renderSim();
-        });
-        document.getElementById("sim-stop-daemon-btn").addEventListener("click", function () {
-          simState.daemonOnline = false;
-          syncSimChrome();
-          renderSim();
-        });
-        document.getElementById("sim-jump-findings").addEventListener("click", function () {
-          simState.pane = "findings";
-          renderSim();
-        });
-        document.getElementById("sim-jump-autojobs").addEventListener("click", function () {
-          simState.pane = "autojobs";
-          renderSim();
-        });
-        document.getElementById("sim-go-snapshot").addEventListener("click", function () {
-          simState.quickUrl = document.getElementById("sim-quick-url").value;
-          simState.pane = "workbench";
-          simState.wbMode = "snapshot";
-          logSimActivity("GET", "/snapshot -> 142 @eN tokens (-99.4%)");
-          renderSim();
-        });
-        document.getElementById("sim-go-markdown").addEventListener("click", function () {
-          simState.quickUrl = document.getElementById("sim-quick-url").value;
-          simState.pane = "workbench";
-          simState.wbMode = "markdown";
-          logSimActivity("GET", "/read -> 318 Clean Markdown tokens");
-          renderSim();
-        });
-      }
-
-      // Render Pane 3: Auto-Jobs Scheduler (AgentView.swift)
-      function triggerMissionRun(missionId) {
-        if (simState.runningJobId) return;
-        const mission = simState.missions.find(function (m) { return m.id === missionId; });
-        if (!mission) return;
-        simState.runningJobId = missionId;
-        simState.scanStepText = "Opening background tab via Target.createTarget (0 focus steal)…";
-        renderSim();
-
-        setTimeout(function () {
-          simState.scanStepText = "Distilling @eN snapshot (-99.4% tokens) & scoring into SQLite…";
-          if (simState.pane === "autojobs") renderAutoJobsPane();
-        }, 380);
-
-        setTimeout(function () {
-          simState.runningJobId = null;
-          simState.scanStepText = "";
-          const pool = simState.liveSpawnPool[mission.category] || simState.liveSpawnPool.jobs;
-          const pick = pool[Math.floor(Math.random() * pool.length)];
-          const newUid = "live-" + Date.now();
-          simState.findings.unshift({
-            uid: newUid,
-            category: mission.category,
-            score: pick.score,
-            title: pick.title,
-            subtitle: pick.subtitle,
-            source: pick.source,
-            amount: pick.amount,
-            currency: pick.currency,
-            phone: pick.phone || "",
-            status: "new",
-            followUp: true,
-            url: "https://selibrah.github.io/station/#studio",
-            note: "Discovered live by Auto-Job '" + mission.title + "' in background Chrome tab."
-          });
-          mission.lastResult = "Just now · +1 high-score match saved (" + pick.score + " pts)";
-          logSimActivity("AUTO-JOB", mission.title + " -> +1 SQLite match (" + pick.score + " pts)", 0.39);
-          syncSimChrome();
-          if (simState.pane === "autojobs") renderAutoJobsPane();
-          showSimToast("New match harvested: " + pick.title, "Inspect in CRM →", function () {
-            simState.pane = "findings";
-            simState.category = mission.category;
-            simState.submode = "pipeline";
-            simState.kpiFilter = "all";
-            simState.selectedUid = newUid;
-            renderSim();
-          });
-        }, 820);
-      }
-
-      function renderAutoJobsPane() {
-        const missionsHtml = simState.missions.map(function (m) {
-          const isRunning = simState.runningJobId === m.id;
-          return '' +
-            '<div class="sim-card" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;">' +
-              '<div style="min-width:220px;flex:1;">' +
-                '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">' +
-                  '<span style="font-weight:600;font-size:14px;">' + esc(m.title) + '</span>' +
-                  '<span class="stage-badge">' + esc(m.category) + '</span>' +
-                  '<span class="mono" style="font-size:11.5px;color:var(--muted);">' + esc(m.interval) + '</span>' +
-                '</div>' +
-                '<div class="mono" style="font-size:11.5px;color:var(--slate);margin-top:4px;">' + esc(m.goal) + '</div>' +
-                '<div style="font-size:12px;color:var(--mint);margin-top:4px;">' +
-                  (isRunning ? "⟳ " + esc(simState.scanStepText) : esc(m.lastResult)) +
-                '</div>' +
-              '</div>' +
-              '<div style="display:flex;gap:8px;">' +
-                '<button type="button" class="sim-btn" data-open-cat="' + esc(m.category) + '">Results</button>' +
-                '<button type="button" class="sim-btn sim-btn-accent" data-run-mission="' + esc(m.id) + '" ' + (simState.runningJobId ? "disabled" : "") + '>' +
-                  (isRunning ? "Scanning…" : "▶ Run Now") +
-                '</button>' +
-              '</div>' +
-            '</div>';
-        }).join("");
-
-        simMount.innerHTML = '' +
-          '<div class="pane-pad">' +
-            '<div class="sim-card" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">' +
-              '<div style="display:flex;align-items:center;gap:10px;">' +
-                '<span class="status-dot-live ' + (simState.schedulerActive ? "" : "stopped") + '"></span>' +
-                '<div>' +
-                  '<div style="font-weight:700;font-size:15px;">' + (simState.schedulerActive ? "Background Scheduler Active" : "Scheduler Paused") + '</div>' +
-                  '<div style="font-size:12.5px;color:var(--slate);">Runs silently in pooled background tabs (<code>background: true</code>) while you code.</div>' +
-                '</div>' +
-              '</div>' +
-              '<button type="button" class="sim-btn" id="sim-toggle-sched">' + (simState.schedulerActive ? "Pause Scheduler" : "Resume Scheduler") + '</button>' +
-            '</div>' +
-            missionsHtml +
-          '</div>';
-
-        document.getElementById("sim-toggle-sched").addEventListener("click", function () {
-          simState.schedulerActive = !simState.schedulerActive;
-          renderSim();
-        });
-        simMount.querySelectorAll("[data-run-mission]").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            triggerMissionRun(btn.getAttribute("data-run-mission"));
-          });
-        });
-        simMount.querySelectorAll("[data-open-cat]").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            simState.category = btn.getAttribute("data-open-cat");
-            simState.pane = "findings";
-            simState.submode = "pipeline";
-            renderSim();
-          });
-        });
-      }
-
-      // Render Pane 4: Browser Workbench (PlaygroundView.swift)
-      function renderWorkbenchPane() {
-        let bodyHtml = '';
-        if (simState.wbMode === "snapshot") {
-          const filtered = simState.elements.filter(function (el) {
-            if (!simState.wbFilter) return true;
-            const q = simState.wbFilter.toLowerCase();
-            return (el.ref + " " + el.role + " " + el.label + " " + el.val).toLowerCase().indexOf(q) !== -1;
-          });
-
-          bodyHtml = '' +
-            '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">' +
-              '<div class="mono" style="font-size:12px;color:var(--mint);">48,210 raw HTML tokens → <strong>142 @eN tokens (-99.4%)</strong> · 0.38 ms</div>' +
-              '<div style="display:flex;gap:8px;">' +
-                '<input type="search" id="sim-wb-filter" class="sim-input" placeholder="Filter @eN, role, or label…" value="' + esc(simState.wbFilter) + '">' +
-                '<button type="button" class="sim-btn" id="sim-copy-tree-btn">Copy LLM Tree</button>' +
-              '</div>' +
-            '</div>' +
-            '<div style="display:flex;flex-direction:column;gap:7px;">' +
-              filtered.map(function (el) {
-                let actionBtn = '';
-                if (el.kind === "input") {
-                  actionBtn = '<button type="button" class="sim-btn" data-wb-fill="' + el.ref + '">Fill Text</button>';
-                } else if (el.kind === "file") {
-                  actionBtn = '<button type="button" class="sim-btn sim-btn-mint" data-wb-upload="' + el.ref + '">Attach CV PDF (/upload)</button>';
-                } else {
-                  actionBtn = '<button type="button" class="sim-btn" data-wb-click="' + el.ref + '">' + (el.active ? "Active ✓ (Toggle)" : "Click @"+el.ref) + '</button>';
-                }
-                return '' +
-                  '<div class="en-row">' +
-                    '<div style="display:flex;align-items:center;gap:10px;min-width:0;">' +
-                      '<span class="ref-chip mono">@' + esc(el.ref) + '</span>' +
-                      '<span class="mono" style="font-size:11.5px;color:var(--muted);">' + esc(el.role) + '</span>' +
-                      '<span style="font-size:13px;font-weight:500;">' + esc(el.label) + '</span>' +
-                      (el.val ? '<span class="mono" style="font-size:11.5px;color:var(--mint);">"' + esc(el.val) + '"</span>' : '') +
-                    '</div>' +
-                    actionBtn +
-                  '</div>';
-              }).join("") +
-            '</div>';
-        } else if (simState.wbMode === "markdown") {
-          const cleanMd =
-            "# Senior Rust Systems Engineer — Linear (Remote)\n" +
-            "**Posted:** 3 hours ago · **Compensation:** $195,000 – $225,000 USD\n\n" +
-            "## Role Overview\n" +
-            "Help architect sub-millisecond local sync engines, persistent WebSocket pools, and native macOS tooling.\n\n" +
-            "- 4+ years production Rust (`tokio`, `serde`, zero-copy framing)\n" +
-            "- Experience with Chrome DevTools Protocol or local SQLite storage\n" +
-            "- Direct apply available via authenticated LinkedIn profile (`@e6`)";
-
-          const rawHtml =
-            "<div class=\"scaffold-layout__list-detail-inner artdeco-card ember-view\" data-view-name=\"job-details\">\n" +
-            "  <div class=\"jobs-unified-top-card__content--two-pane\"><span class=\"visually-hidden\">...</span>\n" +
-            "  <script nonce=\"a8f91c\">window.__como_rehydration__={\"included\":[/* 47,900+ tokens of nested tracking JSON & SVG icons omitted */]}<\/script>\n" +
-            "  <div class=\"jobs-box__html-content jobs-description-content__text--stretch\" id=\"job-details\" tabindex=\"-1\">...</div>\n" +
-            "</div>";
-
-          bodyHtml = '' +
-            '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">' +
-              '<span class="mono" style="font-size:12px;color:' + (simState.mdViewRaw ? "var(--amber)" : "var(--mint)") + ';">' +
-                (simState.mdViewRaw ? "Raw Page HTML: 48,210 tokens (bloats LLM context)" : "Station Clean Markdown: 318 tokens (-99.3% saved · 0.41 ms)") +
-              '</span>' +
-              '<button type="button" class="sim-btn" id="sim-toggle-raw-md">' +
-                (simState.mdViewRaw ? "Switch to Station Clean Markdown" : "Compare vs Raw 48k HTML") +
-              '</button>' +
-            '</div>' +
-            '<pre class="sim-card mono" style="margin:0;font-size:12px;line-height:1.55;overflow-x:auto;color:var(--ivory);white-space:pre-wrap;">' +
-              esc(simState.mdViewRaw ? rawHtml : cleanMd) +
-            '</pre>';
-        } else {
-          bodyHtml = '' +
-            '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
-              '<input type="text" id="sim-js-input" class="sim-input mono" style="flex:1;" value="' + esc(simState.jsExpr) + '">' +
-              '<button type="button" class="sim-btn sim-btn-accent" id="sim-run-js-btn">▶ Evaluate (0.36 ms)</button>' +
-            '</div>' +
-            '<pre class="sim-card mono" style="margin:0;font-size:12px;color:var(--mint);overflow-x:auto;">' + esc(simState.jsOutput) + '</pre>';
-        }
-
-        simMount.innerHTML = '' +
-          '<div class="pane-subheader">' +
-            '<div class="seg-control" role="tablist" aria-label="Workbench mode">' +
-              '<button type="button" class="seg-btn" role="tab" data-wb="snapshot" aria-selected="' + (simState.wbMode === "snapshot") + '">Snapshot (@eN)</button>' +
-              '<button type="button" class="seg-btn" role="tab" data-wb="markdown" aria-selected="' + (simState.wbMode === "markdown") + '">Clean Markdown</button>' +
-              '<button type="button" class="seg-btn" role="tab" data-wb="eval" aria-selected="' + (simState.wbMode === "eval") + '">JS Console</button>' +
-            '</div>' +
-            '<span class="mono" style="font-size:11.5px;color:var(--slate);">Target: ' + esc(simState.session) + ' · Authenticated</span>' +
-          '</div>' +
-          '<div class="pane-pad">' + bodyHtml + '</div>';
-
-        simMount.querySelectorAll("[data-wb]").forEach(function (b) {
-          b.addEventListener("click", function () {
-            simState.wbMode = b.getAttribute("data-wb");
-            renderSim();
-          });
-        });
-
-        const wbFilter = document.getElementById("sim-wb-filter");
-        if (wbFilter) {
-          wbFilter.addEventListener("input", function () {
-            simState.wbFilter = this.value;
-            const p = this.selectionStart;
-            renderSim();
-            const nf = document.getElementById("sim-wb-filter");
-            if (nf) { nf.focus(); nf.setSelectionRange(p, p); }
-          });
-        }
-
-        const copyTree = document.getElementById("sim-copy-tree-btn");
-        if (copyTree) {
-          copyTree.addEventListener("click", function () {
-            const txt = simState.elements.map(function (e) { return "[@" + e.ref + "] " + e.role + " \"" + e.label + "\""; }).join("\n");
-            navigator.clipboard.writeText(txt);
-            showSimToast("Copied compact @eN tree (142 tokens) to clipboard");
-          });
-        }
-
-        simMount.querySelectorAll("[data-wb-click]").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            const ref = btn.getAttribute("data-wb-click");
-            const el = simState.elements.find(function (x) { return x.ref === ref; });
-            if (el) {
-              el.active = !el.active;
-              logSimActivity("POST", "/act { target: '@" + ref + "', action: 'click' }");
-              showSimToast("Clicked @" + ref + " (" + el.label + ") in 0.35 ms");
-              renderSim();
-            }
-          });
-        });
-
-        simMount.querySelectorAll("[data-wb-fill]").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            const ref = btn.getAttribute("data-wb-fill");
-            const el = simState.elements.find(function (x) { return x.ref === ref; });
-            if (el) {
-              el.val = el.val === "Rust Systems Engineer" ? "Staff AI Infrastructure" : "Rust Systems Engineer";
-              logSimActivity("POST", "/act { target: '@" + ref + "', action: 'fill', value: '" + el.val + "' }");
-              showSimToast("Filled @" + ref + " with '" + el.val + "' (React value-setter safe)");
-              renderSim();
-            }
-          });
-        });
-
-        simMount.querySelectorAll("[data-wb-upload]").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            const ref = btn.getAttribute("data-wb-upload");
-            const el = simState.elements.find(function (x) { return x.ref === ref; });
-            if (el) {
-              el.val = "resume_2026.pdf (184 KB attached ✓)";
-              logSimActivity("POST", "/upload @" + ref + " resume_2026.pdf (chunked DataTransfer)", 0.41);
-              showSimToast("Attached resume_2026.pdf via DataTransfer — bypassed Chrome #2541 user-gesture gate!");
-              renderSim();
-            }
-          });
-        });
-
-        const toggleRaw = document.getElementById("sim-toggle-raw-md");
-        if (toggleRaw) {
-          toggleRaw.addEventListener("click", function () {
-            simState.mdViewRaw = !simState.mdViewRaw;
-            renderSim();
-          });
-        }
-
-        const runJs = document.getElementById("sim-run-js-btn");
-        if (runJs) {
-          runJs.addEventListener("click", function () {
-            const expr = document.getElementById("sim-js-input").value;
-            simState.jsExpr = expr;
-            simState.jsOutput = JSON.stringify({
-              ok: true,
-              session: simState.session,
-              evaluated: expr.slice(0, 64),
-              matches: ["Senior Rust Systems Engineer ($210k)", "AI Runtime & MCP Engineer ($235k)"],
-              elapsed_ms: 0.36
-            }, null, 2);
-            logSimActivity("POST", "/eval (" + expr.slice(0, 28) + "…)");
-            renderSim();
-          });
-        }
-      }
-
-      // Render Pane 5: One-Click MCP Hub (MCPHubView.swift)
-      function renderMcpPane() {
-        const cardsHtml = simState.mcpClients.map(function (c) {
-          return '' +
-            '<div class="sim-card" style="display:flex;align-items:center;justify-content:space-between;gap:10px;">' +
-              '<div style="min-width:0;">' +
-                '<div style="font-weight:600;font-size:13.5px;">' + esc(c.name) + '</div>' +
-                '<div class="mono" style="font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + esc(c.path) + '</div>' +
-              '</div>' +
-              '<button type="button" class="sim-btn ' + (c.linked ? "sim-btn-mint" : "") + '" data-mcp-toggle="' + esc(c.id) + '">' +
-                (c.linked ? "Linked ✓" : "1-Click Link") +
-              '</button>' +
-            '</div>';
-        }).join("");
-
-        simMount.innerHTML = '' +
-          '<div class="pane-pad">' +
-            '<div class="sim-card" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">' +
-              '<div>' +
-                '<div style="font-weight:700;font-size:14.5px;">Native Rust stdio MCP Server (<code>station mcp --auto-start</code>)</div>' +
-                '<div style="font-size:12.5px;color:var(--slate);">Non-destructively merges <code>"station"</code> into <code>mcpServers</code> without touching your other MCP tools.</div>' +
-              '</div>' +
-              '<div style="display:flex;gap:6px;flex-wrap:wrap;">' +
-                '<button type="button" class="sim-btn" data-mcp-test="doctor">Test station_doctor</button>' +
-                '<button type="button" class="sim-btn" data-mcp-test="snapshot">Test station_snapshot</button>' +
-              '</div>' +
-            '</div>' +
-            '<div class="mcp-grid">' + cardsHtml + '</div>' +
-            '<pre class="sim-card mono" style="margin:0;font-size:11.5px;color:var(--mint);overflow-x:auto;">' + esc(simState.mcpTestOutput) + '</pre>' +
-          '</div>';
-
-        simMount.querySelectorAll("[data-mcp-toggle]").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            const id = btn.getAttribute("data-mcp-toggle");
-            const client = simState.mcpClients.find(function (c) { return c.id === id; });
-            if (client) {
-              client.linked = !client.linked;
-              logSimActivity("MCP", (client.linked ? "Merged" : "Removed") + " 'station' in " + client.path, 0.21);
-              showSimToast((client.linked ? "Linked " : "Unlinked ") + client.name + " (" + client.path + ")");
-              renderSim();
-            }
-          });
-        });
-
-        simMount.querySelectorAll("[data-mcp-test]").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            const kind = btn.getAttribute("data-mcp-test");
-            if (kind === "doctor") {
-              simState.mcpTestOutput = JSON.stringify({
-                jsonrpc: "2.0",
-                id: 1,
-                result: {
-                  daemon: "127.0.0.1:19826 (v0.4.0)",
-                  cdp_pool_tabs: 4,
-                  token_0600_verified: true,
-                  median_rtt_ms: 0.36,
-                  tools_exposed: 11
-                }
-              }, null, 2);
-            } else {
-              simState.mcpTestOutput = JSON.stringify({
-                jsonrpc: "2.0",
-                id: 2,
-                result: {
-                  url: "https://www.linkedin.com/jobs/search/",
-                  tokens: 142,
-                  savings_vs_html: "-99.4%",
-                  elements: ["[@e1] searchbox", "[@e2] button 'Past 24 hours'", "[@e5] input:file 'Resume PDF'"]
-                }
-              }, null, 2);
-            }
-            logSimActivity("JSON-RPC", "tools/call station_" + kind + " (stdio)");
-            renderSim();
-          });
-        });
-      }
-
-      // Render Pane 6: Activity Stream (ActivityView.swift)
-      function renderActivityPane() {
-        simMount.innerHTML = '' +
-          '<div class="pane-subheader">' +
-            '<span style="font-size:13px;font-weight:600;">Live Loopback &amp; SQLite Telemetry Log</span>' +
-            '<button type="button" class="sim-btn" id="sim-clear-log">Clear</button>' +
-          '</div>' +
-          '<div class="pane-pad" style="gap:6px;">' +
-            (simState.activity.length ? simState.activity.map(function (a) {
-              return '' +
-                '<div class="en-row" style="padding:8px 12px;">' +
-                  '<div class="mono" style="font-size:12px;">' +
-                    '<span style="color:var(--prism);font-weight:600;margin-right:8px;">' + esc(a.method) + '</span>' +
-                    '<span>' + esc(a.path) + '</span>' +
-                  '</div>' +
-                  '<span class="lat-pill mono">' + esc(a.ms) + '</span>' +
-                '</div>';
-            }).join("") : '<div style="color:var(--slate);font-size:13px;">Log cleared. Interact with any Studio screen to record live CDP events.</div>') +
-          '</div>';
-
-        const clr = document.getElementById("sim-clear-log");
-        if (clr) {
-          clr.addEventListener("click", function () {
-            simState.activity = [];
-            syncSimChrome();
-            renderSim();
-          });
-        }
-      }
-
-      function renderSim() {
-        syncSimChrome();
-        if (simState.pane === "findings") renderFindingsPane();
-        else if (simState.pane === "cockpit") renderCockpitPane();
-        else if (simState.pane === "autojobs") renderAutoJobsPane();
-        else if (simState.pane === "workbench") renderWorkbenchPane();
-        else if (simState.pane === "mcp") renderMcpPane();
-        else renderActivityPane();
-      }
-
-      // Sidebar navigation
-      document.querySelectorAll(".sidebar-nav-btn").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          simState.pane = btn.getAttribute("data-sim-pane");
-          renderSim();
-        });
-      });
-
-      // Session dropdown & Reload Tab toolbar button
-      document.getElementById("sim-session-select").addEventListener("change", function () {
-        simState.session = this.value;
-        logSimActivity("SESSION", "Pinned active Chrome profile -> " + simState.session, 0.24);
-        showSimToast("Switched active Chrome profile to '" + simState.session + "'");
-        renderSim();
-      });
-
-      document.getElementById("sim-reload-tab-btn").addEventListener("click", function () {
-        logSimActivity("CDP", "Page.reload on session '" + simState.session + "'");
-        showSimToast("Reloaded active tab in " + simState.latencyMs.toFixed(2) + " ms");
-        if (simState.pane === "cockpit" || simState.pane === "activity") renderSim();
-      });
-
-      // Guided Walkthrough Scenario Pills above the window
-      document.querySelectorAll(".scenario-pill").forEach(function (pill) {
-        pill.addEventListener("click", function () {
-          document.querySelectorAll(".scenario-pill").forEach(function (p) { p.setAttribute("aria-pressed", "false"); });
-          pill.setAttribute("aria-pressed", "true");
-          const sc = pill.getAttribute("data-scenario");
-          if (sc === "jobs-crm") {
-            simState.pane = "findings";
-            simState.category = "jobs";
-            simState.submode = "pipeline";
-            simState.kpiFilter = "all";
-            simState.selectedUid = "j1";
-            renderSim();
-          } else if (sc === "rent-charts") {
-            simState.pane = "findings";
-            simState.category = "housing";
-            simState.submode = "charts";
-            renderSim();
-          } else if (sc === "run-autojob") {
-            simState.pane = "autojobs";
-            renderSim();
-            triggerMissionRun("m-jobs");
-          } else if (sc === "workbench-en") {
-            simState.pane = "workbench";
-            simState.wbMode = "snapshot";
-            renderSim();
-          } else if (sc === "mcp-link") {
-            simState.pane = "mcp";
-            renderSim();
-          }
-        });
-      });
-
-      // Boot simulator on initial load
-      renderSim();
     })();
   </script>
+  <script src="studio-lab.js"></script>
 </body>
 </html>
